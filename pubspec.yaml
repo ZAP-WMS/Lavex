@@ -29,11 +29,14 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
-  fl_chart:
+  fl_chart: null
   flutter:
     sdk: flutter
   flutter_svg: null
   get: null
+  http:
+  syncfusion_flutter_core: ^20.4.54
+  syncfusion_flutter_datagrid: ^20.4.49
   tab_indicator_styler: null
 
 dev_dependencies:
@@ -53,6 +56,10 @@ flutter:
   assets:
     - assets/
     - assets/login/
+    - assets/menu_bar/
+    - assets/create_invoice/
+    - assets/item_master/
+    - assets/store/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

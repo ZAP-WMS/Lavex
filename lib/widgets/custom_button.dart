@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../utils/colors.dart';
 
 class CustomButton extends StatelessWidget {
@@ -18,12 +17,12 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: 40,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: appColor,
+          backgroundColor: redColor,
           shape: RoundedRectangleBorder(
             borderRadius:
                 BorderRadius.circular(25.0), // Adjust the value as needed

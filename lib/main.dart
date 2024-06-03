@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lavex/routes/app_pages.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/utils/colors.dart';
+import 'package:lavex/view/Authentication/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      // home: ProfilePage(),
     );
   }
 }

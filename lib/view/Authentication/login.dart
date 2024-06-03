@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lavex/data/data_source/remote/api_service.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/utils/asset_image.dart';
 import 'package:lavex/utils/colors.dart';
@@ -8,7 +9,6 @@ import 'package:lavex/utils/string.dart';
 import 'package:lavex/widgets/custom_button.dart';
 import 'package:lavex/widgets/custom_spacebar.dart';
 import 'package:lavex/widgets/rich_text.dart';
-
 import '../../utils/style.dart';
 import '../../widgets/cutom_textformfield.dart';
 
@@ -20,7 +20,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController gmailController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -45,33 +45,30 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: RichTextWidget(
-                        title: newUser,
-                        subtitle: signUp,
-                        titlestyle: normalTextStyle,
-                        subtitleStyle: normalappcolorTextStyle),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.REGISTER);
+                    },
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        child: RichTextWidget(
+                            title: newUser,
+                            subtitle: signUp,
+                            titlestyle: normalTextStyle,
+                            subtitleStyle: normalappcolorTextStyle)),
                   ),
-                  CTextWhite(
-                    welcomeText,
-                    textStyle: boldTextStyle,
-                  ),
-                  CTextWhite(
-                    loginText,
-                    textStyle: normalTextStyle,
-                  ),
+                  CTextWhite(welcomeText, textStyle: boldTextStyle),
+                  CTextWhite(loginText, textStyle: normalTextStyle),
                   verticalSpace(30),
                   CustomTextFormField(
-                    controller: gmailController,
-                    name: 'Enter Email Id',
-                    style: normalTextStyle,
-                    // width: 700,
-                    isSuffixIcon: false,
-                    isreadOnly: false,
-                    icon: Icon(Icons.email_outlined),
-                    validator: (p0) {},
-                  ),
+                      controller: userNameController,
+                      name: 'User Name',
+                      style: normalTextStyle,
+                      // width: 700,
+                      isSuffixIcon: false,
+                      isreadOnly: false,
+                      icon: Icon(Icons.email_outlined),
+                      validator: (p0) {}),
                   verticalSpace(15),
                   CustomTextFormField(
                     controller: passwordController,
@@ -91,7 +88,11 @@ class _LoginPageState extends State<LoginPage> {
                           width: MediaQuery.of(context).size.width * 0.1,
                           text: 'LOGIN',
                           onPressed: () {
-                            Get.toNamed(AppRoutes.NavBar_Page);
+                            // Get.toNamed(AppRoutes.Menu_bar);
+                            ApiServices().loginUser(
+                                context,
+                                userNameController.text,
+                                passwordController.text);
                           }),
                       CTextWhite(
                         forgetText,

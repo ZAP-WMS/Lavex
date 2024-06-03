@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:lavex/widgets/custom_scaffold.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,24 +20,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: AspectRatio(
-        aspectRatio: 2,
-        child: BarChart(
-          BarChartData(
-            barGroups: _chartGroups(),
-            borderData: FlBorderData(
-                border: const Border(bottom: BorderSide(), left: BorderSide())),
-            gridData: FlGridData(show: true),
-            titlesData: FlTitlesData(
-              bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-              leftTitles: AxisTitles(
-                  sideTitles: SideTitles(reservedSize: 50, showTitles: true)),
-              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: true)),
-              rightTitles:
-                  AxisTitles(sideTitles: SideTitles(showTitles: false)),
+    return CommonScaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: BarChart(
+            BarChartData(
+              barGroups: _chartGroups(),
+              borderData: FlBorderData(
+                  border: const Border(
+                      bottom: BorderSide(width: 1.0), left: BorderSide())),
+              gridData: FlGridData(show: true),
+              titlesData: FlTitlesData(
+                bottomTitles: AxisTitles(sideTitles: _bottomTitles),
+                leftTitles: AxisTitles(
+                    sideTitles: SideTitles(reservedSize: 40, showTitles: true)),
+                topTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                  showTitles: true,
+                )),
+                rightTitles:
+                    AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              ),
             ),
           ),
         ),
@@ -47,13 +53,17 @@ class _HomePageState extends State<HomePage> {
   List<BarChartGroupData> _chartGroups() {
     return points
         .map((point) => BarChartGroupData(x: point.x.toInt(), barRods: [
-              BarChartRodData(width: 50, toY: point.y),
+              BarChartRodData(
+                  width: 50,
+                  toY: point.y,
+                  borderRadius: BorderRadius.circular(0)),
             ]))
         .toList();
   }
 
   SideTitles get _bottomTitles => SideTitles(
         showTitles: true,
+        reservedSize: 22,
         getTitlesWidget: (value, meta) {
           String text = '';
           switch (value.toInt()) {

@@ -8,7 +8,8 @@ class CustomTextFormField extends StatelessWidget {
   bool isSuffixIcon = false;
   bool isreadOnly = false;
   double? width;
-  Icon? icon ;
+  double? height;
+  Icon? icon;
 
   String? Function(String?)? validator;
   CustomTextFormField(
@@ -21,8 +22,8 @@ class CustomTextFormField extends StatelessWidget {
       this.isSuffixIcon = false,
       this.isreadOnly = false,
       this.width,
-      this.icon
-      });
+      this.height,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +32,13 @@ class CustomTextFormField extends StatelessWidget {
       children: [
         SizedBox(
           width: width,
+          height: height,
           child: TextFormField(
               readOnly: isreadOnly,
               style: const TextStyle(fontSize: 15),
               decoration: InputDecoration(
                   hintText: name,
-                  prefixIcon:icon ,
+                  prefixIcon: icon,
                   // suffixIcon: isSuffixIcon
                   //     ? IconButton(
                   //         onPressed: () async {
@@ -56,7 +58,7 @@ class CustomTextFormField extends StatelessWidget {
                   //         icon: const Icon(Icons.calendar_today_outlined))
                   //     : const SizedBox.shrink(),
                   contentPadding:
-                     const EdgeInsets.symmetric(vertical: 2, horizontal: 2)),
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 2)),
               controller: controller,
               textAlignVertical: TextAlignVertical.center,
               // onChanged: (value) {

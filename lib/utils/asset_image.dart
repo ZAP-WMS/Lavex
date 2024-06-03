@@ -24,7 +24,7 @@ class LocalAssetImage extends StatelessWidget {
         path,
         height: height,
         width: width,
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
       ),
     );
   }
