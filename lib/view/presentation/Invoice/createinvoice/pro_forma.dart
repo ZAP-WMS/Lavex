@@ -485,7 +485,11 @@ class PromaForm extends GetView<CartController> {
   }
 
   customAlertDialog(context, TextEditingController controller) {
-    List<String> clientlist = ['data1', 'data2', 'data3'];
+    List<String> clientlist = [
+      'data1',
+      'data2',
+      'data3',
+    ];
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: CircleAvatar(
@@ -499,7 +503,7 @@ class PromaForm extends GetView<CartController> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('Select Client From List'),
+                    title: const Text('Select Client From List'),
                     content: SizedBox(
                       width: 500, // Set width to maximum
                       height: 500,

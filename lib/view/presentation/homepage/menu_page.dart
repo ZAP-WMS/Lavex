@@ -12,7 +12,7 @@ import 'package:lavex/view/presentation/item_master.dart';
 import 'package:lavex/view/presentation/payments/cash_memo_payments.dart';
 import 'package:lavex/view/presentation/payments/my_payments.dart';
 import 'package:lavex/view/presentation/payments/my_supplier_payment.dart';
-import 'package:lavex/view/presentation/store.dart';
+import 'package:lavex/view/presentation/store/store.dart';
 import '../../../widgets/custom_card.dart';
 import '../../../widgets/custom_scaffold.dart';
 import '../bom.dart';

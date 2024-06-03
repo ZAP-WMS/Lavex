@@ -6,6 +6,7 @@ import 'package:lavex/view/Authentication/login_register.dart';
 import 'package:lavex/view/Authentication/register.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
 import 'package:lavex/view/presentation/homepage/menu_page.dart';
+import 'package:lavex/view/presentation/store/cash_inward_entry.dart';
 
 import '../view/Authentication/navbar_page.dart';
 
@@ -66,6 +67,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.CREATE_INVOICE_LIST,
       page: () => CreateInvoiceList(),
+      //  binding: PromaFormBinding()
+    ),
+     GetPage(
+      name: AppRoutes.Cash_Inward_Entry,
+      page: () => CashInward(),
       //  binding: PromaFormBinding()
     ),
   ];

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/datasource/store_datasource.dart';
+import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/controller/store_controller.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import '../../common/custom_text.dart';
-import '../../utils/asset_image.dart';
-import '../../utils/colors.dart';
-import '../../utils/string.dart';
-import '../../utils/style.dart';
-import '../../widgets/custom_spacebar.dart';
+import '../../../common/custom_text.dart';
+import '../../../utils/asset_image.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/string.dart';
+import '../../../utils/style.dart';
+import '../../../widgets/custom_spacebar.dart';
 
 class StorePage extends GetView<StoreController> {
   StorePage({super.key});
@@ -83,7 +84,7 @@ class StorePage extends GetView<StoreController> {
               children: [
                 Wrap(
                   direction: Axis.horizontal,
-                  spacing: 0.0,
+                  spacing: 2.0,
                   runSpacing: 0.0,
                   children: List.generate(storeTabName.length, (index) {
                     return Padding(
@@ -91,27 +92,27 @@ class StorePage extends GetView<StoreController> {
                       child: GestureDetector(
                         onTap: () {
                           controller.currentIndex.value = index;
+                          Get.toNamed(AppRoutes.Cash_Inward_Entry);
                         },
                         child: Container(
                           height: 50,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 3),
                           decoration: BoxDecoration(
-                            color: controller.currentIndex.value == index
-                                ? appColor
-                                : greyColor,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                              color: controller.currentIndex.value == index
+                                  ? appColor
+                                  : whiteColor,
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(color: greyColor)),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               LocalAssetImage(
-                                path: tabIcon[index],
-                                height: 25,
-                                width: 25,
-                              ),
+                                  path: tabIcon[index], height: 25, width: 25),
                               horizontalSpace(5),
-                              CTextWhite(storeTabName[index], mSize: 14),
+                              controller.currentIndex.value == index
+                                  ? CTextWhite(storeTabName[index], mSize: 14)
+                                  : CTextBlack(storeTabName[index], mSize: 14)
                             ],
                           ),
                         ),
@@ -119,6 +120,7 @@ class StorePage extends GetView<StoreController> {
                     );
                   }),
                 ),
+                Divider(color: greyColor),
                 _buildDataGrid(context)
               ],
             ),

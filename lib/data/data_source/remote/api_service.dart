@@ -101,7 +101,7 @@ class ApiServices {
   Future<void> loginUser(
       BuildContext context, String username, String password) async {
     final requestBody = {
-      'username': username,
+      'email': username,
       'password': password,
     };
 

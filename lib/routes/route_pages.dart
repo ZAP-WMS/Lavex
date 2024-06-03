@@ -11,4 +11,5 @@ class AppRoutes {
   static const String MY_HOME_INVOICE = '/my-home-invoice';
   static const String MY_INVOICE = '/my-invoice';
   static const String CREATE_INVOICE_LIST = '/create-invoice-list';
+  static const String Cash_Inward_Entry = '/cash-inward';
 }

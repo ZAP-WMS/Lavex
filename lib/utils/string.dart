@@ -42,13 +42,16 @@ String taxIncludeTxt = 'Tax Include';
 String grandTotalTxt = 'Grand Total';
 String remarkTxt = 'Remarks';
 String paymentMethodTxt = 'Payment Method';
-
+String betrayedTxt = 'Betrayed';
+String acceptedTxt = 'Accepted';
 // Invoice
 String invoiceTxt = 'invoice';
 
 //create invoice Button Name
 String createTxt = 'Create Incvoice';
 
+// Cash Inward Entry
+String cashInwardTxt = 'Cash Inward Entry';
 // My Invoice List
 String invoiceNoTxt = 'Invoice num';
 String paymentTypeTxt = 'Payment Type:';
@@ -62,6 +65,14 @@ String manufacturerTxt = 'Manufacturer';
 String brandsTxt = 'Brands';
 String deleteTxt = 'Delete';
 String exportDataTxt = 'Export Data';
+
+// cash Inward
+String forUnitTxt = 'For Unit';
+String accountablePerson = 'Accountable Person';
+String cashMovementNo = 'Cash Movement No';
+String supplierName = "Supplier's Name";
+String supplierInvoiceNo = 'Supplier Invoice No';
+String movementAmountTxt = 'Movement amount';
 
 final List<String> tabTitles = [
   'Home',
