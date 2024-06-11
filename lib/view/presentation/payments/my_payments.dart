@@ -61,7 +61,7 @@ class MyPayments extends GetView<MyPaymentController> {
     return CommonScaffold(
       body: Obx(() {
         if (myPaymentController.isLoading.value) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else {
           _myPaymentDatasource = MyPaymentDatasource(
               myPaymentController.paymentModel, context, 'userId');

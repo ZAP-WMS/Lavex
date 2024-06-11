@@ -44,6 +44,7 @@ String remarkTxt = 'Remarks';
 String paymentMethodTxt = 'Payment Method';
 String betrayedTxt = 'Betrayed';
 String acceptedTxt = 'Accepted';
+String selectTxt = 'Select';
 // Invoice
 String invoiceTxt = 'invoice';
 
@@ -52,6 +53,13 @@ String createTxt = 'Create Incvoice';
 
 // Cash Inward Entry
 String cashInwardTxt = 'Cash Inward Entry';
+
+// Cash Inward Entry
+String createProductionTxt = 'Create Production Entry';
+
+// Cash Inward Entry
+String createInwardTxt = 'Create Inward Entry';
+
 // My Invoice List
 String invoiceNoTxt = 'Invoice num';
 String paymentTypeTxt = 'Payment Type:';
@@ -73,6 +81,18 @@ String cashMovementNo = 'Cash Movement No';
 String supplierName = "Supplier's Name";
 String supplierInvoiceNo = 'Supplier Invoice No';
 String movementAmountTxt = 'Movement amount';
+
+// Add Item
+String itemCodeTxt = 'Item_code';
+String storeTxt = 'Store';
+String manufactureTxt = 'Manufacturer';
+String quantityTypeTxt = 'Quantity Type';
+String lawquantityTypeTxt = 'Law Quantity';
+String categoryTypeTxt = 'Category';
+String stockStatusTxt = 'Stock Status';
+String currencyTxt = 'Currency';
+String statusTxt = 'Status';
+
 
 final List<String> tabTitles = [
   'Home',
@@ -256,6 +276,12 @@ final List<String> myClientTableName = [
   'Manage',
 ];
 
+// Stock Page
+final List<String> stockTableName = [
+  'Store',
+  'Item',
+  'Quantity',
+];
 // Item Master
 final List<String> itemMasterTableName = [
   'Id',

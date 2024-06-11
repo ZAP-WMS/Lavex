@@ -118,19 +118,19 @@ class AppStyles {
           fontSize: fontSize);
 
   static getTextStylePrimary(bool isSemiBold, double fontSize, Color? mColor) =>
-      new TextStyle(
+      TextStyle(
           // fontFamily: AppFonts.textRegular,
           fontWeight: isSemiBold ? FontWeight.w600 : FontWeight.w500,
           color: mColor,
           fontSize: fontSize);
 
-  static getTextStyleBlack(bool isSemiBold, double fontSize) => new TextStyle(
+  static getTextStyleBlack(bool isSemiBold, double fontSize) => TextStyle(
       // fontFamily: AppFonts.textRegular,
       fontWeight: isSemiBold ? FontWeight.w800 : FontWeight.w500,
       color: Colors.black,
       fontSize: fontSize);
 
-  static getTextStyleRed(bool isSemiBold, double fontSize) => new TextStyle(
+  static getTextStyleRed(bool isSemiBold, double fontSize) => TextStyle(
       // fontFamily: AppFonts.textRegular,
       fontWeight: isSemiBold ? FontWeight.w800 : FontWeight.w500,
       color: redColor,

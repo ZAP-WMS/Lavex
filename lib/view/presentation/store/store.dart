@@ -73,6 +73,13 @@ class StorePage extends GetView<StoreController> {
       'assets/store/All DC Entry.png',
       'assets/store/Store settings.png',
     ];
+
+    List<String> pages = [
+      AppRoutes.Cash_Inward_home,
+      AppRoutes.Cash_Inward_home,
+      AppRoutes.Cash_Inward_home,
+      AppRoutes.Stock_Page
+    ];
     return CommonScaffold(
       body: Obx(
         () => SingleChildScrollView(
@@ -92,7 +99,7 @@ class StorePage extends GetView<StoreController> {
                       child: GestureDetector(
                         onTap: () {
                           controller.currentIndex.value = index;
-                          Get.toNamed(AppRoutes.Cash_Inward_Entry);
+                          Get.toNamed(pages[index]);
                         },
                         child: Container(
                           height: 50,
@@ -155,4 +162,5 @@ class StorePage extends GetView<StoreController> {
       );
     }
   }
+
 }

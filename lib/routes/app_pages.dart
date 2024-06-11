@@ -6,7 +6,9 @@ import 'package:lavex/view/Authentication/login_register.dart';
 import 'package:lavex/view/Authentication/register.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
 import 'package:lavex/view/presentation/homepage/menu_page.dart';
-import 'package:lavex/view/presentation/store/cash_inward_entry.dart';
+import 'package:lavex/view/presentation/store/cash_inward_home.dart';
+import 'package:lavex/view/presentation/store/stocks.dart';
+import 'package:lavex/view/presentation/store/store.dart';
 
 import '../view/Authentication/navbar_page.dart';
 
@@ -18,6 +20,7 @@ import '../view/presentation/Invoice/createinvoice/create_invoice.dart';
 import '../view/presentation/Invoice/createinvoice/pro_forma.dart';
 import '../view/presentation/Invoice/myinvoice/myInvoice_home.dart';
 import '../view/presentation/Invoice/myinvoice/myInvoice..dart';
+import '../view/presentation/store/add_item.dart';
 
 class AppPages {
   static var list = [
@@ -69,9 +72,24 @@ class AppPages {
       page: () => CreateInvoiceList(),
       //  binding: PromaFormBinding()
     ),
-     GetPage(
-      name: AppRoutes.Cash_Inward_Entry,
-      page: () => CashInward(),
+    GetPage(
+      name: AppRoutes.STORE_PAGE,
+      page: () => StorePage(),
+      //  binding: PromaFormBinding()
+    ),
+    GetPage(
+      name: AppRoutes.Cash_Inward_home,
+      page: () => CashInwardHome(),
+      //  binding: PromaFormBinding()
+    ),
+    GetPage(
+      name: AppRoutes.Stock_Page,
+      page: () => StockPage(),
+      //  binding: PromaFormBinding()
+    ),
+    GetPage(
+      name: AppRoutes.Add_Item,
+      page: () => AddItem(),
       //  binding: PromaFormBinding()
     ),
   ];

@@ -14,8 +14,8 @@ import '../../../widgets/cutom_textformfield.dart';
 import '../../../widgets/icon_with_text.dart';
 import '../../controller/cash_inward_controller.dart';
 
-class CashInward extends GetView<CashInwardController> {
-  CashInward({super.key});
+class InwardEntry extends GetView<CashInwardController> {
+  InwardEntry({super.key});
 
   final TextEditingController clientController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -430,7 +430,7 @@ class CashInward extends GetView<CashInwardController> {
               Row(
                 children: [
                   CustomButton(
-                      width: 200, text: cashInwardTxt, onPressed: () {}),
+                      width: 200, text: createInwardTxt, onPressed: () {}),
                   horizontalSpace(10),
                   CTextBlack('Or'),
                   horizontalSpace(10),

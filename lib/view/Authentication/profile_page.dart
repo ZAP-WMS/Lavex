@@ -27,7 +27,7 @@ class ProfilePage extends StatelessWidget {
             ),
             Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 40,
                   child: Icon(Icons.person),
                 ),
@@ -51,7 +51,7 @@ class ProfilePage extends StatelessWidget {
                     CTextBlack('@pratyushpandey', mSize: 15),
                     Row(
                       children: [
-                        Icon(Icons.star),
+                        const Icon(Icons.star),
                         RichTextWidget(
                             title: '1200  ',
                             subtitle: 'coins',

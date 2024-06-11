@@ -8,6 +8,7 @@ import 'package:lavex/data/model/store_model.dart';
 import 'package:lavex/data/model/supplier_payments.dart';
 import 'package:lavex/utils/api_string.dart';
 import '../../../view/presentation/homepage/menu_page.dart';
+import '../../model/add_item.dart';
 
 class ApiServices {
   Future<List<MyPaymentsModel>> myPaymentData() async {
@@ -134,6 +135,41 @@ class ApiServices {
     } catch (e) {
       print('An error occurred: $e');
       throw Exception('An error occurred while logging in: $e');
+    }
+  }
+
+  Future<List<String>> fetchCompanies() async {
+    final response = await http.get(Uri.parse(baseUrlTxt + comapanyUrlTxt));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((company) => company['name'].toString()).toList();
+    } else {
+      throw Exception('Failed to load companies');
+    }
+  }
+
+  Future<void> postItemData(AddItemModel itemData) async {
+    final String url = baseUrlTxt + addItemUrlTxt;
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(itemData.toJson()),
+      );
+
+      if (response.statusCode == 200) {
+        print('Success: ${response.body}');
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
     }
   }
 }

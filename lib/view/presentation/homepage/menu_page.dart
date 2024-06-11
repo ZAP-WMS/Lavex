@@ -8,13 +8,14 @@ import 'package:lavex/view/presentation/Invoice/createinvoice/create_invoice.dar
 import 'package:lavex/view/presentation/Invoice/myinvoice/myInvoice_home.dart';
 import 'package:lavex/view/presentation/clients/my_clients.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
-import 'package:lavex/view/presentation/item_master.dart';
+import 'package:lavex/view/ItemMaster/item_master.dart';
 import 'package:lavex/view/presentation/payments/cash_memo_payments.dart';
 import 'package:lavex/view/presentation/payments/my_payments.dart';
 import 'package:lavex/view/presentation/payments/my_supplier_payment.dart';
 import 'package:lavex/view/presentation/store/store.dart';
 import '../../../widgets/custom_card.dart';
 import '../../../widgets/custom_scaffold.dart';
+import '../Report/reports.dart';
 import '../bom.dart';
 
 class MenuPage extends StatelessWidget {
@@ -35,7 +36,9 @@ class MenuPage extends StatelessWidget {
       MySupplierPayment(),
       BomPage(),
       ItemMaster(),
-      StorePage()
+      StorePage(),
+      StorePage(),
+      ReportPage(),
     ];
     return CommonScaffold(
       body: Padding(

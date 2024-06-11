@@ -26,6 +26,7 @@ class ItemMasterModel {
   String storeName;
   String category;
   String total;
+  String status;
   dynamic manage;
 
   ItemMasterModel({
@@ -41,6 +42,7 @@ class ItemMasterModel {
     required this.storeName,
     required this.category,
     required this.total,
+    required this.status,
   });
 
   factory ItemMasterModel.fromJson(Map<String, dynamic> json) =>
@@ -57,6 +59,7 @@ class ItemMasterModel {
         storeName: json["store_name"],
         category: json["category"],
         total: json["total"],
+        status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,6 +75,7 @@ class ItemMasterModel {
         "store_name": storeName,
         "category": category,
         "total": total,
+        "status": status,
       };
 
   DataGridRow dataGridRow() {

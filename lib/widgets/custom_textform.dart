@@ -28,24 +28,21 @@ class CustomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(3.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(textAlign: TextAlign.start, name!, style: smallTextStyle),
-          verticalSpace(5),
-          SizedBox(
-              width: width,
-              height: height,
-              child: TextFormField(
-                  readOnly: isreadOnly,
-                  style: const TextStyle(fontSize: 15),
-                  controller: controller,
-                  textAlignVertical: TextAlignVertical.center,
-                  validator: validator!)),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(textAlign: TextAlign.start, name!, style: smallTextStyle),
+        verticalSpace(5),
+        SizedBox(
+            width: width,
+            height: height,
+            child: TextFormField(
+                readOnly: isreadOnly,
+                style: const TextStyle(fontSize: 15),
+                controller: controller,
+                textAlignVertical: TextAlignVertical.center,
+                validator: validator!)),
+      ],
     );
   }
 }

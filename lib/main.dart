@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lavex/routes/app_pages.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/utils/colors.dart';
-import 'package:lavex/view/Authentication/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,14 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.LOGIN,
+      initialRoute:
+          // AppRoutes.LOGIN,
+          AppRoutes.Menu_bar,
       getPages: AppPages.list,
       themeMode: ThemeMode.system,
       theme: ThemeData(
-        // textTheme:
-        //     DeviceInfo.deviceWidth() < 500 ? smallTextTheme : defaultTextTheme,
-        // body = monstera
-        // heading = playfair display
         fontFamily: "Monstserrat",
         inputDecorationTheme: InputDecorationTheme(
           contentPadding:
