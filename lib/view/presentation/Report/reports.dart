@@ -1,28 +1,42 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lavex/common/custom_text.dart';
-import 'package:lavex/utils/string.dart';
+import 'package:lavex/utils/colors.dart';
 import 'package:lavex/utils/style.dart';
-import 'package:lavex/view/presentation/homepage/home_page.dart';
 import 'package:lavex/widgets/custom_button.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:lavex/widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';
 import '../../../widgets/drop_downTextField.dart';
+import '../../controller/report_controller.dart';
 
-class ReportPage extends StatelessWidget {
+class ReportPage extends GetView<ReportController> {
   ReportPage({super.key});
 
   TextEditingController fromTextController = TextEditingController();
   List<String> reports = [
     'Challan Report',
-    'Challan Returns',
+    'Sales Returns',
     'Rate Report',
     'Ananlysis Report',
     'Gst Report',
     'Stock Report',
     'Production Report',
     'Raw material consummations report',
+  ];
+
+  List<String> reportsTypes = [
+    'Movement report',
+    'Over due outstanding report',
+    'Supplier Payment Report',
+    'Sales Reports Area Wise',
+    'Sales Reports Product Wise',
+    'Ledger Report',
+    'Purchase Reports',
+    'Cubic Sale Report',
+    'Cubic Purchase Report',
+    'Product Report'
   ];
 
   List<String> invoices = [
@@ -32,8 +46,10 @@ class ReportPage extends StatelessWidget {
     'Show only partially paid invoices',
   ];
   List<PricePoint> points = [];
+
   @override
   Widget build(BuildContext context) {
+    final ReportController reportController = Get.put(ReportController());
     points = [
       PricePoint(1000, 500),
       PricePoint(2000, 1000),
@@ -42,844 +58,288 @@ class ReportPage extends StatelessWidget {
     ];
     return CommonScaffold(
         body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: greyColor)),
+        child: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                horizontalSpace(10),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                horizontalSpace(50),
-                CustomButton(text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(20),
-                CustomButton(text: 'Download Pdf', onPressed: () {})
-              ],
-            ),
-            verticalSpace(10),
-            Divider(),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: CTextBlack('Over Due Outstanding Report',
-                    mSize: 18, mBold: false)),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Client Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Area:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            Divider(),
-            verticalSpace(10),
-            Row(
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Invoice Type',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                horizontalSpace(50),
-                CustomButton(text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(20),
-                CustomButton(text: 'Download Pdf', onPressed: () {})
-              ],
-            ),
-            verticalSpace(10),
-            const Divider(),
-            verticalSpace(10),
-            CTextBlack('Supplier Payment Report', mSize: 18, mBold: false),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Invoice Type:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Area:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            Row(children: [
-              CustomButton(text: 'Download Excel', onPressed: () {}),
-              horizontalSpace(10),
-              CustomButton(text: 'Download Pdf', onPressed: () {})
-            ]),
-            verticalSpace(10),
-            Divider(),
-            verticalSpace(10),
-            CTextBlack('Sales Report', mSize: 18, mBold: false),
-            verticalSpace(10),
-            CTextBlack('Area Wise', mSize: 16, mBold: false),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Client Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Area:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            CustomField(
-                width: 300,
-                height: 40,
-                name: clientTxt,
-                controller: fromTextController,
-                style: normalTextStyle,
-                isreadOnly: false,
-                isSuffixIcon: false,
-                validator: (value) {}),
-            verticalSpace(10),
-            CustomButton(width: 150, text: 'Download Pdf', onPressed: () {}),
-            Divider(),
-            CTextBlack('Product Wise', mSize: 16, mBold: false),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Client Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Area:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            CustomField(
-                width: 300,
-                height: 40,
-                name: 'Product Name',
-                controller: fromTextController,
-                style: normalTextStyle,
-                isreadOnly: false,
-                isSuffixIcon: false,
-                validator: (value) {}),
-
-            verticalSpace(10),
-            CustomButton(width: 150, text: 'Download Pdf', onPressed: () {}),
-            verticalSpace(10),
-            CTextBlack('Customer Wise', mSize: 16, mBold: false),
-            verticalSpace(10),
-            Row(
-              children: [
-                CustomButton(text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(10),
-                CustomButton(text: 'Download Pdf', onPressed: () {}),
-              ],
-            ),
-            verticalSpace(10),
-            Divider(),
-            verticalSpace(10),
-            CTextBlack('Ledger Report', mSize: 16, mBold: false),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From Year',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To Year',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Client Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Suppllier Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            Row(
-              children: [
-                CustomButton(text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(10),
-                CustomButton(text: 'Download Pdf', onPressed: () {}),
-              ],
-            ),
-            verticalSpace(10),
-            Divider(),
-            verticalSpace(10),
-            CTextBlack('Purchase Report', mSize: 16, mBold: false),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Suppllier Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            Row(
-              children: [
-                CustomButton(
-                    width: 150, text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(10),
-                CustomButton(
-                    width: 150, text: 'Download Pdf', onPressed: () {}),
-              ],
-            ),
-            verticalSpace(10),
-            const Divider(), verticalSpace(10),
-            CTextBlack('Cubic Sale Report', mSize: 16, mBold: false),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Suppllier Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            Row(
-              children: [
-                CustomButton(
-                    width: 150, text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(10),
-              ],
-            ),
-            verticalSpace(10),
-            const Divider(),
-            verticalSpace(10),
-            CTextBlack('Cubic Purchase Report', mSize: 16, mBold: false),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Suppllier Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            Row(
-              children: [
-                CustomButton(
-                    width: 150, text: 'Download Excel', onPressed: () {}),
-              ],
-            ),
-
-            verticalSpace(10), const Divider(), verticalSpace(10),
-            CTextBlack('Product Report', mSize: 16, mBold: false),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Company Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Product Name:',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Brand Name',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'Invoice Type',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-              ],
-            ),
-            verticalSpace(10),
-            Row(
-              children: [
-                CustomButton(
-                    width: 150, text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(10),
-                CustomButton(
-                    width: 150, text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(10),
-                CustomButton(
-                    width: 250,
-                    text: 'Download Excel(Month Wise)',
-                    onPressed: () {}),
-              ],
-            ),
-            verticalSpace(10),
-            const Divider(),
-            verticalSpace(10),
-            Row(
-              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 250,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: blackColor)),
+                      child: DropdownTextField<String>(
+                        items: reportsTypes,
+                        hintText: 'Select Reports',
+                        itemAsString: (item) => item,
+                        onChanged: (value) {
+                          print('Selected: $value');
+                          reportController.onItemSelected(value);
+                          print('Selected: $value');
+                          print('Selected: $value');
+                        },
+                      ),
+                    ),
+                    verticalSpace(10),
+                  ],
+                ),
+                Obx(() {
+                  // Use Obx to update the UI based on the selected fields
+                  return Wrap(
+                    direction: Axis.horizontal,
+                    children: reportController.fields.map((field) {
+                      if (field == 'Client Name' || field == 'Supplier Name') {
+                        // Render dropdown for Client Name
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CTextBlack(
+                                field,
+                                mBold: true,
+                                mSize: 14,
+                              ),
+                              Container(
+                                width: 250,
+                                height: 35,
+                                child: DropdownTextField<String>(
+                                  items: reportsTypes,
+                                  hintText: field,
+                                  itemAsString: (item) => item,
+                                  onChanged: (value) {},
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        // Render TextField for other fields
+                        return Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: CustomField(
+                              width: 300,
+                              height: 35,
+                              name: field,
+                              controller: fromTextController,
+                              style: normalTextStyle,
+                              isreadOnly: false,
+                              isSuffixIcon: false,
+                              validator: (value) {}),
+                        );
+                      }
+                    }).toList(),
+                  );
+                }),
+                verticalSpace(10),
+                Row(children: [
+                  CustomButton(text: 'Download Excel', onPressed: () {}),
+                  horizontalSpace(10),
+                  CustomButton(text: 'Download Pdf', onPressed: () {})
+                ]),
+                Divider(thickness: 2, color: greyColor),
+                verticalSpace(10),
+                Row(
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 40,
+                      child: DropdownTextField<String>(
+                        items: reports,
+                        hintText: 'Reports',
+                        itemAsString: (item) => item,
+                        onChanged: (value) {
+                          print('Selected: $value');
+                        },
+                      ),
+                    ),
+                    horizontalSpace(10),
+                    CustomButton(
+                        width: 150, text: 'Download Excel', onPressed: () {}),
+                    horizontalSpace(10),
+                    CustomButton(
+                        width: 150, text: 'Download Pdf', onPressed: () {}),
+                    horizontalSpace(10),
+                  ],
+                ),
+                verticalSpace(15),
+                Divider(thickness: 2, color: greyColor),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomField(
+                        width: 300,
+                        height: 40,
+                        name: 'From date',
+                        controller: fromTextController,
+                        style: normalTextStyle,
+                        isreadOnly: false,
+                        isSuffixIcon: false,
+                        validator: (value) {}),
+                    CustomField(
+                        width: 300,
+                        height: 40,
+                        name: 'To date',
+                        controller: fromTextController,
+                        style: normalTextStyle,
+                        isreadOnly: false,
+                        isSuffixIcon: false,
+                        validator: (value) {}),
+                    Container(
+                      width: 300,
+                      height: 40,
+                      child: DropdownTextField<String>(
+                        items: invoices,
+                        hintText: 'Invoices',
+                        itemAsString: (item) => item,
+                        onChanged: (value) {
+                          print('Selected: $value');
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                verticalSpace(10),
                 Container(
-                  width: 200,
-                  height: 40,
-                  child: DropdownTextField<String>(
-                    items: reports,
-                    hintText: 'Reports',
-                    itemAsString: (item) => item,
-                    onChanged: (value) {
-                      print('Selected: $value');
-                    },
+                  height: 350,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: BarChart(
+                        BarChartData(
+                          barGroups: _chartGroups(),
+                          borderData: FlBorderData(
+                              border: const Border(
+                                  bottom: BorderSide(width: 1.0),
+                                  left: BorderSide())),
+                          gridData: FlGridData(show: true),
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(sideTitles: _bottomTitles),
+                            leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                    reservedSize: 40, showTitles: true)),
+                            topTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                              showTitles: true,
+                            )),
+                            rightTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false)),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                horizontalSpace(10),
-                CustomButton(
-                    width: 150, text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(10),
-                CustomButton(
-                    width: 150, text: 'Download Excel', onPressed: () {}),
-                horizontalSpace(10),
-              ],
-            ),
-            verticalSpace(10),
-            Divider(),
-            verticalSpace(10),
-            // CTextBlack('Challan Report', mSize: 16, mBold: false),
-            // verticalSpace(10),
-            // Row(
-            //   children: [
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //   ],
-            // ),
-            // const Divider(),
-            // CTextBlack('Sales Return', mSize: 16, mBold: false),
-            // verticalSpace(10),
-            // Row(
-            //   children: [
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //   ],
-            // ),
-            // const Divider(),
-            // CTextBlack('Rate Report', mSize: 16, mBold: false),
-            // verticalSpace(10),
-            // Row(
-            //   children: [
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //   ],
-            // ),
-            // const Divider(),
-            // CTextBlack('Analysis Report', mSize: 16, mBold: false),
-            // verticalSpace(10),
-            // Row(
-            //   children: [
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //   ],
-            // ),
-            // const Divider(),
-            // CTextBlack('Stock Report', mSize: 16, mBold: false),
-            // verticalSpace(10),
-            // Row(
-            //   children: [
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //   ],
-            // ),
-            // const Divider(),
-            // CTextBlack('Production Report', mSize: 16, mBold: false),
-            // verticalSpace(10),
-            // Row(
-            //   children: [
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //   ],
-            // ),
-            // const Divider(),
-            // CTextBlack('Raw material consummations report',
-            //     mSize: 16, mBold: false),
-            // verticalSpace(10),
-            // Row(
-            //   children: [
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //     CustomButton(
-            //         width: 150, text: 'Download Excel', onPressed: () {}),
-            //     horizontalSpace(10),
-            //   ],
-            // ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'From date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
-                CustomField(
-                    width: 300,
-                    height: 40,
-                    name: 'To date',
-                    controller: fromTextController,
-                    style: normalTextStyle,
-                    isreadOnly: false,
-                    isSuffixIcon: false,
-                    validator: (value) {}),
                 Container(
-                  width: 300,
-                  height: 40,
-                  child: DropdownTextField<String>(
-                    items: invoices,
-                    hintText: 'Invoices',
-                    itemAsString: (item) => item,
-                    onChanged: (value) {
-                      print('Selected: $value');
-                    },
-                  ),
-                ),
-              ],
-            ),
-            verticalSpace(10),
-            Container(
-              height: 350,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: BarChart(
-                    BarChartData(
-                      barGroups: _chartGroups(),
-                      borderData: FlBorderData(
-                          border: const Border(
-                              bottom: BorderSide(width: 1.0),
-                              left: BorderSide())),
-                      gridData: FlGridData(show: true),
-                      titlesData: FlTitlesData(
-                        bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                        leftTitles: AxisTitles(
-                            sideTitles:
-                                SideTitles(reservedSize: 40, showTitles: true)),
-                        topTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                          showTitles: true,
-                        )),
-                        rightTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false)),
+                  height: 350,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: LineChart(
+                        LineChartData(
+                          lineBarsData: _lineBarsData(),
+                          borderData: FlBorderData(
+                              border: const Border(
+                                  bottom: BorderSide(width: 1.0),
+                                  left: BorderSide())),
+                          gridData: FlGridData(show: true),
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(sideTitles: _bottomTitles),
+                            leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                    reservedSize: 40, showTitles: true)),
+                            topTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                              showTitles: true,
+                            )),
+                            rightTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false)),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              height: 350,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: LineChart(
-                    LineChartData(
-                      lineBarsData: _lineBarsData(),
-                      borderData: FlBorderData(
-                          border: const Border(
-                              bottom: BorderSide(width: 1.0),
-                              left: BorderSide())),
-                      gridData: FlGridData(show: true),
-                      titlesData: FlTitlesData(
-                        bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                        leftTitles: AxisTitles(
-                            sideTitles:
-                                SideTitles(reservedSize: 40, showTitles: true)),
-                        topTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                          showTitles: true,
-                        )),
-                        rightTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false)),
+                Container(
+                  height: 350,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: LineChart(
+                        LineChartData(
+                          lineBarsData: _lineBarsData(),
+                          borderData: FlBorderData(
+                              border: const Border(
+                                  bottom: BorderSide(width: 1.0),
+                                  left: BorderSide())),
+                          gridData: FlGridData(show: true),
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(sideTitles: _bottomTitles),
+                            leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                    reservedSize: 40, showTitles: true)),
+                            topTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                              showTitles: true,
+                            )),
+                            rightTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false)),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              height: 350,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: LineChart(
-                    LineChartData(
-                      lineBarsData: _lineBarsData(),
-                      borderData: FlBorderData(
-                          border: const Border(
-                              bottom: BorderSide(width: 1.0),
-                              left: BorderSide())),
-                      gridData: FlGridData(show: true),
-                      titlesData: FlTitlesData(
-                        bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                        leftTitles: AxisTitles(
-                            sideTitles:
-                                SideTitles(reservedSize: 40, showTitles: true)),
-                        topTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                          showTitles: true,
-                        )),
-                        rightTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false)),
+                Container(
+                  height: 350,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: BarChart(
+                        BarChartData(
+                          barGroups: _chartGroups(),
+                          borderData: FlBorderData(
+                              border: const Border(
+                                  bottom: BorderSide(width: 1.0),
+                                  left: BorderSide())),
+                          gridData: FlGridData(show: true),
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(sideTitles: _bottomTitles),
+                            leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                    reservedSize: 40, showTitles: true)),
+                            topTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                              showTitles: true,
+                            )),
+                            rightTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false)),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Container(
-              height: 350,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: BarChart(
-                    BarChartData(
-                      barGroups: _chartGroups(),
-                      borderData: FlBorderData(
-                          border: const Border(
-                              bottom: BorderSide(width: 1.0),
-                              left: BorderSide())),
-                      gridData: FlGridData(show: true),
-                      titlesData: FlTitlesData(
-                        bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                        leftTitles: AxisTitles(
-                            sideTitles:
-                                SideTitles(reservedSize: 40, showTitles: true)),
-                        topTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                          showTitles: true,
-                        )),
-                        rightTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false)),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+                )
+              ]),
         ),
       ),
     ));
