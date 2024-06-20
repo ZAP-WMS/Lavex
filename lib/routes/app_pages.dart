@@ -4,6 +4,7 @@ import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/Authentication/login.dart';
 import 'package:lavex/view/Authentication/login_register.dart';
 import 'package:lavex/view/Authentication/register.dart';
+import 'package:lavex/view/presentation/edit/edit_table.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
 import 'package:lavex/view/presentation/homepage/menu_page.dart';
 import 'package:lavex/view/presentation/store/cash_inward_home.dart';
@@ -79,7 +80,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.Cash_Inward_home,
-      page: () => CashInwardHome(),
+      page: () => const CashInwardHome(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
@@ -91,6 +92,10 @@ class AppPages {
       name: AppRoutes.Add_Item,
       page: () => AddItem(),
       //  binding: PromaFormBinding()
+    ),
+    GetPage(
+      name: AppRoutes.Edit_Page,
+      page: () => EditTable(),
     ),
   ];
 }

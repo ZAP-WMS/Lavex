@@ -6,9 +6,10 @@ import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:lavex/widgets/custom_spacebar.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import '../../utils/colors.dart';
-import '../../utils/string.dart';
-import 'Invoice/myinvoice/myInvoice..dart';
+import '../../../utils/colors.dart';
+import '../../../utils/string.dart';
+import '../Invoice/myinvoice/myInvoice..dart';
+import 'bom_add_item.dart';
 
 class BomPage extends StatelessWidget {
   BomPage({super.key});
@@ -16,6 +17,9 @@ class BomPage extends StatelessWidget {
   late DataGridController _dataGridController;
   List<BomModel> bomModel = [];
   List<GridColumn> columns = [];
+  List<Widget> tabClass = [
+    BomAddItem(),
+  ];
   late BomDataSource _bomDataSource;
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,15 @@ class BomPage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CustomButton(text: 'Add New', onPressed: () {}),
+                  CustomButton( 
+                      text: 'Add New',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => tabClass[0],
+                            ));
+                      }),
                   horizontalSpace(5),
                   CustomButton(text: 'Delete', onPressed: () {}),
                   horizontalSpace(5),
@@ -59,7 +71,7 @@ class BomPage extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 width: 300,
                 height: 60,
                 child: TextField(

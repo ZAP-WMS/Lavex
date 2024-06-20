@@ -134,41 +134,6 @@ class MyInvoiceList extends GetView<InvoiceController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 verticalSpace(10),
-                // SizedBox(
-                //   height: 40,
-                //   child: ListView.builder(
-                //     itemCount: myInvoiceTabTitle.length,
-                //     scrollDirection: Axis.horizontal,
-                //     controller: scrollController,
-                //     itemBuilder: (context, index) {
-                //       return Padding(
-                //           padding: const EdgeInsets.all(3.0),
-                //           child: GestureDetector(
-                //             onTap: () {
-                //               controller.currentIndex.value = index;
-                //             },
-                //             child: Container(
-                //               height: 50,
-                //               padding: const EdgeInsets.symmetric(
-                //                   horizontal: 5, vertical: 3),
-                //               decoration: BoxDecoration(
-                //                   color: controller.currentIndex.value == index
-                //                       ? appColor
-                //                       : greyColor,
-                //                   borderRadius: BorderRadius.circular(5)),
-                //               child: Row(
-                //                 children: [
-                //                   Icon(Icons.home_max_outlined, color: whiteColor),
-                //                   horizontalSpace(10),
-                //                   CTextWhite(myInvoiceTabTitle[index], mSize: 14)
-                //                 ],
-                //               ),
-                //             ),
-                //           ));
-                //     },
-                //   ),
-                // ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -256,58 +221,58 @@ class MyInvoiceList extends GetView<InvoiceController> {
                         validator: (value) {}),
                   ],
                 ),
+                // verticalSpace(10),
+                // CTextBlack('Type', mSize: 14, mBold: true),
+                // SizedBox(
+                //   height: 40,
+                //   width: MediaQuery.of(context).size.width,
+                //   child: ListView.builder(
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: createInvoice.length,
+                //     itemBuilder: (context, index) {
+                //       return MyCheckbox(
+                //         width: 200,
+                //         titleName: createInvoice[index],
+                //         onChanged: (value) {},
+                //       );
+                //     },
+                //   ),
+                // ),
+                // verticalSpace(10),
+                // CTextBlack('Payments', mSize: 14, mBold: true),
+                // SizedBox(
+                //   height: 40,
+                //   width: MediaQuery.of(context).size.width,
+                //   child: ListView.builder(
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: paymentsList.length,
+                //     itemBuilder: (context, index) {
+                //       return MyCheckbox(
+                //         width: 200,
+                //         titleName: paymentsList[index],
+                //         onChanged: (value) {},
+                //       );
+                //     },
+                //   ),
+                // ),
+                // verticalSpace(10),
+                // SizedBox(
+                //   height: 40,
+                //   width: MediaQuery.of(context).size.width,
+                //   child: ListView.builder(
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: statusList.length,
+                //     itemBuilder: (context, index) {
+                //       return MyCheckbox(
+                //         width: 200,
+                //         titleName: statusList[index],
+                //         onChanged: (value) {},
+                //       );
+                //     },
+                //   ),
+                // ),
                 verticalSpace(10),
-                CTextBlack('Type', mSize: 14, mBold: true),
-                SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: createInvoice.length,
-                    itemBuilder: (context, index) {
-                      return MyCheckbox(
-                        width: 200,
-                        titleName: createInvoice[index],
-                        onChanged: (value) {},
-                      );
-                    },
-                  ),
-                ),
-                verticalSpace(10),
-                CTextBlack('Payments', mSize: 14, mBold: true),
-                SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: paymentsList.length,
-                    itemBuilder: (context, index) {
-                      return MyCheckbox(
-                        width: 200,
-                        titleName: paymentsList[index],
-                        onChanged: (value) {},
-                      );
-                    },
-                  ),
-                ),
-                verticalSpace(10),
-                CTextBlack('Status', mSize: 14, mBold: true),
-                SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: statusList.length,
-                    itemBuilder: (context, index) {
-                      return MyCheckbox(
-                        width: 200,
-                        titleName: statusList[index],
-                        onChanged: (value) {},
-                      );
-                    },
-                  ),
-                ),
-                verticalSpace(10),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

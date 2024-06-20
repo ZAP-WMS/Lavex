@@ -211,133 +211,142 @@ class ReportPage extends GetView<ReportController> {
                   ],
                 ),
                 verticalSpace(10),
-                Container(
-                  height: 350,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: BarChart(
-                        BarChartData(
-                          barGroups: _chartGroups(),
-                          borderData: FlBorderData(
-                              border: const Border(
-                                  bottom: BorderSide(width: 1.0),
-                                  left: BorderSide())),
-                          gridData: FlGridData(show: true),
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                            leftTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                                    reservedSize: 40, showTitles: true)),
-                            topTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                              showTitles: true,
-                            )),
-                            rightTitles: AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 350,
+                      width: MediaQuery.of(context).size.width / 2.2,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: BarChart(
+                          BarChartData(
+                            barGroups: _chartGroups(),
+                            borderData: FlBorderData(
+                                border: const Border(
+                                    bottom: BorderSide(width: 1.0),
+                                    left: BorderSide())),
+                            gridData: FlGridData(show: true),
+                            titlesData: FlTitlesData(
+                              bottomTitles:
+                                  AxisTitles(sideTitles: _bottomTitles),
+                              leftTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                      reservedSize: 40, showTitles: true)),
+                              topTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                showTitles: true,
+                              )),
+                              rightTitles: AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false)),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 350,
+                        width: MediaQuery.of(context).size.width / 2.2,
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: LineChart(
+                            LineChartData(
+                              lineBarsData: _lineBarsData(),
+                              borderData: FlBorderData(
+                                  border: const Border(
+                                      bottom: BorderSide(width: 1.0),
+                                      left: BorderSide())),
+                              gridData: FlGridData(show: true),
+                              titlesData: FlTitlesData(
+                                bottomTitles:
+                                    AxisTitles(sideTitles: _bottomTitles),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        reservedSize: 40, showTitles: true)),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                  showTitles: true,
+                                )),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  height: 350,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: LineChart(
-                        LineChartData(
-                          lineBarsData: _lineBarsData(),
-                          borderData: FlBorderData(
-                              border: const Border(
-                                  bottom: BorderSide(width: 1.0),
-                                  left: BorderSide())),
-                          gridData: FlGridData(show: true),
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                            leftTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                                    reservedSize: 40, showTitles: true)),
-                            topTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                              showTitles: true,
-                            )),
-                            rightTitles: AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 350,
+                      width: MediaQuery.of(context).size.width / 2.2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: LineChart(
+                            LineChartData(
+                              lineBarsData: _lineBarsData(),
+                              borderData: FlBorderData(
+                                  border: const Border(
+                                      bottom: BorderSide(width: 1.0),
+                                      left: BorderSide())),
+                              gridData: FlGridData(show: true),
+                              titlesData: FlTitlesData(
+                                bottomTitles:
+                                    AxisTitles(sideTitles: _bottomTitles),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        reservedSize: 40, showTitles: true)),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                  showTitles: true,
+                                )),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                Container(
-                  height: 350,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: LineChart(
-                        LineChartData(
-                          lineBarsData: _lineBarsData(),
-                          borderData: FlBorderData(
-                              border: const Border(
-                                  bottom: BorderSide(width: 1.0),
-                                  left: BorderSide())),
-                          gridData: FlGridData(show: true),
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                            leftTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                                    reservedSize: 40, showTitles: true)),
-                            topTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                              showTitles: true,
-                            )),
-                            rightTitles: AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
+                    SizedBox(
+                      height: 350,
+                      width: MediaQuery.of(context).size.width / 2.2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: BarChart(
+                            BarChartData(
+                              barGroups: _chartGroups(),
+                              borderData: FlBorderData(
+                                  border: const Border(
+                                      bottom: BorderSide(width: 1.0),
+                                      left: BorderSide())),
+                              gridData: FlGridData(show: true),
+                              titlesData: FlTitlesData(
+                                bottomTitles:
+                                    AxisTitles(sideTitles: _bottomTitles),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                        reservedSize: 40, showTitles: true)),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                  showTitles: true,
+                                )),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 350,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: BarChart(
-                        BarChartData(
-                          barGroups: _chartGroups(),
-                          borderData: FlBorderData(
-                              border: const Border(
-                                  bottom: BorderSide(width: 1.0),
-                                  left: BorderSide())),
-                          gridData: FlGridData(show: true),
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(sideTitles: _bottomTitles),
-                            leftTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                                    reservedSize: 40, showTitles: true)),
-                            topTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                              showTitles: true,
-                            )),
-                            rightTitles: AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                    )
+                  ],
                 )
               ]),
         ),

@@ -6,7 +6,9 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/style.dart';
+import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_scaffold.dart';
+import '../../../widgets/custom_spacebar.dart';
 
 class CashMemoPayments extends StatelessWidget {
   CashMemoPayments({super.key});
@@ -55,20 +57,41 @@ class CashMemoPayments extends StatelessWidget {
       );
     }
     return CommonScaffold(
-      body: SfDataGridTheme(
-          data: SfDataGridThemeData(
-              gridLineStrokeWidth: 2, gridLineColor: greyColor),
-          child: SfDataGrid(
-              showCheckboxColumn: true,
-              checkboxShape: const CircleBorder(),
-              allowFiltering: false,
-              allowSorting: true,
-              selectionMode: SelectionMode.multiple,
-              gridLinesVisibility: GridLinesVisibility.both,
-              controller: _dataGridController,
-              headerGridLinesVisibility: GridLinesVisibility.both,
-              source: _cashMemoDatasource,
-              columns: columns)),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                verticalSpace(50),
+                CustomButton(text: 'Add Payments', onPressed: () {}),
+                horizontalSpace(10),
+                CustomButton(text: 'Delete', onPressed: () {}),
+                horizontalSpace(10),
+                CustomButton(text: 'Export Data', onPressed: () {}),
+                verticalSpace(10),
+              ],
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: SfDataGridTheme(
+                  data: SfDataGridThemeData(
+                      gridLineStrokeWidth: 2, gridLineColor: greyColor),
+                  child: SfDataGrid(
+                      showCheckboxColumn: true,
+                      checkboxShape: const CircleBorder(),
+                      allowFiltering: false,
+                      allowSorting: true,
+                      selectionMode: SelectionMode.multiple,
+                      gridLinesVisibility: GridLinesVisibility.both,
+                      controller: _dataGridController,
+                      headerGridLinesVisibility: GridLinesVisibility.both,
+                      source: _cashMemoDatasource,
+                      columns: columns)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

@@ -20,13 +20,13 @@ class CreateInvoice extends GetView<InvoiceController> {
       PromaForm(pageTitle: createInvoice[3])
     ];
     List<String> tabIcon = [
-      'assets/create_invoice/invoice setting.png',
+      //  'assets/create_invoice/invoice setting.png',
       'assets/create_invoice/pro-forma.png',
       'assets/create_invoice/invoice.png',
       'assets/create_invoice/Debit note.png',
       'assets/create_invoice/credit note.png',
       'assets/create_invoice/delivery challan.png',
-      'assets/create_invoice/Cash memo.png',
+  //    'assets/create_invoice/Cash memo.png',
     ];
     return CommonScaffold(
       body: Obx(

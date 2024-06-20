@@ -14,5 +14,6 @@ class AppRoutes {
   static const String STORE_PAGE = '/store-page';
   static const String Cash_Inward_home = '/cash-inward';
   static const String Stock_Page = '/stock-page';
-    static const String Add_Item = '/item-page';
+  static const String Add_Item = '/item-page';
+  static const String Edit_Page = '/edit-page';
 }

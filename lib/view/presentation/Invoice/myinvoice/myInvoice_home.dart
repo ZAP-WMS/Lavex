@@ -23,7 +23,7 @@ class MyHomeInvoice extends GetView<InvoiceController> {
       'assets/create_invoice/Debit note.png',
       'assets/create_invoice/credit note.png',
       'assets/create_invoice/delivery challan.png',
-      'assets/create_invoice/Cash memo.png',
+      //    'assets/create_invoice/Cash memo.png',
       'assets/create_invoice/invoice setting.png',
       'assets/create_invoice/Delete.png',
     ];

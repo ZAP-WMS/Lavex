@@ -9,6 +9,8 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/style.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_spacebar.dart';
 import '../../controller/my_payment_controller.dart';
 
 class MyPayments extends GetView<MyPaymentController> {
@@ -59,29 +61,49 @@ class MyPayments extends GetView<MyPaymentController> {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      body: Obx(() {
-        if (myPaymentController.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          _myPaymentDatasource = MyPaymentDatasource(
-              myPaymentController.paymentModel, context, 'userId');
-
-          return SfDataGridTheme(
-              data: SfDataGridThemeData(
-                  gridLineStrokeWidth: 2, gridLineColor: greyColor),
-              child: SfDataGrid(
-                  showCheckboxColumn: true,
-                  checkboxShape: const CircleBorder(),
-                  allowFiltering: false,
-                  allowSorting: true,
-                  selectionMode: SelectionMode.multiple,
-                  gridLinesVisibility: GridLinesVisibility.both,
-                  controller: DataGridController(),
-                  headerGridLinesVisibility: GridLinesVisibility.both,
-                  source: _myPaymentDatasource,
-                  columns: buildColumns(context)));
-        }
-      }),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                verticalSpace(50),
+                CustomButton(text: 'Add Payments', onPressed: () {}),
+                horizontalSpace(10),
+                CustomButton(text: 'Delete', onPressed: () {}),
+                horizontalSpace(10),
+                CustomButton(text: 'Export Data', onPressed: () {}),
+                verticalSpace(10),
+              ],
+            ),
+            Obx(() {
+              if (myPaymentController.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                _myPaymentDatasource = MyPaymentDatasource(
+                    myPaymentController.paymentModel, context, 'userId');
+                return Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: SfDataGridTheme(
+                      data: SfDataGridThemeData(
+                          gridLineStrokeWidth: 2, gridLineColor: greyColor),
+                      child: SfDataGrid(
+                          showCheckboxColumn: true,
+                          checkboxShape: const CircleBorder(),
+                          allowFiltering: false,
+                          allowSorting: true,
+                          selectionMode: SelectionMode.multiple,
+                          gridLinesVisibility: GridLinesVisibility.both,
+                          controller: DataGridController(),
+                          headerGridLinesVisibility: GridLinesVisibility.both,
+                          source: _myPaymentDatasource,
+                          columns: buildColumns(context))),
+                );
+              }
+            }),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -4,14 +4,17 @@ import 'package:lavex/datasource/itemMaster_datasource.dart';
 import 'package:lavex/utils/string.dart';
 import 'package:lavex/utils/style.dart';
 import 'package:lavex/view/controller/item_master_controller.dart';
+import 'package:lavex/view/presentation/ItemMaster/add_Item.dart';
+import 'package:lavex/view/presentation/store/add_item.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:lavex/widgets/custom_spacebar.dart';
 import 'package:lavex/widgets/custom_textform.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import '../../common/custom_text.dart';
-import '../../utils/asset_image.dart';
-import '../../utils/colors.dart';
+import '../../../common/custom_text.dart';
+import '../../../utils/asset_image.dart';
+import '../../../utils/colors.dart';
+import '../../../widgets/custom_button.dart';
 
 class ItemMaster extends GetView<ItemMasterController> {
   ItemMaster({super.key});
@@ -19,6 +22,9 @@ class ItemMaster extends GetView<ItemMasterController> {
 
   late ItemMasterDataSource itemMasterDataSource;
   final ScrollController scrollController = ScrollController();
+  List<Widget> tabClass = [
+    AddItemMaster(),
+  ];
   final ItemMasterController itemMasterController =
       Get.put(ItemMasterController());
 
@@ -63,14 +69,14 @@ class ItemMaster extends GetView<ItemMasterController> {
       'assets/item_master/Add New.png',
       'assets/item_master/Manufacturer.png',
       'assets/item_master/Brands.png',
-      'assets/item_master/Delete.png',
+      'assets/item_master/Brands.png',
       'assets/item_master/Delete.png',
     ];
     return CommonScaffold(
       body: Obx(
         () => SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
                 SizedBox(
@@ -85,6 +91,11 @@ class ItemMaster extends GetView<ItemMasterController> {
                           child: GestureDetector(
                             onTap: () {
                               controller.currentIndex.value = index;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => tabClass[index],
+                                  ));
                             },
                             child: Container(
                               height: 50,
@@ -137,6 +148,14 @@ class ItemMaster extends GetView<ItemMasterController> {
                         name: toTxt,
                         validator: (p0) {},
                         style: normalTextStyle),
+                  ],
+                ),
+                verticalSpace(20),
+                Row(
+                  children: [
+                    CustomButton(text: 'Search', onPressed: () {}),
+                    horizontalSpace(10),
+                    CustomButton(text: 'Clear Search', onPressed: () {}),
                   ],
                 ),
                 verticalSpace(20),

@@ -93,13 +93,12 @@ String stockStatusTxt = 'Stock Status';
 String currencyTxt = 'Currency';
 String statusTxt = 'Status';
 
-
 final List<String> tabTitles = [
   'Home',
   'Create Invoice',
   'My Invoice',
   'My Payment',
-  'Cash Memo Payments',
+  //'Cash Memo Payments',
   'Supplier Payment',
   "My Client's",
   "Client's Ledger Balance",
@@ -108,11 +107,11 @@ final List<String> tabTitles = [
   'Bill Of Material',
   'Item Master',
   'Store',
-  'Protocols',
+ // 'Protocols',
   'Reports',
   'Low Quantity',
-  'All Cash Payment',
-  'Received Cash Payment',
+//  'All Cash Payment',
+//  'Received Cash Payment',
   'Logs',
 ];
 
@@ -122,7 +121,7 @@ final List<String> menubarIcons = [
   'assets/menu_bar/create_invoice.png',
   'assets/menu_bar/invoice.png',
   'assets/menu_bar/my_payment.png',
-  'assets/menu_bar/cash_memo.png',
+//  'assets/menu_bar/cash_memo.png',
   'assets/menu_bar/supplier_payment.png',
   'assets/menu_bar/my_client.png',
   'assets/menu_bar/clients ledger balance.png',
@@ -131,11 +130,11 @@ final List<String> menubarIcons = [
   'assets/menu_bar/bom.png',
   'assets/menu_bar/item master.png',
   'assets/menu_bar/store.png',
-  'assets/menu_bar/protocols.png',
+ // 'assets/menu_bar/protocols.png',
   'assets/menu_bar/Reports.png',
   'assets/menu_bar/low quantity.png',
-  'assets/menu_bar/cash payment.png',
-  'assets/menu_bar/Received cash payment.png',
+ // 'assets/menu_bar/cash payment.png',
+ // 'assets/menu_bar/Received cash payment.png',
   'assets/menu_bar/logs.png',
 ];
 
@@ -175,13 +174,13 @@ final List<IconData> navbaTabIcons = [
 // List of tab titles
 
 final List<String> createInvoice = [
-  'Invoice Setting',
+  // 'Invoice Setting',
   'Pro-forma',
   'Invoice',
   'Debit note',
   'Credit note',
   'Delievery Challan',
-  'Cash Memo'
+  // 'Cash Memo'
 ];
 
 // my invoice payments
@@ -207,7 +206,7 @@ final List<String> myInvoiceTabTitle = [
   'Debit note',
   'Credit note',
   'Delievery Challan',
-  'Cash Memo',
+  // 'Cash Memo',
   'My Invoice List',
   'Delete Invoice'
 ];

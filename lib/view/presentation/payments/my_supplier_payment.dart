@@ -31,6 +31,7 @@ class MySupplierPayment extends GetView<SupplierController> {
                   columnName == columnName[0]
               ? false
               : true,
+              
           width: columnName == 'Client Name'
               ? MediaQuery.of(context).size.width * 0.14
               : MediaQuery.of(context).size.width * 0.09,
@@ -96,7 +97,7 @@ class MySupplierPayment extends GetView<SupplierController> {
               ),
               Obx(() {
                 if (supplierController.isLoading.value) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else {
                   _supplierPaymentDatasource = SupplierPaymentDatasource(
                       supplierController.supplierModel, context, 'userId');

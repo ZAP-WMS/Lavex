@@ -70,7 +70,7 @@ class MyClient extends GetView<MyClientController> {
                 Row(
                   children: [
                     verticalSpace(50),
-                    CustomButton(text: 'Add New Supplier', onPressed: () {}),
+                    CustomButton(text: 'My Client', onPressed: () {}),
                     horizontalSpace(10),
                     CustomButton(text: 'Delete', onPressed: () {}),
                     horizontalSpace(10),

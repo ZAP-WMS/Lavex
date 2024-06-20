@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/supplier_payments.dart';
+import 'package:lavex/utils/colors.dart';
+import 'package:lavex/widgets/custom_spacebar.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../utils/style.dart';
 
@@ -45,11 +47,57 @@ class SupplierPaymentDatasource extends DataGridSource {
       return Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Text(
-            dataGridCell.value.toString(),
-            textAlign: TextAlign.center,
-            style: tablefontsize,
-          ));
+          child: (dataGridCell.columnName == 'Options')
+              ? Container(
+                  height: 500,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit, color: redColor),
+                          onPressed: () {
+                            Get.toNamed('/edit-page');
+                          },
+                        ),
+                        horizontalSpace(5),
+                        PopupMenuButton<String>(
+                          icon: Icon(Icons.menu, color: redColor),
+                          onSelected: (String result) {
+                            switch (result) {
+                              case 'Delete':
+                                // Handle Option 1
+                                break;
+                              case 'Option 2':
+                                // Handle Option 2
+                                break;
+                              case 'Option 3':
+                                // Handle Option 3
+                                break;
+                            }
+                          },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'Option 1',
+                              child: Text('Option 1'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Option 2',
+                              child: Text('Option 2'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Option 3',
+                              child: Text('Option 3'),
+                            ),
+                          ],
+                        )
+                      ]),
+                )
+              : Text(
+                  dataGridCell.value.toString(),
+                  textAlign: TextAlign.center,
+                  style: tablefontsize,
+                ));
     }).toList());
   }
 
