@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/common/custom_text.dart';
+import 'package:lavex/datasource/create_invoice_datasource.dart';
 import 'package:lavex/utils/colors.dart';
 import 'package:lavex/utils/string.dart';
 import 'package:lavex/view/controller/cartItem_controller.dart';
@@ -10,8 +11,10 @@ import 'package:lavex/widgets/custom_spacebar.dart';
 import 'package:lavex/widgets/custom_textform.dart';
 import 'package:lavex/widgets/cutom_textformfield.dart';
 import 'package:lavex/widgets/icon_with_text.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../../data/model/cart_item.dart';
 import '../../../../utils/style.dart';
+import '../myinvoice/myInvoice..dart';
 
 class PromaForm extends GetView<CartController> {
   String? pageTitle;
@@ -50,9 +53,32 @@ class PromaForm extends GetView<CartController> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController totalController = TextEditingController();
 
+  List<GridColumn> columns = [];
+  late CreateInvoiceDatasource _createInvoiceDatasource;
+  final List<CartItem> _cartdata = [];
+
   @override
   Widget build(BuildContext context) {
     final CartController controller = Get.put(CartController());
+    // ignore: use_build_context_synchronously
+    _createInvoiceDatasource = CreateInvoiceDatasource(_cartdata, context, '');
+
+    columns.clear();
+    for (String columnName in createInvoiceTable) {
+      columns.add(
+        GridColumn(
+          columnName: columnName,
+          visible: true,
+          allowEditing: true,
+
+          width: MediaQuery.of(context).size.width *
+              0.09, // You can adjust this width as needed
+          label: createColumnLabel(
+            createInvoiceTable[createInvoiceTable.indexOf(columnName)],
+          ),
+        ),
+      );
+    }
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(10),
@@ -79,6 +105,7 @@ class PromaForm extends GetView<CartController> {
                         isreadOnly: false,
                         isSuffixIcon: false,
                         validator: (value) {}),
+                    horizontalSpace(10),
                     customAlertDialog(context, clientController)
                   ],
                 ),
@@ -268,117 +295,131 @@ class PromaForm extends GetView<CartController> {
               titleName: accountingTxt,
               onChanged: (value) {},
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(border: Border.all(color: greyColor)),
-              child: Obx(
-                () => DataTable(
-                    columnSpacing: 30,
-                    columns: const <DataColumn>[
-                      DataColumn(label: Text('Item')),
-                      DataColumn(label: Text('Brand')),
-                      DataColumn(label: Text('Quantity')),
-                      DataColumn(label: Text('GST')),
-                      DataColumn(label: Text('Price')),
-                      DataColumn(label: Text('Total')),
-                    ],
-                    rows: [
-                      DataRow(
-                          cells: List.generate(6, (index) {
-                        return DataCell(Container(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
-                          width: (index == 0) || (index == 1) ? 150 : 60,
-                          child: TextFormField(
-                            decoration: const InputDecoration(),
-                            onChanged: (value) {
-                              // Handle onChanged event
-                            },
-                          ),
-                        ));
-                      }))
-                    ]..addAll(controller.cartItems.map((item) {
-                        return DataRow(cells: [
-                          DataCell(Container(
-                            padding: const EdgeInsets.symmetric(vertical: 3),
-                            width: 150,
-                            child: TextFormField(
-                              controller: itemController,
-                              // initialValue: item.item.toString(),
-                              onChanged: (value) {
-                                //        _itemNameController.text = value;
-                                // Update the item name when user changes it
-                              },
-                            ),
-                          )),
-                          DataCell(Container(
-                            padding: const EdgeInsets.symmetric(vertical: 3),
-                            width: 150,
-                            child: TextFormField(
-                              controller: brandController,
-                              //    initialValue: item.brand.toString(),
-                              onChanged: (value) {
-                                // Update the brand when user changes it
-                              },
-                            ),
-                          )),
-                          DataCell(Container(
-                            padding: const EdgeInsets.symmetric(vertical: 3),
-                            width: 60,
-                            child: TextFormField(
-                              controller: quantityController,
-                              //    initialValue: item.quantity.toString(),
-                              onChanged: (value) {
-                                // Update the quantity when user changes it
-                              },
-                            ),
-                          )),
-                          DataCell(Container(
-                            padding: const EdgeInsets.symmetric(vertical: 3),
-                            width: 60,
-                            child: TextFormField(
-                              controller: gstController,
-                              //       initialValue: item.gst.toString(),
-                              onChanged: (value) {
-                                // Update the GST when user changes it
-                              },
-                            ),
-                          )),
-                          DataCell(Container(
-                            padding: const EdgeInsets.symmetric(vertical: 3),
-                            width: 60,
-                            child: TextFormField(
-                              controller: priceController,
-                              //        initialValue: item.price.toString(),
-                              onChanged: (value) {
-                                // Update the price when user changes it
-                              },
-                            ),
-                          )),
-                          DataCell(Container(
-                            padding: const EdgeInsets.symmetric(vertical: 3),
-                            width: 60,
-                            child: Text(
-                              '\$${(item.price * item.quantity).toStringAsFixed(2)}',
-                            ),
-                          )),
-                        ]);
-                      }).toList())),
-              ),
+
+            // Container(
+            //   alignment: Alignment.centerLeft,
+            //   padding: const EdgeInsets.all(10),
+            //   decoration: BoxDecoration(border: Border.all(color: greyColor)),
+            //   child: Obx(
+            //     () => DataTable(
+            //         columnSpacing: 30,
+            //         columns: const <DataColumn>[
+            //           DataColumn(label: Text('Item')),
+            //           DataColumn(label: Text('Brand')),
+            //           DataColumn(label: Text('Quantity')),
+            //           DataColumn(label: Text('GST')),
+            //           DataColumn(label: Text('Price')),
+            //           DataColumn(label: Text('Total')),
+            //         ],
+            //         rows: [
+            //           DataRow(
+            //               cells: List.generate(6, (index) {
+            //             return DataCell(Container(
+            //               padding: const EdgeInsets.symmetric(vertical: 3),
+            //               width: (index == 0) || (index == 1) ? 150 : 60,
+            //               child: TextFormField(
+            //                 decoration: const InputDecoration(),
+            //                 onChanged: (value) {
+            //                   // Handle onChanged event
+            //                 },
+            //               ),
+            //             ));
+            //           }))
+            //         ]..addAll(controller.cartItems.map((item) {
+            //             return DataRow(cells: [
+            //               DataCell(Container(
+            //                 padding: const EdgeInsets.symmetric(vertical: 3),
+            //                 width: 150,
+            //                 child: TextFormField(
+            //                   controller: itemController,
+            //                   // initialValue: item.item.toString(),
+            //                   onChanged: (value) {
+            //                     //        _itemNameController.text = value;
+            //                     // Update the item name when user changes it
+            //                   },
+            //                 ),
+            //               )),
+            //               DataCell(Container(
+            //                 padding: const EdgeInsets.symmetric(vertical: 3),
+            //                 width: 150,
+            //                 child: TextFormField(
+            //                   controller: brandController,
+            //                   //    initialValue: item.brand.toString(),
+            //                   onChanged: (value) {
+            //                     // Update the brand when user changes it
+            //                   },
+            //                 ),
+            //               )),
+            //               DataCell(Container(
+            //                 padding: const EdgeInsets.symmetric(vertical: 3),
+            //                 width: 60,
+            //                 child: TextFormField(
+            //                   controller: quantityController,
+            //                   //    initialValue: item.quantity.toString(),
+            //                   onChanged: (value) {
+            //                     // Update the quantity when user changes it
+            //                   },
+            //                 ),
+            //               )),
+            //               DataCell(Container(
+            //                 padding: const EdgeInsets.symmetric(vertical: 3),
+            //                 width: 60,
+            //                 child: TextFormField(
+            //                   controller: gstController,
+            //                   //       initialValue: item.gst.toString(),
+            //                   onChanged: (value) {
+            //                     // Update the GST when user changes it
+            //                   },
+            //                 ),
+            //               )),
+            //               DataCell(Container(
+            //                 padding: const EdgeInsets.symmetric(vertical: 3),
+            //                 width: 60,
+            //                 child: TextFormField(
+            //                   controller: priceController,
+            //                   //        initialValue: item.price.toString(),
+            //                   onChanged: (value) {
+            //                     // Update the price when user changes it
+            //                   },
+            //                 ),
+            //               )),
+            //               DataCell(Container(
+            //                 padding: const EdgeInsets.symmetric(vertical: 3),
+            //                 width: 60,
+            //                 child: Text(
+            //                   '\$${(item.price * item.quantity).toStringAsFixed(2)}',
+            //                 ),
+            //               )),
+            //             ]);
+            //           }).toList())),
+            //   ),
+            // ),
+            SfDataGrid(
+              allowEditing: true,
+              editingGestureType: EditingGestureType.tap,
+              gridLinesVisibility: GridLinesVisibility.both,
+              headerGridLinesVisibility: GridLinesVisibility.both,
+              selectionMode: SelectionMode.single,
+              navigationMode: GridNavigationMode.cell,
+              columnWidthMode: ColumnWidthMode.auto,
+              source: _createInvoiceDatasource,
+              columns: columns,
             ),
             IconWithText(
               iconData: Icons.add,
               text: 'Add Item',
               onPressed: () {
                 // Add new item to the cartItems list
-                final CartItem newItem = CartItem(
+                _cartdata.add(CartItem(
                     item: 'item',
                     brand: 'brand',
                     quantity: 1,
                     gst: 18.00,
                     price: 15,
-                    total: 15.00);
-                controller.addItem(newItem);
+                    total: 15.00));
+                // controller.addItem(newItem);
+                _createInvoiceDatasource.buildDataGridRows();
+                _createInvoiceDatasource.updateDatagridSource();
               },
             ),
             Align(
@@ -537,6 +578,16 @@ class PromaForm extends GetView<CartController> {
           },
         ),
       ),
+    );
+  }
+
+  Widget createColumnLabel(String labelText) {
+    return Container(
+      alignment: Alignment.center,
+      child: Text(labelText,
+          overflow: TextOverflow.values.first,
+          textAlign: TextAlign.center,
+          style: tableheader),
     );
   }
 }

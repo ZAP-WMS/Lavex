@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../common/custom_text.dart';
 import '../utils/colors.dart';
-import '../utils/string.dart';
 import '../view/controller/company_controller.dart';
 import 'custom_spacebar.dart';
 
 class CommonScaffold extends GetView<CompanyController> {
   final Widget body;
+  final String? pageName;
 
-  CommonScaffold({super.key, required this.body});
+  CommonScaffold({super.key, required this.body, this.pageName});
   final CompanyController controller = Get.put(CompanyController());
   @override
   Widget build(BuildContext context) {
@@ -31,19 +31,19 @@ class CommonScaffold extends GetView<CompanyController> {
                     value: controller.selectedCompany.value.isEmpty
                         ? null
                         : controller.selectedCompany.value,
-                    hint: CTextWhite(
-                      'Change Company',
-                      mBold: true,
-                      mSize: 18,
-                    ),
+                    hint: CTextWhite('Change Company', mBold: true, mSize: 15),
                     items: controller.companyList.map((String company) {
                       return DropdownMenuItem<String>(
                           value: company,
-                          child: Text(
-                            company,
-                            style: TextStyle(color: blackColor),
-                          ));
+                          child: Text(company,
+                              style: TextStyle(color: blackColor)));
                     }).toList(),
+                    selectedItemBuilder: (BuildContext context) {
+                      return controller.companyList.map((String company) {
+                        return Center(
+                            child: CTextWhite(company, mBold: true, mSize: 15));
+                      }).toList();
+                    },
                     onChanged: (String? value) {
                       if (value != null) {
                         controller.changeCompany(value);
@@ -55,31 +55,51 @@ class CommonScaffold extends GetView<CompanyController> {
                 Row(
                   children: [
                     horizontalSpace(10),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      width: 200,
-                      height: 60,
-                      child: TextField(
-                        onChanged: (value) {
-                          // Filter data based on the entered value
-                        },
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: whiteColor),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          hintText: 'Search...',
-                          hintStyle: TextStyle(color: whiteColor),
-                          prefixIcon: Icon(Icons.search, color: whiteColor),
-                        ),
-                      ),
-                    )
+                    CTextWhite(pageName ?? '', mBold: true, mSize: 15)
+                    // Container(
+                    //   padding: const EdgeInsets.all(10),
+                    //   width: 200,
+                    //   height: 60,
+                    //   child: TextField(
+                    //     onChanged: (value) {
+                    //       // Filter data based on the entered value
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       border: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: whiteColor),
+                    //         borderRadius: BorderRadius.circular(5),
+                    //       ),
+                    //       hintText: 'Search...',
+                    //       hintStyle: TextStyle(color: whiteColor),
+                    //       prefixIcon: Icon(Icons.search, color: whiteColor),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ],
             ),
             Row(
               children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  width: 250,
+                  height: 60,
+                  child: TextField(
+                    onChanged: (value) {
+                      // Filter data based on the entered value
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: whiteColor),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(color: whiteColor),
+                      prefixIcon: Icon(Icons.search, color: whiteColor),
+                    ),
+                  ),
+                ),
                 DropdownButton(
                     value: 'Change Language',
                     items: [

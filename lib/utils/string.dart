@@ -107,7 +107,7 @@ final List<String> tabTitles = [
   'Bill Of Material',
   'Item Master',
   'Store',
- // 'Protocols',
+  // 'Protocols',
   'Reports',
   'Low Quantity',
 //  'All Cash Payment',
@@ -130,11 +130,11 @@ final List<String> menubarIcons = [
   'assets/menu_bar/bom.png',
   'assets/menu_bar/item master.png',
   'assets/menu_bar/store.png',
- // 'assets/menu_bar/protocols.png',
+  // 'assets/menu_bar/protocols.png',
   'assets/menu_bar/Reports.png',
   'assets/menu_bar/low quantity.png',
- // 'assets/menu_bar/cash payment.png',
- // 'assets/menu_bar/Received cash payment.png',
+  // 'assets/menu_bar/cash payment.png',
+  // 'assets/menu_bar/Received cash payment.png',
   'assets/menu_bar/logs.png',
 ];
 
@@ -180,6 +180,17 @@ final List<String> createInvoice = [
   'Debit note',
   'Credit note',
   'Delievery Challan',
+  // 'Cash Memo'
+];
+
+final List<String> createInvoiceTable = [
+  'Item',
+  'Brand',
+  'Quantity',
+  'Gst',
+  'Price',
+  'Total',
+  'Delete'
   // 'Cash Memo'
 ];
 

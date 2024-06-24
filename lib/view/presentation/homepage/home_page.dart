@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
+      pageName: 'Home Page',
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

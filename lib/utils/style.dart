@@ -7,9 +7,9 @@ TextStyle boldTextStyle =
     TextStyle(fontSize: 20, color: blackColor, fontWeight: FontWeight.bold);
 
 TextStyle tableheader =
-    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
+    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15);
 
-TextStyle tablefontsize = const TextStyle(fontSize: 12, color: Colors.black);
+TextStyle tablefontsize = const TextStyle(fontSize: 15, color: Colors.black);
 
 TextStyle smallTextStyle =
     TextStyle(fontSize: 14, color: blackColor, fontWeight: FontWeight.bold);

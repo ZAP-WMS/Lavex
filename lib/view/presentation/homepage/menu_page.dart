@@ -41,6 +41,7 @@ class MenuPage extends StatelessWidget {
       ReportPage(),
     ];
     return CommonScaffold(
+    
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: GridView.builder(

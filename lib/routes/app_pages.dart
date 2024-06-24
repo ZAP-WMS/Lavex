@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/Authentication/login.dart';
-import 'package:lavex/view/Authentication/login_register.dart';
 import 'package:lavex/view/Authentication/register.dart';
 import 'package:lavex/view/presentation/edit/edit_table.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
@@ -10,9 +8,7 @@ import 'package:lavex/view/presentation/homepage/menu_page.dart';
 import 'package:lavex/view/presentation/store/cash_inward_home.dart';
 import 'package:lavex/view/presentation/store/stocks.dart';
 import 'package:lavex/view/presentation/store/store.dart';
-
 import '../view/Authentication/navbar_page.dart';
-
 import '../view/binding/create_invoice_binding.dart';
 import '../view/binding/index_binding.dart';
 import '../view/binding/proma_form_binding.dart';
@@ -26,12 +22,12 @@ import '../view/presentation/store/add_item.dart';
 class AppPages {
   static var list = [
     GetPage(
-      name: AppRoutes.Home, page: () => HomePage(),
+      name: AppRoutes.Home, page: () => const HomePage(),
       //   binding: SplashBinding(),
     ),
     GetPage(
       name: AppRoutes.Menu_bar,
-      page: () => MenuPage(),
+      page: () => const MenuPage(),
       //   binding: SplashBinding(),
     ),
     GetPage(
@@ -60,7 +56,7 @@ class AppPages {
         binding: PromaFormBinding()),
     GetPage(
       name: AppRoutes.MY_HOME_INVOICE,
-      page: () => MyHomeInvoice(),
+      page: () => const MyHomeInvoice(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
@@ -70,7 +66,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.CREATE_INVOICE_LIST,
-      page: () => CreateInvoiceList(),
+      page: () => const CreateInvoiceList(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
