@@ -18,22 +18,22 @@ class CartItem {
 
   factory CartItem.fromjson(Map<String, dynamic> json) {
     return CartItem(
-        item: json['item'],
-        brand: json['brand'],
-        quantity: json['quantity'],
-        gst: json['gst'],
-        price: json['price'],
-        total: json['total']);
+        item: json['Item'],
+        brand: json['Brand'],
+        quantity: json['Quantity'],
+        gst: json['Gst'],
+        price: json['Price'],
+        total: json['Total']);
   }
 
   DataGridRow dataGridRow() {
     return DataGridRow(cells: <DataGridCell>[
-      DataGridCell(columnName: 'item', value: item),
-      DataGridCell(columnName: 'brand', value: brand),
-      DataGridCell(columnName: 'quantity', value: quantity),
-      DataGridCell(columnName: 'gst', value: gst),
-      DataGridCell(columnName: 'price', value: price),
-      DataGridCell(columnName: 'total', value: total),
+      DataGridCell(columnName: 'Item', value: item),
+      DataGridCell(columnName: 'Brand', value: brand),
+      DataGridCell(columnName: 'Quantity', value: quantity),
+      DataGridCell(columnName: 'Gst', value: gst),
+      DataGridCell(columnName: 'Price', value: price),
+      DataGridCell(columnName: 'Total', value: total),
       // const DataGridCell(columnName: 'Add', value: null),
       const DataGridCell(columnName: 'Delete', value: null)
     ]);

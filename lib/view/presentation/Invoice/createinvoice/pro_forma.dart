@@ -14,7 +14,6 @@ import 'package:lavex/widgets/icon_with_text.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../../data/model/cart_item.dart';
 import '../../../../utils/style.dart';
-import '../myinvoice/myInvoice..dart';
 
 class PromaForm extends GetView<CartController> {
   String? pageTitle;
@@ -69,8 +68,8 @@ class PromaForm extends GetView<CartController> {
         GridColumn(
           columnName: columnName,
           visible: true,
-          allowEditing: true,
-
+          allowEditing:
+              columnName == 'Total' || columnName == 'Gst' ? false : true,
           width: MediaQuery.of(context).size.width *
               0.09, // You can adjust this width as needed
           label: createColumnLabel(
@@ -103,9 +102,9 @@ class PromaForm extends GetView<CartController> {
                         controller: clientController,
                         style: normalTextStyle,
                         isreadOnly: false,
-                        isSuffixIcon: false,
+                        isSuffixIcon: false,  
                         validator: (value) {}),
-                    horizontalSpace(10),
+                    horizontalSpace(10),    
                     customAlertDialog(context, clientController)
                   ],
                 ),
@@ -412,11 +411,11 @@ class PromaForm extends GetView<CartController> {
                 // Add new item to the cartItems list
                 _cartdata.add(CartItem(
                     item: 'item',
-                    brand: 'brand',
-                    quantity: 1,
+                    brand: 'Lavex',
+                    quantity: 10,
                     gst: 18.00,
                     price: 15,
-                    total: 15.00));
+                    total: 150.00));
                 // controller.addItem(newItem);
                 _createInvoiceDatasource.buildDataGridRows();
                 _createInvoiceDatasource.updateDatagridSource();

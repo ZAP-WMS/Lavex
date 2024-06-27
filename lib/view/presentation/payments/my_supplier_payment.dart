@@ -17,6 +17,7 @@ class MySupplierPayment extends GetView<SupplierController> {
   List<SupplierPaymentsModel> supplierModel = [];
   List<GridColumn> columns = [];
   late SupplierPaymentDatasource _supplierPaymentDatasource;
+  String _searchQuery = '';
   final SupplierController supplierController = Get.put(SupplierController());
 
   List<GridColumn> buildColumns(BuildContext context) {
@@ -31,7 +32,6 @@ class MySupplierPayment extends GetView<SupplierController> {
                   columnName == columnName[0]
               ? false
               : true,
-              
           width: columnName == 'Client Name'
               ? MediaQuery.of(context).size.width * 0.14
               : MediaQuery.of(context).size.width * 0.09,
@@ -52,6 +52,14 @@ class MySupplierPayment extends GetView<SupplierController> {
           textAlign: TextAlign.center,
           style: tableheader),
     );
+  }
+
+  void _filterData(String query) {
+    _searchQuery = query;
+    // Update the data source with the filtered data
+    _supplierPaymentDatasource.filterData(_searchQuery);
+    _supplierPaymentDatasource.updateDatagridSource();
+    _supplierPaymentDatasource.buildDataGridRows();
   }
 
   @override
@@ -85,6 +93,7 @@ class MySupplierPayment extends GetView<SupplierController> {
                         child: TextField(
                           onChanged: (value) {
                             // Filter data based on the entered value
+                            _filterData(value);
                           },
                           decoration: const InputDecoration(
                               hintText: 'Search...',

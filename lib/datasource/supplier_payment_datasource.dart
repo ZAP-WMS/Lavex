@@ -12,6 +12,8 @@ class SupplierPaymentDatasource extends DataGridSource {
   BuildContext mainContext;
 
   List data = [];
+  List<DataGridRow> _filteredData = [];
+  List<DataGridRow> _data = [];
   SupplierPaymentDatasource(this._paymentModel, this.mainContext, this.userId) {
     buildDataGridRows();
   }
@@ -109,6 +111,19 @@ class SupplierPaymentDatasource extends DataGridSource {
     _paymentModel
         .removeWhere((payment) => payment.invPaymentNumber == invoiceNo);
     buildDataGridRows();
+    notifyListeners();
+  }
+
+  void filterData(String query) {
+    if (query.isEmpty) {
+      _filteredData = _data;
+    } else {
+      _filteredData = _data.where((row) {
+        // Replace 'yourColumnName' with the actual column name you want to search in
+        return row.getCells().any((cell) =>
+            cell.value.toString().toLowerCase().contains(query.toLowerCase()));
+      }).toList();
+    }
     notifyListeners();
   }
 
