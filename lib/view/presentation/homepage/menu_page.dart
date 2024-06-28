@@ -38,10 +38,10 @@ class MenuPage extends StatelessWidget {
       ItemMaster(),
 //      StorePage(),
 //      StorePage(),
+      ItemMaster(),
       ReportPage(),
     ];
     return CommonScaffold(
-    
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: GridView.builder(

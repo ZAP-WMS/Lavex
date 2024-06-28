@@ -114,18 +114,18 @@ class SupplierPaymentDatasource extends DataGridSource {
     notifyListeners();
   }
 
-  void filterData(String query) {
-    if (query.isEmpty) {
-      _filteredData = _data;
-    } else {
-      _filteredData = _data.where((row) {
-        // Replace 'yourColumnName' with the actual column name you want to search in
-        return row.getCells().any((cell) =>
-            cell.value.toString().toLowerCase().contains(query.toLowerCase()));
-      }).toList();
-    }
-    notifyListeners();
-  }
+  // void filterData(String query) {
+  //   if (query.isEmpty) {
+  //     _filteredData = _data;
+  //   } else {
+  //     _filteredData = _data.where((row) {
+  //       // Replace 'yourColumnName' with the actual column name you want to search in
+  //       return row.getCells().any((cell) =>
+  //           cell.value.toString().toLowerCase().contains(query.toLowerCase()));
+  //     }).toList();
+  //   }
+  //   notifyListeners();
+  // }
 
   void updateDataGrid({required RowColumnIndex rowColumnIndex}) {
     notifyDataSourceListeners(rowColumnIndex: rowColumnIndex);

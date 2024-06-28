@@ -29,15 +29,19 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  excel: null
+  firebase_storage: ^11.6.0
   fl_chart: null
   flutter:
     sdk: flutter
   flutter_svg: null
   get: null
-  http:
+  http: null
   syncfusion_flutter_core: ^20.4.54
   syncfusion_flutter_datagrid: ^20.4.49
+  syncfusion_flutter_xlsio: null
   tab_indicator_styler: null
+  universal_html: null
 
 dev_dependencies:
   flutter_lints: ^2.0.0

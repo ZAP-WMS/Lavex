@@ -1,3 +1,5 @@
+import 'package:excel/excel.dart' as ex;
+import 'package:http/http.dart' as http;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,8 @@ import 'package:lavex/widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';
 import '../../../widgets/drop_downTextField.dart';
 import '../../controller/report_controller.dart';
+import 'package:universal_html/html.dart' as html;
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ReportPage extends GetView<ReportController> {
   ReportPage({super.key});
@@ -46,6 +50,55 @@ class ReportPage extends GetView<ReportController> {
     'Show only partially paid invoices',
   ];
   List<PricePoint> points = [];
+
+  void downloadExcel() {
+    var excel = ex.Excel.createExcel(); // Create a new Excel document
+
+    // Add some data to the document
+    var sheet = excel['Sheet1'];
+    sheet.appendRow(['Header1', 'Header2', 'Header3']);
+    sheet.appendRow(['Row1-Col1', 'Row1-Col2', 'Row1-Col3']);
+    sheet.appendRow(['Row2-Col1', 'Row2-Col2', 'Row2-Col3']);
+
+    // Encode the document to a byte array
+    var bytes = excel.encode();
+    if (bytes == null) return;
+
+    // Create a Blob object from the byte array
+    final blob = html.Blob([bytes],
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+    // Create a download link for the Blob
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute('download', 'example.xlsx')
+      ..click();
+    html.Url.revokeObjectUrl(url);
+  }
+
+  final String pdfPath = 'path/to/your/pdf.pdf';
+
+  Future<void> _downloadPdf(String pdfPath) async {
+    try {
+      // Get the download URL
+      final ref = FirebaseStorage.instance.ref().child(pdfPath);
+      final downloadUrl = await ref.getDownloadURL();
+
+      // Fetch the PDF file
+      final response = await http.get(Uri.parse(downloadUrl));
+      final bytes = response.bodyBytes;
+
+      // Create a Blob and trigger the download
+      final blob = html.Blob([bytes]);
+      final url = html.Url.createObjectUrlFromBlob(blob);
+      final anchor = html.AnchorElement(href: url)
+        ..setAttribute("download", "file.pdf")
+        ..click();
+      html.Url.revokeObjectUrl(url);
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +197,11 @@ class ReportPage extends GetView<ReportController> {
                 }),
                 verticalSpace(10),
                 Row(children: [
-                  CustomButton(text: 'Download Excel', onPressed: () {}),
+                  CustomButton(
+                      text: 'Download Excel',
+                      onPressed: () {
+                        downloadExcel();
+                      }),
                   horizontalSpace(10),
                   CustomButton(text: 'Download Pdf', onPressed: () {})
                 ]),

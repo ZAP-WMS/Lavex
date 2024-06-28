@@ -54,13 +54,13 @@ class MySupplierPayment extends GetView<SupplierController> {
     );
   }
 
-  void _filterData(String query) {
-    _searchQuery = query;
-    // Update the data source with the filtered data
-    _supplierPaymentDatasource.filterData(_searchQuery);
-    _supplierPaymentDatasource.updateDatagridSource();
-    _supplierPaymentDatasource.buildDataGridRows();
-  }
+  // void _filterData(String query) {
+  //   _searchQuery = query;
+  //   // Update the data source with the filtered data
+  //   _supplierPaymentDatasource.filterData(_searchQuery);
+  //   _supplierPaymentDatasource.updateDatagridSource();
+  //   _supplierPaymentDatasource.buildDataGridRows();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,10 @@ class MySupplierPayment extends GetView<SupplierController> {
                         child: TextField(
                           onChanged: (value) {
                             // Filter data based on the entered value
-                            _filterData(value);
+                            // _filterData(value);
+                            supplierController.searchTxt.text =
+                                value.toString();
+                            supplierController.fetchSupplierData();
                           },
                           decoration: const InputDecoration(
                               hintText: 'Search...',

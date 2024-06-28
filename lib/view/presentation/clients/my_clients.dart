@@ -87,6 +87,8 @@ class MyClient extends GetView<MyClientController> {
                       child: TextField(
                         onChanged: (value) {
                           // Filter data based on the entered value
+                          myClientController.searchTxt.text = value;
+                          myClientController.myClientData();
                         },
                         decoration: const InputDecoration(
                             hintText: 'Search...',
