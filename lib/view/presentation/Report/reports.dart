@@ -1,7 +1,7 @@
 import 'package:excel/excel.dart' as ex;
-import 'package:http/http.dart' as http;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lavex/common/custom_text.dart';
 import 'package:lavex/utils/colors.dart';
@@ -9,16 +9,17 @@ import 'package:lavex/utils/style.dart';
 import 'package:lavex/widgets/custom_button.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:lavex/widgets/custom_spacebar.dart';
+
 import '../../../widgets/custom_textform.dart';
 import '../../../widgets/drop_downTextField.dart';
 import '../../controller/report_controller.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:firebase_storage/firebase_storage.dart';
 
 class ReportPage extends GetView<ReportController> {
   ReportPage({super.key});
 
   TextEditingController fromTextController = TextEditingController();
+
   List<String> reports = [
     'Challan Report',
     'Sales Returns',
@@ -74,30 +75,6 @@ class ReportPage extends GetView<ReportController> {
       ..setAttribute('download', 'example.xlsx')
       ..click();
     html.Url.revokeObjectUrl(url);
-  }
-
-  final String pdfPath = 'path/to/your/pdf.pdf';
-
-  Future<void> _downloadPdf(String pdfPath) async {
-    try {
-      // Get the download URL
-      final ref = FirebaseStorage.instance.ref().child(pdfPath);
-      final downloadUrl = await ref.getDownloadURL();
-
-      // Fetch the PDF file
-      final response = await http.get(Uri.parse(downloadUrl));
-      final bytes = response.bodyBytes;
-
-      // Create a Blob and trigger the download
-      final blob = html.Blob([bytes]);
-      final url = html.Url.createObjectUrlFromBlob(blob);
-      final anchor = html.AnchorElement(href: url)
-        ..setAttribute("download", "file.pdf")
-        ..click();
-      html.Url.revokeObjectUrl(url);
-    } catch (e) {
-      print('Error: $e');
-    }
   }
 
   @override
@@ -203,7 +180,11 @@ class ReportPage extends GetView<ReportController> {
                         downloadExcel();
                       }),
                   horizontalSpace(10),
-                  CustomButton(text: 'Download Pdf', onPressed: () {})
+                  CustomButton(
+                      text: 'Download Pdf',
+                      onPressed: () {
+                        reportController.generateDailyPDF();
+                      })
                 ]),
                 Divider(thickness: 2, color: greyColor),
                 verticalSpace(10),

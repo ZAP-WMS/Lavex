@@ -37,6 +37,10 @@ dependencies:
   flutter_svg: null
   get: null
   http: null
+  path_provider: null
+  pdf: null
+  printing: null
+  progress_dialog_null_safe: null
   syncfusion_flutter_core: ^20.4.54
   syncfusion_flutter_datagrid: ^20.4.49
   syncfusion_flutter_xlsio: null
@@ -73,15 +77,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Monstserrat
-  #     fonts:
-  #       - asset: assets/fonts/Monstserrat-Bold.ttf
-  #         weight: 700
-  #       - asset: assets/fonts/Monstserrat-Medium.ttf
-  #         weight: 500
-  #       - asset: assets/fonts/Monstserrat-SemiBold.ttf
-  #         weight: 600
+  fonts:
+    - family: IBMPlexSans
+      fonts:
+        - asset: assets/fonts/IBMPlexSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/IBMPlexSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSans-SemiBold.ttf
+          weight: 600
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
