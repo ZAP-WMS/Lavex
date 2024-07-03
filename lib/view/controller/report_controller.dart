@@ -23,7 +23,7 @@ class ReportController extends GetxController {
   void onInit() {
     // pr = ProgressDialog(context!,
     //     customBody:
-    //         Container(height: 200, width: 100, child: const LoadingFile()));
+    //         Container(height: 200, width: 100,   child: const LoadingFile()));
     super.onInit();
   }
 

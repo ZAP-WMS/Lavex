@@ -16,7 +16,7 @@ class CommonScaffold extends GetView<CompanyController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        backgroundColor: redColor,
+        // backgroundColor: controller.backgroundColor.value,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

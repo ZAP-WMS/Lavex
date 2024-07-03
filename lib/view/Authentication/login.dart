@@ -88,11 +88,11 @@ class _LoginPageState extends State<LoginPage> {
                           width: MediaQuery.of(context).size.width * 0.1,
                           text: 'LOGIN',
                           onPressed: () {
-                            Get.toNamed(AppRoutes.Menu_bar);
-                            // ApiServices().loginUser(
-                            //     context,
-                            //     userNameController.text,
-                            //     passwordController.text);
+                            // Get.toNamed(AppRoutes.Menu_bar);
+                            ApiServices().loginUser(
+                                context,
+                                userNameController.text,
+                                passwordController.text);
                           }),
                       CTextWhite(
                         forgetText,

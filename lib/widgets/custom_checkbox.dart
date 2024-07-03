@@ -19,7 +19,7 @@ class MyCheckbox extends StatelessWidget {
       child: CheckboxListTile(
         contentPadding: const EdgeInsets.all(0),
         title: Text(titleName!),
-        value: false,
+        value: checkedvalue,
         onChanged: onChanged,
         controlAffinity: ListTileControlAffinity.leading,
       ),

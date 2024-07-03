@@ -7,6 +7,7 @@ import 'package:lavex/widgets/custom_spacebar.dart';
 import 'package:lavex/widgets/rich_text.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
+import '../../data/model/register_model.dart';
 import '../../utils/asset_image.dart';
 import '../../utils/colors.dart';
 import '../../utils/string.dart';
@@ -123,11 +124,16 @@ class RegisterPage extends StatelessWidget {
                   text: 'Sign Up',
                   width: 150,
                   onPressed: () {
-                    ApiServices().registerUser(
-                        nameController.text,
-                        emailController.text,
-                        passwordController.text,
-                        numberController.text);
+                    Data data = Data(
+                        name: nameController.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                        mobile: '+91${numberController.text}');
+
+                    RegisterModel registerModel = RegisterModel(
+                      data: data,
+                    );
+                    ApiServices().registerUser(registerModel);
                   }),
               verticalSpace(30),
               GestureDetector(

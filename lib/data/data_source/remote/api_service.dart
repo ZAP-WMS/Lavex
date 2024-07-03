@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:lavex/data/model/item_master.dart';
 import 'package:lavex/data/model/my_clients.dart';
 import 'package:lavex/data/model/my_payments.dart';
@@ -7,8 +9,11 @@ import 'package:http/http.dart' as http;
 import 'package:lavex/data/model/store_model.dart';
 import 'package:lavex/data/model/supplier_payments.dart';
 import 'package:lavex/utils/api_string.dart';
+import '../../../routes/route_pages.dart';
 import '../../../view/presentation/homepage/menu_page.dart';
 import '../../model/add_item.dart';
+import '../../model/register_model.dart';
+import '../local/shared_preference.dart';
 
 class ApiServices {
   Future<List<MyPaymentsModel>> myPaymentData() async {
@@ -69,33 +74,34 @@ class ApiServices {
     }
   }
 
-  Future<void> registerUser(String username, String email, String password,
-      String phoneNumber) async {
-    final String apiUrl = baseUrlTxt + loginUrl;
-    print(apiUrl);
+  Future<void> registerUser(RegisterModel registerModel) async {
+    final String apiUrl = baseUrl + registerUrl;
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'name': username,
-        'email': email,
-        'password': password,
-        'phoneNum': phoneNumber,
-      }),
-    );
+    if (registerModel.data != null) {
+      try {
+        final response = await http.post(Uri.parse(apiUrl),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: jsonEncode(registerModel.data!.toJson()));
 
-    if (response.statusCode == 201) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      print('User registered successfully');
-      print(response.body);
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        if (responseData['success']) {
+          // If the server did return a 200 OK response,
+          // then parse the JSON.
+
+          print(responseData['message']);
+        } else {
+          // If the server did not return a 200 OK response,
+          // then throw an exception.
+          throw Exception('Failed to register user');
+        }
+      } catch (e) {
+        print(e);
+      }
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to register user');
+      print(
+          'Data object in RegisterModel is null'); // Handle case where data is null (if needed)
     }
   }
 
@@ -109,24 +115,23 @@ class ApiServices {
     print('Request Body: ${jsonEncode(requestBody)}');
 
     try {
-      final response = await http.post(
-        Uri.parse(baseUrlTxt + loginUrlTxt),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(requestBody),
-      );
-
-      if (response.statusCode == 200) {
+      final response = await http.post(Uri.parse(baseUrl + loginUrl),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(requestBody));
+      final responseData = jsonDecode(response.body);
+      if (responseData['success']) {
         // Assuming the response is a JSON object with user data or a token
-        final responseData = jsonDecode(response.body);
-        print('Login successful');
-        print('User Data: $responseData');
+        if (responseData.containsKey('token')) {
+          await saveToken(responseData['token']);
+          print('Token saved successfully');
+        }
+        // else {
+        //   print('Token not found in response');
+        // }
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MenuPage()),
-        );
+        Get.toNamed(AppRoutes.Menu_bar);
       } else {
         print('Failed to login. Status Code: ${response.statusCode}');
         print('Response Body: ${response.body}');
