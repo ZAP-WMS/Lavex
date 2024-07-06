@@ -15,9 +15,11 @@ class CreateInvoice extends GetView<InvoiceController> {
     final InvoiceController controller = Get.put(InvoiceController());
     final ScrollController scrollController = ScrollController();
     List<Widget> invoicePages = [
+      PromaForm(pageTitle: createInvoice[0]),
       PromaForm(pageTitle: createInvoice[1]),
       PromaForm(pageTitle: createInvoice[2]),
-      PromaForm(pageTitle: createInvoice[3])
+      PromaForm(pageTitle: createInvoice[3]),
+      PromaForm(pageTitle: createInvoice[4])
     ];
     List<String> tabIcon = [
       //  'assets/create_invoice/invoice setting.png',
@@ -26,7 +28,7 @@ class CreateInvoice extends GetView<InvoiceController> {
       'assets/create_invoice/Debit note.png',
       'assets/create_invoice/credit note.png',
       'assets/create_invoice/delivery challan.png',
-  //    'assets/create_invoice/Cash memo.png',
+      //    'assets/create_invoice/Cash memo.png',
     ];
     return CommonScaffold(
       body: Obx(

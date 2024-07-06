@@ -11,95 +11,78 @@ String createInvoiceModelToJson(CreateInvoiceModel data) =>
     json.encode(data.toJson());
 
 class CreateInvoiceModel {
-  String message;
-  bool success;
-  Data data;
+  String? message;
+  bool? success;
+  InvoiceData invoiceData;
 
   CreateInvoiceModel({
-    required this.message,
-    required this.success,
-    required this.data,
+    this.message,
+    this.success,
+    required this.invoiceData,
   });
 
   factory CreateInvoiceModel.fromJson(Map<String, dynamic> json) =>
       CreateInvoiceModel(
         message: json["message"],
         success: json["success"],
-        data: Data.fromJson(json["data"]),
+        invoiceData: InvoiceData.fromJson(json["InvoiceData"]),
       );
 
   Map<String, dynamic> toJson() => {
         "message": message,
         "success": success,
-        "data": data.toJson(),
+        "InvoiceData": invoiceData.toJson(),
       };
 }
 
-class Data {
-  ClientDetail clientDetail;
+class InvoiceData {
+  InvoiceclientDetail invoiceclientDetail;
   InvoiceDetail invoiceDetail;
-  ShippedDetail shippedDetail;
-  String selectCountry;
+  InvoiceShippedDetail invoiceShippedDetail;
+  bool individual;
+  bool gstRegistration;
+  String gstNumber;
+  String selectCurrency;
   String chanlanType;
-  List<Item> item;
+  List<InvoiceItem> invoiceItem;
 
-  Data({
-    required this.clientDetail,
+  InvoiceData({
+    required this.invoiceclientDetail,
     required this.invoiceDetail,
-    required this.shippedDetail,
-    required this.selectCountry,
+    required this.invoiceShippedDetail,
+    required this.individual,
+    required this.gstRegistration,
+    required this.gstNumber,
+    required this.selectCurrency,
     required this.chanlanType,
-    required this.item,
+    required this.invoiceItem,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        clientDetail: ClientDetail.fromJson(json["clientDetail"]),
+  factory InvoiceData.fromJson(Map<String, dynamic> json) => InvoiceData(
+        invoiceclientDetail:
+            InvoiceclientDetail.fromJson(json["InvoiceclientDetail"]),
         invoiceDetail: InvoiceDetail.fromJson(json["invoiceDetail"]),
-        shippedDetail: ShippedDetail.fromJson(json["shippedDetail"]),
-        selectCountry: json["selectCountry"],
+        invoiceShippedDetail:
+            InvoiceShippedDetail.fromJson(json["InvoiceShippedDetail"]),
+        individual: json["individual"],
+        gstRegistration: json["gstRegistration"],
+        gstNumber: json["gstNumber"],
+        selectCurrency: json["selectCurrency"],
         chanlanType: json["chanlanType"],
-        item: List<Item>.from(json["item"].map((x) => Item.fromJson(x))),
+        invoiceItem: List<InvoiceItem>.from(
+            json["InvoiceItem"].map((x) => InvoiceItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "clientDetail": clientDetail.toJson(),
+        "InvoiceclientDetail": invoiceclientDetail.toJson(),
         "invoiceDetail": invoiceDetail.toJson(),
-        "shippedDetail": shippedDetail.toJson(),
-        "selectCountry": selectCountry,
+        "InvoiceShippedDetail": invoiceShippedDetail.toJson(),
+        "individual": individual,
+        "gstRegistration": gstRegistration,
+        "gstNumber": gstNumber,
+        "selectCurrency": selectCurrency,
         "chanlanType": chanlanType,
-        "item": List<dynamic>.from(item.map((x) => x.toJson())),
-      };
-}
-
-class ClientDetail {
-  String client;
-  String address;
-  String city;
-  String country;
-  String stateCode;
-
-  ClientDetail({
-    required this.client,
-    required this.address,
-    required this.city,
-    required this.country,
-    required this.stateCode,
-  });
-
-  factory ClientDetail.fromJson(Map<String, dynamic> json) => ClientDetail(
-        client: json["client"],
-        address: json["address"],
-        city: json["city"],
-        country: json["country"],
-        stateCode: json["stateCode"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "client": client,
-        "address": address,
-        "city": city,
-        "country": country,
-        "stateCode": stateCode,
+        "InvoiceItem": List<dynamic>.from(invoiceItem.map((x) => x.toJson())),
       };
 }
 
@@ -139,14 +122,14 @@ class InvoiceDetail {
       };
 }
 
-class Item {
+class InvoiceItem {
   String name;
   String brand;
   int quantity;
   double price;
   int gst;
 
-  Item({
+  InvoiceItem({
     required this.name,
     required this.brand,
     required this.quantity,
@@ -154,7 +137,7 @@ class Item {
     required this.gst,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
+  factory InvoiceItem.fromJson(Map<String, dynamic> json) => InvoiceItem(
         name: json["name"],
         brand: json["brand"],
         quantity: json["quantity"],
@@ -171,16 +154,17 @@ class Item {
       };
 }
 
-class ShippedDetail {
+class InvoiceShippedDetail {
   String toShipped;
   String forToShipped;
 
-  ShippedDetail({
+  InvoiceShippedDetail({
     required this.toShipped,
     required this.forToShipped,
   });
 
-  factory ShippedDetail.fromJson(Map<String, dynamic> json) => ShippedDetail(
+  factory InvoiceShippedDetail.fromJson(Map<String, dynamic> json) =>
+      InvoiceShippedDetail(
         toShipped: json["toShipped"],
         forToShipped: json["forToShipped"],
       );
@@ -188,5 +172,38 @@ class ShippedDetail {
   Map<String, dynamic> toJson() => {
         "toShipped": toShipped,
         "forToShipped": forToShipped,
+      };
+}
+
+class InvoiceclientDetail {
+  String client;
+  String address;
+  String city;
+  String country;
+  String stateCode;
+
+  InvoiceclientDetail({
+    required this.client,
+    required this.address,
+    required this.city,
+    required this.country,
+    required this.stateCode,
+  });
+
+  factory InvoiceclientDetail.fromJson(Map<String, dynamic> json) =>
+      InvoiceclientDetail(
+        client: json["client"],
+        address: json["address"],
+        city: json["city"],
+        country: json["country"],
+        stateCode: json["stateCode"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "client": client,
+        "address": address,
+        "city": city,
+        "country": country,
+        "stateCode": stateCode,
       };
 }

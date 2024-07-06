@@ -41,8 +41,7 @@ class MyApp extends StatelessWidget {
     return Obx(() {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.LOGIN,
-
+        initialRoute: AppRoutes.menuBar,
         getPages: AppPages.list,
         themeMode: ThemeMode.system,
         theme: ThemeData(
@@ -63,7 +62,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        // home: ProfilePage(),
       );
     });
   }

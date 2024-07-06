@@ -39,28 +39,14 @@ class CustomTextFormField extends StatelessWidget {
               decoration: InputDecoration(
                   hintText: name,
                   prefixIcon: icon,
-                  // suffixIcon: isSuffixIcon
-                  //     ? IconButton(
-                  //         onPressed: () async {
-                  //           DateTime? pickedDate = await showDatePicker(
-                  //               context: context,
-                  //               initialDate: DateTime.now(),
-                  //               firstDate: DateTime(1950),
-
-                  //               //DateTime.now() - not to allow to choose before today.
-                  //               lastDate: DateTime(2100));
-
-                  //           if (pickedDate != null) {
-                  //             controller.text =
-                  //                 DateFormat('dd/MM/yyyy').format(pickedDate);
-                  //           }
-                  //         },
-                  //         icon: const Icon(Icons.calendar_today_outlined))
-                  //     : const SizedBox.shrink(),
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 2, horizontal: 2)),
               controller: controller,
               textAlignVertical: TextAlignVertical.center,
+              onFieldSubmitted: (value) {
+                
+              },
+              onChanged: (value) {},
               // onChanged: (value) {
               //   saveDataToSharedPreferences(controller.text, value);
               // },

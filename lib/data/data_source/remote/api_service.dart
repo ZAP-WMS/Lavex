@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:lavex/data/model/proforma_invoice.dart';
 import 'package:lavex/data/model/item_master.dart';
 import 'package:lavex/data/model/my_clients.dart';
 import 'package:lavex/data/model/my_payments.dart';
@@ -10,12 +10,175 @@ import 'package:lavex/data/model/store_model.dart';
 import 'package:lavex/data/model/supplier_payments.dart';
 import 'package:lavex/utils/api_string.dart';
 import '../../../routes/route_pages.dart';
-import '../../../view/presentation/homepage/menu_page.dart';
+import '../../model/add_client_model.dart';
 import '../../model/add_item.dart';
+import '../../model/credit_note.dart';
+import '../../model/debit_note.dart';
+import '../../model/invoice.dart';
 import '../../model/register_model.dart';
 import '../local/shared_preference.dart';
 
 class ApiServices {
+  Future<ProformaInvoiceModel> proFormaData(
+      ProformaInvoiceModel proformaData) async {
+    try {
+      Uri url = Uri.parse('$baseUrl$proFormaUrl');
+      var response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json'
+            // Add other headers if needed
+          },
+          body: jsonEncode(proformaData.data!.toJson()));
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if (responseData['success']) {
+          var data = proformaInvoiceModelFromJson(response.body);
+          return data;
+        } else {
+          print(proformaData.data!.toJson());
+          print('message${responseData['message']}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  Future<CreateInvoiceModel> invoiceData(
+      CreateInvoiceModel createInvoiceModel) async {
+    try {
+      Uri url = Uri.parse('$baseUrl$invoiceUrl');
+      var response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json'
+            // Add other headers if needed
+          },
+          body: jsonEncode(createInvoiceModel.invoiceData.toJson()));
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if (responseData['success']) {
+          var data = createInvoiceModelFromJson(response.body);
+          return data;
+        } else {
+          print('message${responseData['message']}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  Future<DebitNoteModel> debitData(DebitNoteModel debitNoteModel) async {
+    try {
+      Uri url = Uri.parse('$baseUrl$debitUrl');
+      var response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json'
+            // Add other headers if needed
+          },
+          body: jsonEncode(debitNoteModel.toJson()));
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if (responseData['success']) {
+          var data = debitNoteModelFromJson(response.body);
+          return data;
+        } else {
+          print('message${responseData['message']}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  // credit invoice in create invoice
+  Future<DebitNoteModel> creditData(CreditNoteModel creditNoteModel) async {
+    try {
+      Uri url = Uri.parse('$baseUrl$creditUrl');
+      var response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json'
+            // Add other headers if needed
+          },
+          body: jsonEncode(creditNoteModel.toJson()));
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if (responseData['success']) {
+          var data = debitNoteModelFromJson(response.body);
+          return data;
+        } else {
+          print('message${responseData['message']}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+// Add client APi
+  Future<AddClientModel> addClientData(AddClientModel addClientModel) async {
+    try {
+      Uri url = Uri.parse('$baseUrl$addClientUrl');
+      var response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json'
+            // Add other headers if needed
+          },
+          body: jsonEncode(addClientModel.toJson()));
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if (responseData['success']) {
+          var data = addClientModelFromJson(response.body);
+          return data;
+        } else {
+          print('message${responseData['message']}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+// get proforma data
+
+  Future<ProformaInvoiceModel> myProFormaData(String type) async {
+    Uri url = Uri.parse('$baseUrl$getProForma$type');
+    var response = await http.get(url);
+    final Map<String, dynamic> responseData = jsonDecode(response.body);
+    if (responseData['success']) {
+      print(response.body);
+      var data = proformaInvoiceModelFromJson(response.body);
+      return data;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   Future<List<MyPaymentsModel>> myPaymentData() async {
     Uri url = Uri.parse('$baseUrlTxt$myPaymentsEndUrlTxt');
     var response = await http.get(url);
@@ -131,7 +294,7 @@ class ApiServices {
         //   print('Token not found in response');
         // }
 
-        Get.toNamed(AppRoutes.Menu_bar);
+        Get.toNamed(AppRoutes.menuBar);
       } else {
         print('Failed to login. Status Code: ${response.statusCode}');
         print('Response Body: ${response.body}');

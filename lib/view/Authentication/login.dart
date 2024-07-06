@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(AppRoutes.REGISTER);
+                      Get.toNamed(AppRoutes.register);
                     },
                     child: Container(
                         alignment: Alignment.centerRight,

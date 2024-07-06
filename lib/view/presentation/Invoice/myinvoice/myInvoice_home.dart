@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/utils/string.dart';
+import 'package:lavex/view/presentation/Invoice/myinvoice/pro_forma_myInvoice.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import '../../../../common/custom_text.dart';
 import '../../../../utils/asset_image.dart';
@@ -70,7 +71,7 @@ class MyHomeInvoice extends GetView<InvoiceController> {
             ),
           ),
           Expanded(
-            child: MyInvoiceList(
+            child: MyProFormaInvoice(
                 pageTitle: createInvoice[controller.currentIndex.value]),
           )
         ]),

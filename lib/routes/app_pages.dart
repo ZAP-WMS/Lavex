@@ -2,6 +2,7 @@ import 'package:get/route_manager.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/Authentication/login.dart';
 import 'package:lavex/view/Authentication/register.dart';
+import 'package:lavex/view/presentation/clients/add_client.dart';
 import 'package:lavex/view/presentation/edit/edit_table.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
 import 'package:lavex/view/presentation/homepage/menu_page.dart';
@@ -22,76 +23,80 @@ import '../view/presentation/store/add_item.dart';
 class AppPages {
   static var list = [
     GetPage(
-      name: AppRoutes.Home, page: () => const HomePage(),
+      name: AppRoutes.home, page: () => const HomePage(),
       //   binding: SplashBinding(),
     ),
     GetPage(
-      name: AppRoutes.Menu_bar,
+      name: AppRoutes.menuBar,
       page: () => const MenuPage(),
       //   binding: SplashBinding(),
     ),
     GetPage(
-      name: AppRoutes.LOGIN,
+      name: AppRoutes.login,
       page: () => const LoginPage(),
       //   binding: SplashBinding(),
     ),
     GetPage(
-      name: AppRoutes.REGISTER,
+      name: AppRoutes.register,
       page: () => RegisterPage(),
       //   binding: SplashBinding(),
     ),
     GetPage(
-      name: AppRoutes.NavBar_Page,
+      name: AppRoutes.navBarPage,
       page: () => NavBarPage(),
       binding: NavBarBinding(),
     ),
     GetPage(
-      name: AppRoutes.CREATE_INVOICE,
+      name: AppRoutes.createInvoice,
       page: () => CreateInvoice(),
       binding: CreateInvoiceBinding(),
     ),
     GetPage(
-        name: AppRoutes.PROMA_FORM,
+        name: AppRoutes.proForma,
         page: () => PromaForm(),
         binding: PromaFormBinding()),
     GetPage(
-      name: AppRoutes.MY_HOME_INVOICE,
+      name: AppRoutes.myHomeInvoice,
       page: () => const MyHomeInvoice(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
-      name: AppRoutes.MY_INVOICE,
+      name: AppRoutes.myInvoice,
       page: () => MyInvoiceList(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
-      name: AppRoutes.CREATE_INVOICE_LIST,
+      name: AppRoutes.createInvoiceList,
       page: () => const CreateInvoiceList(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
-      name: AppRoutes.STORE_PAGE,
+      name: AppRoutes.storePage,
       page: () => StorePage(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
-      name: AppRoutes.Cash_Inward_home,
+      name: AppRoutes.cashInwardHome,
       page: () => const CashInwardHome(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
-      name: AppRoutes.Stock_Page,
+      name: AppRoutes.stockPage,
       page: () => StockPage(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
-      name: AppRoutes.Add_Item,
+      name: AppRoutes.addItem,
       page: () => AddItem(),
       //  binding: PromaFormBinding()
     ),
     GetPage(
-      name: AppRoutes.Edit_Page,
+      name: AppRoutes.editPage,
       page: () => EditTable(),
+    ),
+    GetPage(
+      name: AppRoutes.addClient,
+      page: () => AddClient(),
     ),
   ];
 }

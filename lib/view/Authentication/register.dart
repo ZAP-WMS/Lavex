@@ -138,7 +138,7 @@ class RegisterPage extends StatelessWidget {
               verticalSpace(30),
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(AppRoutes.LOGIN);
+                  Get.toNamed(AppRoutes.login);
                 },
                 child: RichTextWidget(
                     title: 'Already have an account? ',

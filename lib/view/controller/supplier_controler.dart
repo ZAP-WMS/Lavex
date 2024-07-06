@@ -22,7 +22,7 @@ class SupplierController extends GetxController {
       if (searchTxt.text.isNotEmpty) {
 
         List<SupplierPaymentsModel> filteredData = mydata
-            .where((item) => item.supplierName.toLowerCase().contains(searchTxt
+           .where( (item) => item.supplierName.toLowerCase().contains(searchTxt
                     .text
                     .toString()
                     .toLowerCase()) // Assuming the model has a 'name' property

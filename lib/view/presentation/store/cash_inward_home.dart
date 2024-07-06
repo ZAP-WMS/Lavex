@@ -49,7 +49,7 @@ class CashInwardHome extends GetView<CashInwardController> {
                       child: GestureDetector(
                         onTap: () {
                           controller.currentIndex.value = index;
-                          Get.toNamed(AppRoutes.Cash_Inward_home);
+                          Get.toNamed(AppRoutes.cashInwardHome);
                         },
                         child: Container(
                           height: 50,

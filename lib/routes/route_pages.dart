@@ -1,19 +1,20 @@
 class AppRoutes {
   /* Authentication */
-  static const String SPLASH = '/splash';
-  static const String Home = '/home';
-  static const String Menu_bar = '/menu-bar';
-  static const String LOGIN = '/login';
-  static const String REGISTER = '/register';
-  static const String NavBar_Page = '/navbar-page';
-  static const String CREATE_INVOICE = '/create-invoice';
-  static const String PROMA_FORM = '/proma-form';
-  static const String MY_HOME_INVOICE = '/my-home-invoice';
-  static const String MY_INVOICE = '/my-invoice';
-  static const String CREATE_INVOICE_LIST = '/create-invoice-list';
-  static const String STORE_PAGE = '/store-page';
-  static const String Cash_Inward_home = '/cash-inward';
-  static const String Stock_Page = '/stock-page';
-  static const String Add_Item = '/item-page';
-  static const String Edit_Page = '/edit-page';
+  static const String splash = '/splash';
+  static const String home = '/home';
+  static const String menuBar = '/menu-bar';
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String navBarPage = '/navbar-page';
+  static const String createInvoice = '/create-invoice';
+  static const String proForma = '/proma-form';
+  static const String myHomeInvoice = '/my-home-invoice';
+  static const String myInvoice = '/my-invoice';
+  static const String createInvoiceList = '/create-invoice-list';
+  static const String storePage = '/store-page';
+  static const String cashInwardHome = '/cash-inward';
+  static const String stockPage = '/stock-page';
+  static const String addItem = '/item-page';
+  static const String editPage = '/edit-page';
+  static const String addClient = '/add-client';
 }

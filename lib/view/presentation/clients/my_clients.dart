@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/my_clients.dart';
 import 'package:lavex/datasource/my_clients_datasource.dart';
+import 'package:lavex/routes/route_pages.dart';
+import 'package:lavex/view/presentation/clients/add_client.dart';
 import 'package:lavex/widgets/custom_button.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:lavex/widgets/custom_spacebar.dart';
@@ -69,7 +71,11 @@ class MyClient extends GetView<MyClientController> {
                 Row(
                   children: [
                     verticalSpace(50),
-                    CustomButton(text: 'My Client', onPressed: () {}),
+                    CustomButton(
+                        text: 'Add Client',
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.addClient);
+                        }),
                     horizontalSpace(10),
                     CustomButton(text: 'Delete', onPressed: () {}),
                     horizontalSpace(10),

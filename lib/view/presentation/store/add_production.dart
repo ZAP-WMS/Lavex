@@ -83,7 +83,7 @@ class AddProduction extends GetView<ProductionController> {
                     CustomField(
                         width: 300,
                         height: 40,
-                        name: accountablePerson,
+                        name: accountablePersonTxt,
                         controller: addressController,
                         style: normalTextStyle,
                         isreadOnly: false,

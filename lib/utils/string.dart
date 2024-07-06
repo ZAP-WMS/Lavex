@@ -9,9 +9,27 @@ String settingText = 'Setting';
 String adminProfileText = 'AdminProfile';
 String logoutText = 'Logout';
 
+//Add Client
+String firstCreditLimit = '1st Credit Limit';
+String secondCreditLimit = '2ⁿᵈ Credit Limit';
+String firstCreditLimitdays = '1st Credit Limit Days';
+String secondCreditLimitdays = '2ⁿᵈ Credit Limit Days';
+String panNumberTxt = 'Pan Number';
+String beneficiaryTxt = 'Beneficiary';
+String clientShortCodeTxt = 'Client Short Code';
+String shipToTxt = 'Ship To';
+String saveClientTxt = 'Save Client';
+String cancelTxt = 'Cancel';
+
 // create invoice
 String clientTxt = 'Client:';
 String addressTxt = 'Address:';
+String locationTxt = 'Location';
+String areaTxt = 'Location';
+String pincodeTxt = 'Location';
+String emailTxt = 'Email Id';
+String mobileNumberTxt = 'Mobile Number';
+String contactNumberTxt = 'Contact Number';
 String formaTxt = 'Pro-forma No:';
 String individualTxt = 'Individual:';
 String cityTxt = 'city:';
@@ -20,6 +38,7 @@ String shortCodeTxt = 'ShortCode';
 String stateTxt = 'State';
 String dateTxt = 'Invoice date';
 String gstregistrationTxt = 'GST Registration';
+String gstNumerTxt = 'GST Number';
 String toShipedTxt = 'To Shipped';
 String stateCodeTxt = 'State Code';
 String dueDateTxt = 'Due Date';
@@ -49,6 +68,7 @@ String selectTxt = 'Select';
 // Invoice
 String invoiceTxt = 'invoice';
 
+String gradeTxt = 'Grade';
 //create invoice Button Name
 String createTxt = 'Create Incvoice';
 
@@ -77,7 +97,7 @@ String exportDataTxt = 'Export Data';
 
 // cash Inward
 String forUnitTxt = 'For Unit';
-String accountablePerson = 'Accountable Person';
+String accountablePersonTxt = 'Accountable Person';
 String cashMovementNo = 'Cash Movement No';
 String supplierName = "Supplier's Name";
 String supplierInvoiceNo = 'Supplier Invoice No';

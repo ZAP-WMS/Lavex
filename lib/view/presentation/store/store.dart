@@ -75,10 +75,10 @@ class StorePage extends GetView<StoreController> {
     ];
 
     List<String> pages = [
-      AppRoutes.Cash_Inward_home,
-      AppRoutes.Cash_Inward_home,
-      AppRoutes.Cash_Inward_home,
-      AppRoutes.Stock_Page
+      AppRoutes.cashInwardHome,
+      AppRoutes.cashInwardHome,
+      AppRoutes.cashInwardHome,
+      AppRoutes.stockPage
     ];
     return CommonScaffold(
       body: Obx(
@@ -162,5 +162,4 @@ class StorePage extends GetView<StoreController> {
       );
     }
   }
-
 }
