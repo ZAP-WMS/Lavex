@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lavex/utils/colors.dart';
 import 'package:lavex/utils/string.dart';
+import 'package:lavex/view/presentation/Companey/Managecompaney.dart';
 import 'package:lavex/view/presentation/Invoice/createinvoice/create_invoice.dart';
 import 'package:lavex/view/presentation/Invoice/myinvoice/myInvoice_home.dart';
 import 'package:lavex/view/presentation/clients/my_clients.dart';
@@ -10,6 +11,7 @@ import 'package:lavex/view/presentation/payments/my_payments.dart';
 import 'package:lavex/view/presentation/payments/my_supplier_payment.dart';
 import '../../../widgets/custom_card.dart';
 import '../../../widgets/custom_scaffold.dart';
+import '../Companey/add_company.dart';
 import '../Report/reports.dart';
 import '../BOM/bom.dart';
 
@@ -19,6 +21,7 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> pageName = [
+      AddCompaney(),
       const HomePage(),
       CreateInvoice(),
       const MyHomeInvoice(),

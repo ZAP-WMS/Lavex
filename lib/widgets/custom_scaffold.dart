@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lavex/widgets/custom_button.dart';
 import '../common/custom_text.dart';
 import '../utils/colors.dart';
 import '../view/controller/company_controller.dart';
@@ -16,7 +17,7 @@ class CommonScaffold extends GetView<CompanyController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        // backgroundColor: controller.backgroundColor.value,
+        backgroundColor: controller.bgColor.value,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -35,8 +36,13 @@ class CommonScaffold extends GetView<CompanyController> {
                     items: controller.companyList.map((String company) {
                       return DropdownMenuItem<String>(
                           value: company,
-                          child: Text(company,
-                              style: TextStyle(color: blackColor)));
+                          child: company != "Create companey"
+                              ? Text(company,
+                                  style: TextStyle(color: blackColor))
+                              : CustomButton(
+                                  text: "Create Companey",
+                                  onPressed: () =>
+                                      {Get.toNamed("/addcompaney")}));
                     }).toList(),
                     selectedItemBuilder: (BuildContext context) {
                       return controller.companyList.map((String company) {
@@ -46,7 +52,10 @@ class CommonScaffold extends GetView<CompanyController> {
                     },
                     onChanged: (String? value) {
                       if (value != null) {
-                        controller.changeCompany(value);
+                        if (value == "Create companey") {
+                        } else {
+                          controller.changeCompany(value);
+                        }
                       }
                     },
                   );

@@ -8,7 +8,12 @@ String debitUrl = '/api/debitnote/debitNoteCreate';
 String creditUrl = '/api/creditnote/creditNoteCreate';
 String addClientUrl = '/api/client/addClient';
 String getProForma = '/api/invoices/myInvoices?type=';
+String getallcompeney = "/api/company/allcompany";
+String addcompeney = "/api/company/addCompany";
+String deletecompeney = "/api/company/deleteCompany/";
+String singlecompeney = "/api/company/getCompany/";
 
+// --------------------------------------------------------
 String baseUrlTxt = 'https://zapwms.in/';
 String myPaymentsEndUrlTxt = 'lavex_api/my_payments.php';
 String supplierEndUrlTxt = 'lavex_api/supplier_payments.php';

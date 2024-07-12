@@ -57,9 +57,9 @@ class ReportPage extends GetView<ReportController> {
 
     // Add some data to the document
     var sheet = excel['Sheet1'];
-    sheet.appendRow(['Header1', 'Header2', 'Header3']);
-    sheet.appendRow(['Row1-Col1', 'Row1-Col2', 'Row1-Col3']);
-    sheet.appendRow(['Row2-Col1', 'Row2-Col2', 'Row2-Col3']);
+    // sheet.appendRow(['Header1', 'Header2', 'Header3']);
+    // sheet.appendRow(['Row1-Col1', 'Row1-Col2', 'Row1-Col3']);
+    // sheet.appendRow(['Row2-Col1', 'Row2-Col2', 'Row2-Col3']);
 
     // Encode the document to a byte array
     var bytes = excel.encode();

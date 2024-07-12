@@ -13,6 +13,7 @@ import '../view/Authentication/navbar_page.dart';
 import '../view/binding/create_invoice_binding.dart';
 import '../view/binding/index_binding.dart';
 import '../view/binding/proma_form_binding.dart';
+import '../view/presentation/Companey/Managecompaney.dart';
 import '../view/presentation/Invoice/createinvoice/create_invoiceList.dart';
 import '../view/presentation/Invoice/createinvoice/create_invoice.dart';
 import '../view/presentation/Invoice/createinvoice/pro_forma.dart';
@@ -29,6 +30,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.menuBar,
       page: () => const MenuPage(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.addcompaney,
+      page: () => MyCompaney(),
       //   binding: SplashBinding(),
     ),
     GetPage(

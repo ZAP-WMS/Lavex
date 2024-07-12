@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:js_interop';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/proforma_invoice.dart';
 import 'package:lavex/data/model/item_master.dart';
+
 import 'package:lavex/data/model/my_clients.dart';
 import 'package:lavex/data/model/my_payments.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +14,7 @@ import 'package:lavex/data/model/supplier_payments.dart';
 import 'package:lavex/utils/api_string.dart';
 import '../../../routes/route_pages.dart';
 import '../../model/add_client_model.dart';
+import '../../model/add_companie_model.dart' as model;
 import '../../model/add_item.dart';
 import '../../model/credit_note.dart';
 import '../../model/debit_note.dart';
@@ -306,16 +310,15 @@ class ApiServices {
     }
   }
 
-  Future<List<String>> fetchCompanies() async {
-    final response = await http.get(Uri.parse(baseUrlTxt + comapanyUrlTxt));
-
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((company) => company['name'].toString()).toList();
-    } else {
-      throw Exception('Failed to load companies');
-    }
-  }
+  // Future<List<String>> fetchCompanies() async {
+  //   final response = await http.get(Uri.parse(baseUrlTxt + comapanyUrlTxt));
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> data = json.decode(response.body);
+  //     return data.map((company) => company['name'].toString()).toList();
+  //   } else {
+  //     throw Exception('Failed to load companies');
+  //   }
+  // }
 
   Future<void> postItemData(AddItemModel itemData) async {
     final String url = baseUrlTxt + addItemUrlTxt;
