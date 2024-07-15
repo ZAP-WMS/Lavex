@@ -12,6 +12,9 @@ String getallcompeney = "/api/company/allcompany";
 String addcompeney = "/api/company/addCompany";
 String deletecompeney = "/api/company/deleteCompany/";
 String singlecompeney = "/api/company/getCompany/";
+String updatecompeney = "/api/company/updateCompany/";
+String getallclient = "/api/client/allClient";
+String deleteclient = "/api/client/deleteClient/";
 
 // --------------------------------------------------------
 String baseUrlTxt = 'https://zapwms.in/';

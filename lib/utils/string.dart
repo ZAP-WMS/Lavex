@@ -25,8 +25,8 @@ String cancelTxt = 'Cancel';
 String clientTxt = 'Client:';
 String addressTxt = 'Address:';
 String locationTxt = 'Location';
-String areaTxt = 'Location';
-String pincodeTxt = 'Location';
+String areaTxt = 'Area';
+String pincodeTxt = 'Pincode';
 String emailTxt = 'Email Id';
 String mobileNumberTxt = 'Mobile Number';
 String contactNumberTxt = 'Contact Number';
@@ -298,6 +298,7 @@ final List<String> supplierPayments = [
 
 // client
 final List<String> myClientTableName = [
+  "CId",
   'Name',
   'ShortCode',
   'Client Short-Code',

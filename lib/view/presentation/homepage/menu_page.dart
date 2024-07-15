@@ -21,7 +21,6 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> pageName = [
-      AddCompaney(),
       const HomePage(),
       CreateInvoice(),
       const MyHomeInvoice(),

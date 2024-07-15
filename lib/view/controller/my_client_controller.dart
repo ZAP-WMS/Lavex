@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lavex/data/model/my_clients.dart';
+import 'package:lavex/data/model/get_client_model.dart';
 import '../../data/data_source/remote/api_service.dart';
 
 class MyClientController extends GetxController {
@@ -14,22 +14,28 @@ class MyClientController extends GetxController {
     super.onInit();
   }
 
+  Future<List<MyClientModel>> deleteClient(id) async {
+    await ApiServices().DeleteClient(id).whenComplete(() => {myClientData()});
+
+    return myClientModel;
+  }
+
   void myClientData() async {
     try {
       isLoading(true);
+
       List<MyClientModel> mydata = await ApiServices().myClient();
       if (searchTxt.text.isNotEmpty) {
         List<MyClientModel> filteredData = mydata
-            .where((item) => item.clientName.toLowerCase().contains(searchTxt
-                    .text
+            .where((item) => item.client!.toLowerCase().contains(searchTxt.text
                     .toString()
                     .toLowerCase()) // Assuming the model has a 'name' property
                 )
             .toList();
         myClientModel.clear();
-        myClientModel.addAll(filteredData);
+        myClientModel.assignAll(filteredData);
       } else {
-        myClientModel.addAll(mydata);
+        myClientModel.assignAll(mydata);
       }
     } finally {
       isLoading(false);

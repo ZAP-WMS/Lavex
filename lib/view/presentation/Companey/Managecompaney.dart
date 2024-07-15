@@ -40,62 +40,81 @@ class MyCompaney extends GetView<CompanyController> {
               ),
             ),
             Obx(() {
-              return Container(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.companeydata.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                controller.companeydata[index].name
-                                        .toString()
-                                        .toUpperCase() ??
-                                    "",
-                                style: normalappcolorTextStyle,
+              return controller.loader.value
+                  ? Container(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.companeydata.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      controller.companeydata[index].name
+                                              .toString()
+                                              .toUpperCase() ??
+                                          "",
+                                      style: normalappcolorTextStyle,
+                                    ),
+                                    Row(
+                                      children: [
+                                        InkWell(
+                                            onTap: () async {
+                                              controller.loader.value = false;
+                                              controller.data = controller
+                                                  .companeydata
+                                                  .singleWhere((e) =>
+                                                      e.sId ==
+                                                      controller
+                                                          .companeydata[index]
+                                                          .sId);
+                                              controller.loader.value = true;
+                                              // await controller
+                                              //     .fetchsingelCompanie(
+                                              //         controller
+                                              //             .companeydata[index]
+                                              //             .sId
+                                              //             .toString())
+                                              //     .whenComplete(() {
+                                              //   controller.loader.value = true;
+                                              // });
+                                              Get.toNamed(
+                                                  AppRoutes.update_companey,
+                                                  arguments: {});
+                                            },
+                                            child: Icon(Icons.edit)),
+                                        InkWell(
+                                            onTap: () {
+                                              controller.loader.value = false;
+                                              controller.DeleteCompaney(
+                                                      controller
+                                                              .companeydata[
+                                                                  index]
+                                                              .sId ??
+                                                          "")
+                                                  .whenComplete(() {
+                                                controller.loader.value = true;
+                                              });
+                                            },
+                                            child: Icon(Icons.delete)),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  InkWell(
-                                      onTap: () async {
-                                        Singelcompeney data = await controller
-                                            .fetchsingelCompanie(controller
-                                                .companeydata[index].sId
-                                                .toString());
-                                        Get.to(UpdateCompaney(data));
-                                      },
-                                      child: Icon(Icons.edit)),
-                                  InkWell(
-                                      onTap: () {
-                                        controller.DeleteCompaney(controller
-                                                .companeydata[index].sId ??
-                                            "");
-                                        //     .whenComplete(() {
-                                        //   controller.companeydata!.removeWhere(
-                                        //       (e) =>
-                                        //           e.sId ==
-                                        //           controller
-                                        //               .companeydata[index].sId);
-                                        // });
-                                      },
-                                      child: Icon(Icons.delete)),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      );
+                            );
 
-                      // ;
-                    }),
-              );
+                            // ;
+                          }),
+                    )
+                  : Center(child: CircularProgressIndicator());
             }),
             InkWell(
-              onTap: () => Get.to(AddCompaney()),
+              onTap: () => Get.toNamed("/addcompaney"),
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

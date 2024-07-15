@@ -2,6 +2,7 @@ import 'package:get/route_manager.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/Authentication/login.dart';
 import 'package:lavex/view/Authentication/register.dart';
+import 'package:lavex/view/presentation/Companey/update_company.dart';
 import 'package:lavex/view/presentation/clients/add_client.dart';
 import 'package:lavex/view/presentation/edit/edit_table.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
@@ -14,6 +15,7 @@ import '../view/binding/create_invoice_binding.dart';
 import '../view/binding/index_binding.dart';
 import '../view/binding/proma_form_binding.dart';
 import '../view/presentation/Companey/Managecompaney.dart';
+import '../view/presentation/Companey/add_company.dart';
 import '../view/presentation/Invoice/createinvoice/create_invoiceList.dart';
 import '../view/presentation/Invoice/createinvoice/create_invoice.dart';
 import '../view/presentation/Invoice/createinvoice/pro_forma.dart';
@@ -33,8 +35,18 @@ class AppPages {
       //   binding: SplashBinding(),
     ),
     GetPage(
-      name: AppRoutes.addcompaney,
+      name: AppRoutes.managecompaney,
       page: () => MyCompaney(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.addcompaney,
+      page: () => AddCompaney(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.update_companey,
+      page: () => UpdateCompaney(),
       //   binding: SplashBinding(),
     ),
     GetPage(

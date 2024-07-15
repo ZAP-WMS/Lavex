@@ -17,5 +17,7 @@ class AppRoutes {
   static const String addItem = '/item-page';
   static const String editPage = '/edit-page';
   static const String addClient = '/add-client';
+  static const String managecompaney = '/managecompaney';
   static const String addcompaney = '/addcompaney';
+  static const String update_companey = '/updatecompaney';
 }

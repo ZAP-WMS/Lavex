@@ -3,10 +3,10 @@ import 'dart:js_interop';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lavex/data/model/get_client_model.dart';
 import 'package:lavex/data/model/proforma_invoice.dart';
 import 'package:lavex/data/model/item_master.dart';
 
-import 'package:lavex/data/model/my_clients.dart';
 import 'package:lavex/data/model/my_payments.dart';
 import 'package:http/http.dart' as http;
 import 'package:lavex/data/model/store_model.dart';
@@ -23,6 +23,7 @@ import '../../model/register_model.dart';
 import '../local/shared_preference.dart';
 
 class ApiServices {
+  final dio = Dio();
   Future<ProformaInvoiceModel> proFormaData(
       ProformaInvoiceModel proformaData) async {
     try {
@@ -140,31 +141,45 @@ class ApiServices {
   }
 
 // Add client APi
-  Future<AddClientModel> addClientData(AddClientModel addClientModel) async {
+  Future<void> addClientData(AddClientModel addClientModel) async {
     try {
-      Uri url = Uri.parse('$baseUrl$addClientUrl');
-      var response = await http.post(url,
-          headers: {
-            'Content-Type': 'application/json'
-            // Add other headers if needed
-          },
-          body: jsonEncode(addClientModel.toJson()));
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-
+      var response = await dio.post('$baseUrl$addClientUrl',
+          data: addClientModel.clientData.toJson());
+      print(response.data["message"]);
+      Get.snackbar("Status", response.data["message"].toString(),
+          snackPosition: SnackPosition.BOTTOM);
       if (response.statusCode == 200) {
-        if (responseData['success']) {
-          var data = addClientModelFromJson(response.body);
-          return data;
+        if (response.data["success"] ?? false) {
+          print(response.data["success"]);
+
+          // Get.back();
         } else {
-          print('message${responseData['message']}');
+          print('message${response.data["message"]}');
           throw Exception('Failed to create payment');
         }
       } else {
-        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+        throw Exception('Failed to create payment: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error: $e');
       throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  Future<void> DeleteClient(String id) async {
+    var response = await dio.delete('$baseUrl$deleteclient$id');
+
+    print(response.data["message"]);
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] ?? false) {
+        print(response.data["success"]);
+      } else {
+        print('message${response.data["message"]}');
+        throw Exception('Failed to create payment');
+      }
+    } else {
+      throw Exception('Failed to create payment: ${response.statusMessage}');
     }
   }
 
@@ -206,11 +221,19 @@ class ApiServices {
   }
 
   Future<List<MyClientModel>> myClient() async {
-    Uri url = Uri.parse('$baseUrlTxt$myClientEndUrlTxt');
+    Uri url = Uri.parse('$baseUrl$getallclient');
     var response = await http.get(url);
+
+    print(response.body);
     if (response.statusCode == 200) {
-      var data = MyClientModelFromJson(response.body);
-      return data;
+      getClient? data;
+      try {
+        data = getClient.fromJson(jsonDecode(response.body));
+        print(data);
+      } on Exception catch (e) {
+        print(e);
+      }
+      return data!.data ?? [];
     } else {
       throw Exception('Failed to load data');
     }

@@ -9,13 +9,16 @@ import 'package:lavex/utils/api_string.dart';
 
 import '../../data/model/add_companie_model.dart' as model;
 import '../../data/model/getcompeny_model.dart';
+import '../../data/model/update_companie.dart';
 import '../../utils/colors.dart';
 
 class CompanyController extends GetxController {
   var companyList = <String>[].obs;
+  RxBool loader = true.obs;
   List<Data> companeydata = <Data>[].obs;
   var selectedCompany = ''.obs;
   var companyName = ''.obs;
+  Data data = Data();
   Rx<Color> bgColor = redColor.obs;
 
   @override
@@ -23,6 +26,8 @@ class CompanyController extends GetxController {
     super.onInit();
     fetchCompanies();
   }
+
+  Future<void> Base64image() async {}
 
   Future<void> fetchCompanies() async {
     try {
@@ -54,10 +59,9 @@ class CompanyController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
-        var companey = Singelcompeney.fromJson(data["data"]);
+        data = Singelcompeney.fromJson(data["data"]);
 
-        print(companey);
-        return companey;
+        return data;
       } else {
         throw Exception('Failed to load companies');
       }
@@ -72,6 +76,29 @@ class CompanyController extends GetxController {
       final dio = Dio();
       print(jsonEncode(obj.toJson()));
       var response = await dio.post(baseUrl + addcompeney, data: obj.toJson());
+
+      if (response.statusCode == 200) {
+        Get.snackbar("Status", response.data["message"].toString(),
+            snackPosition: SnackPosition.BOTTOM);
+        if (response.data["success"]) {
+          fetchCompanies();
+        }
+        return "";
+      } else {
+        throw Exception('Failed to load companies');
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+    return "";
+  }
+
+  Future<String> updateCompaney(Updatecompeney obj, String id) async {
+    try {
+      final dio = Dio();
+      print(jsonEncode(obj.toJson()));
+      var response =
+          await dio.put(baseUrl + updatecompeney + id, data: obj.toJson());
 
       if (response.statusCode == 200) {
         Get.snackbar("Status", response.data["message"].toString(),
@@ -112,9 +139,10 @@ class CompanyController extends GetxController {
     return "";
   }
 
-  void changeCompany(String company) {
+  Data changeCompany(String company) {
     selectedCompany.value = company;
     updateCompanyName(selectedCompany.value);
+    return companeydata.firstWhere((e) => e.name == company);
   }
 
   void updateCompanyName(String newName) {
