@@ -17,8 +17,10 @@ import 'package:lavex/widgets/cutom_textformfield.dart';
 import 'package:lavex/widgets/icon_with_text.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../../data/model/cart_item.dart';
+import '../../../../data/model/get_client_model.dart';
 import '../../../../data/model/invoice.dart';
 import '../../../../utils/style.dart';
+import '../../../controller/my_client_controller.dart';
 
 class PromaForm extends GetView<CartController> {
   String? pageTitle;
@@ -64,11 +66,13 @@ class PromaForm extends GetView<CartController> {
   late CreateInvoiceDatasource _createInvoiceDatasource;
   final List<CartItem> _cartdata = [];
   final _formkey = GlobalKey<FormState>();
-
+  final CartController controller = Get.put(CartController());
+  final MyClientController myClientController = Get.put(MyClientController());
   @override
   Widget build(BuildContext context) {
+    controller.getclientlist();
     double formWidth = MediaQuery.of(context).size.width * 0.2;
-    final CartController controller = Get.put(CartController());
+
     // ignore: use_build_context_synchronously
     _createInvoiceDatasource = CreateInvoiceDatasource(_cartdata, context, '');
 
@@ -807,60 +811,77 @@ class PromaForm extends GetView<CartController> {
     );
   }
 
-  customAlertDialog(context, TextEditingController controller) {
-    List<String> clientlist = [
-      'data1',
-      'data2',
-      'data3',
-    ];
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: CircleAvatar(
-        radius: 15,
-        backgroundColor: greyColor,
-        child: IconButton(
-          icon: const Icon(Icons.search),
-          iconSize: 15,
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Select Client From List'),
-                    content: SizedBox(
-                      width: 500, // Set width to maximum
-                      height: 500,
-                      child: ListView.builder(
-                        itemCount: clientlist.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                              title: Text(clientlist[index]),
-                              onTap: () {
-                                String selectedClient =
-                                    clientlist[index].toString();
-                                controller.text = selectedClient;
+  customAlertDialog(context, TextEditingController controller1) {
+    return Container(
+        child: Obx(
+      () => controller.loader.value
+          ? Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: CircleAvatar(
+                radius: 15,
+                backgroundColor: greyColor,
+                child: IconButton(
+                  icon: const Icon(Icons.search),
+                  iconSize: 15,
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Select Client From List'),
+                            content: SizedBox(
+                              width: 500, // Set width to maximum
+                              height: 500,
+                              child: ListView.builder(
+                                itemCount: controller.clientlist.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                      title: Text(controller.clientlist[index]),
+                                      onTap: () {
+                                        String selectedClient = controller
+                                            .clientlist[index]
+                                            .toString();
+                                        controller1.text = selectedClient;
+                                        MyClientModel data = myClientController
+                                            .myClientModel
+                                            .firstWhere((e) =>
+                                                e.client == selectedClient);
+                                        // Handle onTap action for each item if needed
 
-                                // Handle onTap action for each item if needed
-                                Navigator.of(context).pop(
-                                    'Item $index'); // Example: Pop the selected item
-                              });
-                        },
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Close'),
-                      ),
-                    ],
-                  );
-                });
-          },
-        ),
-      ),
-    );
+                                        addressController.text =
+                                            data.area ?? "";
+
+                                        stateController.text = data.state ?? "";
+                                        stateCodeController.text =
+                                            data.stateCode ?? "";
+                                        countryController.text =
+                                            data.country ?? "";
+                                        cityController.text = data.city ?? "";
+                                        shortCodeController.text =
+                                            data.clientShortCode ?? "";
+
+                                        Navigator.of(context).pop(
+                                            'Item '); // Example: Pop the selected item
+                                      });
+                                },
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Close'),
+                              ),
+                            ],
+                          );
+                        });
+                  },
+                ),
+              ),
+            )
+          : Center(child: CircularProgressIndicator()),
+    ));
   }
 
   Widget createColumnLabel(String labelText) {

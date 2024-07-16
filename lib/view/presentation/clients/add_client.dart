@@ -6,6 +6,7 @@ import 'package:lavex/utils/string.dart';
 import 'package:lavex/widgets/custom_button.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 
+import '../../../routes/route_pages.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/style.dart';
 import '../../../widgets/custom_spacebar.dart';
@@ -501,7 +502,7 @@ class AddClient extends StatelessWidget {
                                             .clear();
                                         myClientController.myClientData();
                                       });
-                                      Get.back();
+                                      Get.offAndToNamed(AppRoutes.client_List);
                                     }
                                   }),
                               horizontalSpace(10),

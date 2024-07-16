@@ -183,7 +183,25 @@ class ApiServices {
     }
   }
 
-// get proforma data
+  Future<List<String>> getClientlist() async {
+    var response = await dio.get('$baseUrl$getclient');
+
+    print(response.data["message"]);
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] ?? false) {
+        List<String>? clientlist = response.data["data"].cast<String>() ?? [];
+
+        print(clientlist);
+        return clientlist ?? [];
+      } else {
+        print('message${response.data["message"]}');
+        throw Exception('Failed to create payment');
+      }
+    } else {
+      throw Exception('Failed to create payment: ${response.statusMessage}');
+    }
+  }
 
   Future<ProformaInvoiceModel> myProFormaData(String type) async {
     Uri url = Uri.parse('$baseUrl$getProForma$type');

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../data/data_source/remote/api_service.dart';
 import '../../data/model/cart_item.dart';
 
 class CartController extends GetxController {
@@ -7,6 +8,20 @@ class CartController extends GetxController {
   var gstValue = false.obs;
   var maturityValue = false.obs;
   var accountingValue = false.obs;
+  List<String> clientlist = [
+    'data1',
+    'data2',
+    'data3',
+  ].obs;
+  RxBool loader = (true).obs;
+
+  Future<void> getclientlist() async {
+    loader(false);
+    List<String> data = await ApiServices().getClientlist().whenComplete(() {
+      loader(true);
+    });
+    clientlist.assignAll(data);
+  }
 
   void addItem(CartItem item) {
     cartItems.add(item);

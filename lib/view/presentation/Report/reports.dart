@@ -176,12 +176,14 @@ class ReportPage extends GetView<ReportController> {
                 Row(children: [
                   CustomButton(
                       text: 'Download Excel',
+                      fontsie: 14,
                       onPressed: () {
                         downloadExcel();
                       }),
                   horizontalSpace(10),
                   CustomButton(
                       text: 'Download Pdf',
+                      fontsie: 14,
                       onPressed: () {
                         reportController.generateDailyPDF();
                       })
@@ -204,10 +206,16 @@ class ReportPage extends GetView<ReportController> {
                     ),
                     horizontalSpace(10),
                     CustomButton(
-                        width: 150, text: 'Download Excel', onPressed: () {}),
+                        width: 150,
+                        fontsie: 14,
+                        text: 'Download Excel',
+                        onPressed: () {}),
                     horizontalSpace(10),
                     CustomButton(
-                        width: 150, text: 'Download Pdf', onPressed: () {}),
+                        width: 150,
+                        fontsie: 14,
+                        text: 'Download Pdf',
+                        onPressed: () {}),
                     horizontalSpace(10),
                   ],
                 ),

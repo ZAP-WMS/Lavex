@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/get_client_model.dart';
@@ -15,7 +17,10 @@ class MyClientController extends GetxController {
   }
 
   Future<List<MyClientModel>> deleteClient(id) async {
-    await ApiServices().DeleteClient(id).whenComplete(() => {myClientData()});
+    isLoading(true);
+    await ApiServices().DeleteClient(id).whenComplete(() {
+      myClientData();
+    });
 
     return myClientModel;
   }
@@ -23,7 +28,6 @@ class MyClientController extends GetxController {
   void myClientData() async {
     try {
       isLoading(true);
-
       List<MyClientModel> mydata = await ApiServices().myClient();
       if (searchTxt.text.isNotEmpty) {
         List<MyClientModel> filteredData = mydata

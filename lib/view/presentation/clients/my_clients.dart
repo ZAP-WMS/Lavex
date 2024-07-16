@@ -80,25 +80,17 @@ class MyClient extends GetView<MyClientController> {
                     horizontalSpace(10),
                     CustomButton(
                         text: 'Delete',
-                        onPressed: () async {
-                          myClientController.isLoading.value = true;
-                          Cid.forEach((e) async {
-                            var data = await myClientController
-                                .deleteClient(e)
-                                .whenComplete(() {
-                              myClientController.myClientModel.clear();
-                            });
-                            myClientController.myClientModel.assignAll(data);
-                            Cid.remove(e);
-                          });
-                          // Timer(
-                          //     Duration(seconds: 5),
-                          //     () =>
-                          //         {myClientController.isLoading.value = false});
-                          myClientController.isLoading.value = false;
+                        onPressed: () {
+                          print('object');
+
+                          Deleteclient();
                         }),
                     horizontalSpace(10),
-                    CustomButton(text: 'Export Data', onPressed: () {}),
+                    CustomButton(
+                        text: 'Export Data',
+                        onPressed: () {
+                          myClientController.isLoading(true);
+                        }),
                     verticalSpace(10),
                   ],
                 ),
@@ -164,4 +156,26 @@ class MyClient extends GetView<MyClientController> {
       ),
     );
   }
+
+  void Deleteclient() {
+    try {
+      myClientController.isLoading(true);
+      Cid.forEach((e) async {
+        var data = await myClientController.deleteClient(e).whenComplete(() {
+          myClientController.myClientModel.clear();
+        });
+        myClientController.myClientModel.assignAll(data);
+        Cid.remove(e);
+      });
+    } on Exception catch (e) {
+      print("Error:123  " + e.toString());
+      // TODO
+    } finally {
+      myClientController.isLoading(false);
+    }
+  }
+  // Timer(
+  //     Duration(seconds: 5),
+  //     () =>
+  //         {myClientController.isLoading.value = false});
 }

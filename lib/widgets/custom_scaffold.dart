@@ -40,10 +40,13 @@ class CommonScaffold extends GetView<CompanyController> {
                               child: company != "Create companey"
                                   ? Text(company,
                                       style: TextStyle(color: blackColor))
-                                  : CustomButton(
-                                      text: "Create Companey",
-                                      onPressed: () =>
-                                          {Get.toNamed("/managecompaney")}));
+                                  : Expanded(
+                                      child: CustomButton(
+                                          text: "Manage Companey",
+                                          fontsie: 10,
+                                          onPressed: () =>
+                                              {Get.toNamed("/managecompaney")}),
+                                    ));
                         }).toList(),
                         selectedItemBuilder: (BuildContext context) {
                           return controller.companyList.map((String company) {

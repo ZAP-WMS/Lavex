@@ -21,12 +21,17 @@ import '../view/presentation/Invoice/createinvoice/create_invoice.dart';
 import '../view/presentation/Invoice/createinvoice/pro_forma.dart';
 import '../view/presentation/Invoice/myinvoice/myInvoice_home.dart';
 import '../view/presentation/Invoice/myinvoice/myInvoice..dart';
+import '../view/presentation/clients/my_clients.dart';
 import '../view/presentation/store/add_item.dart';
 
 class AppPages {
   static var list = [
     GetPage(
       name: AppRoutes.home, page: () => const HomePage(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.client_List, page: () => MyClient(),
       //   binding: SplashBinding(),
     ),
     GetPage(

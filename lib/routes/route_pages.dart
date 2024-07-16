@@ -20,4 +20,5 @@ class AppRoutes {
   static const String managecompaney = '/managecompaney';
   static const String addcompaney = '/addcompaney';
   static const String update_companey = '/updatecompaney';
+  static const String client_List = '/clientList';
 }

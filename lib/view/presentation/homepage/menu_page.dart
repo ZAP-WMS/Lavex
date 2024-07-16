@@ -46,8 +46,8 @@ class MenuPage extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              crossAxisCount: 6,
-              childAspectRatio: 1.1),
+              crossAxisCount: 4,
+              childAspectRatio: 4 / 2),
           itemBuilder: (context, index) {
             return Card(
                 elevation: 20,
