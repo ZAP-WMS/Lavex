@@ -356,3 +356,15 @@ final List<String> storeTabName = [
   'All DC Entry',
   'Store Setting',
 ];
+
+final List<String> InwardTabName = [
+  'suplierInvoiceNo',
+  'dateCreated',
+  'remark',
+  'movementNumber',
+  'country',
+  'accountPerson',
+  'gstRegistration',
+  'status',
+  'Manage',
+];

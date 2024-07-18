@@ -7,6 +7,7 @@ import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../common/custom_text.dart';
+import '../../../datasource/Inwardentrysource.dart';
 import '../../../utils/asset_image.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/string.dart';
@@ -17,12 +18,12 @@ class StorePage extends GetView<StoreController> {
   StorePage({super.key});
 
   final ScrollController scrollController = ScrollController();
-  late StoreDataSource storeDataSource;
+  late Inwardentrysource storeDataSource;
   final StoreController storeController = Get.put(StoreController());
 
   List<GridColumn> buildColumns(BuildContext context) {
     List<GridColumn> columns = [];
-    for (String columnName in storeTabName) {
+    for (String columnName in InwardTabName) {
       columns.add(
         GridColumn(
           columnName: columnName,
@@ -37,7 +38,7 @@ class StorePage extends GetView<StoreController> {
               : MediaQuery.of(context).size.width *
                   0.09, // You can adjust this width as needed
           label: createColumnLabel(
-            storeTabName[storeTabName.indexOf(columnName)],
+            InwardTabName[InwardTabName.indexOf(columnName)],
           ),
         ),
       );
@@ -142,7 +143,7 @@ class StorePage extends GetView<StoreController> {
       return const Center(child: CircularProgressIndicator());
     } else {
       storeDataSource =
-          StoreDataSource(storeController.storeModel, context, 'userId');
+          Inwardentrysource(storeController.inwardEntry, context, 'userId');
       return SizedBox(
         height: MediaQuery.of(context).size.height,
         child: SfDataGridTheme(

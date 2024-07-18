@@ -14,6 +14,7 @@ import '../../../widgets/custom_scaffold.dart';
 import '../Companey/add_company.dart';
 import '../Report/reports.dart';
 import '../BOM/bom.dart';
+import '../store/store.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
@@ -33,7 +34,7 @@ class MenuPage extends StatelessWidget {
       MySupplierPayment(),
       BomPage(),
       ItemMaster(),
-//      StorePage(),
+      StorePage(),
 //      StorePage(),
       ItemMaster(),
       ReportPage(),
@@ -62,7 +63,8 @@ class MenuPage extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => pageName[index]));
                   },
-                  child: cards(tabTitles[index], menubarIcons[index], index),
+                  child: cards(
+                      context, tabTitles[index], menubarIcons[index], index),
                 ));
           },
         ),

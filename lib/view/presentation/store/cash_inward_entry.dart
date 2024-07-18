@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lavex/data/data_source/remote/api_service.dart';
 
 import '../../../common/custom_text.dart';
+import '../../../data/model/InwardEntrymodel.dart';
 import '../../../data/model/cart_item.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/string.dart';
@@ -17,16 +20,17 @@ import '../../controller/cash_inward_controller.dart';
 class CashInward extends GetView<CashInwardController> {
   CashInward({super.key});
 
-  final TextEditingController clientController = TextEditingController();
+  final TextEditingController uniteController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  final TextEditingController invoiceController = TextEditingController();
+  final TextEditingController cashMovementNoController =
+      TextEditingController();
   final TextEditingController shortCodeController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
-  final TextEditingController increaseInvoiceController =
-      TextEditingController();
+  final TextEditingController dateCreateController = TextEditingController();
   final TextEditingController toShippedController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
-  final TextEditingController invoiceDateController = TextEditingController();
+  final TextEditingController supplierInvoiceNoController =
+      TextEditingController();
   final TextEditingController forToShippedController = TextEditingController();
   final TextEditingController stateCodeController = TextEditingController();
   final TextEditingController dueDateController = TextEditingController();
@@ -40,6 +44,9 @@ class CashInward extends GetView<CashInwardController> {
   final TextEditingController discountController = TextEditingController();
   final TextEditingController remarkController = TextEditingController();
   final TextEditingController paymentMethodController = TextEditingController();
+  final TextEditingController suppliernameController = TextEditingController();
+  final TextEditingController accountablePersonController =
+      TextEditingController();
 
   // table controller
   final TextEditingController itemController = TextEditingController();
@@ -48,6 +55,7 @@ class CashInward extends GetView<CashInwardController> {
   final TextEditingController gstController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController totalController = TextEditingController();
+  final List<Item> item = [Item()];
 
   @override
   Widget build(BuildContext context) {
@@ -71,19 +79,19 @@ class CashInward extends GetView<CashInwardController> {
                           width: 300,
                           height: 40,
                           name: forUnitTxt,
-                          controller: clientController,
+                          controller: uniteController,
                           style: normalTextStyle,
                           isreadOnly: false,
                           isSuffixIcon: false,
                           validator: (value) {}),
-                      //    customAlertDialog(context, clientController)
+                      //    customAlertDialog(context, uniteController)
                     ],
                   ),
                   CustomField(
                       width: 300,
                       height: 40,
                       name: accountablePersonTxt,
-                      controller: addressController,
+                      controller: accountablePersonController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -92,7 +100,7 @@ class CashInward extends GetView<CashInwardController> {
                       width: 300,
                       height: 40,
                       name: cashMovementNo,
-                      controller: invoiceController,
+                      controller: cashMovementNoController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -111,7 +119,7 @@ class CashInward extends GetView<CashInwardController> {
                       width: 300,
                       height: 40,
                       name: supplierName,
-                      controller: shortCodeController,
+                      controller: suppliernameController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -129,7 +137,7 @@ class CashInward extends GetView<CashInwardController> {
                       width: 300,
                       height: 40,
                       name: dateCreateFromTxt,
-                      controller: increaseInvoiceController,
+                      controller: dateCreateController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -144,7 +152,7 @@ class CashInward extends GetView<CashInwardController> {
                       width: 300,
                       height: 40,
                       name: shortCodeTxt,
-                      controller: toShippedController,
+                      controller: shortCodeController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -153,7 +161,7 @@ class CashInward extends GetView<CashInwardController> {
                       width: 300,
                       height: 40,
                       name: addressTxt,
-                      controller: stateController,
+                      controller: addressController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -162,7 +170,7 @@ class CashInward extends GetView<CashInwardController> {
                       width: 300,
                       height: 40,
                       name: supplierInvoiceNo,
-                      controller: invoiceDateController,
+                      controller: supplierInvoiceNoController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -176,7 +184,7 @@ class CashInward extends GetView<CashInwardController> {
                       width: 300,
                       height: 40,
                       name: countryTxt,
-                      controller: stateCodeController,
+                      controller: countryController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -211,87 +219,189 @@ class CashInward extends GetView<CashInwardController> {
                         DataColumn(label: Text('Price')),
                         DataColumn(label: Text('Total')),
                       ],
-                      rows: [
-                        DataRow(
-                            cells: List.generate(6, (index) {
-                          return DataCell(Container(
+                      rows:
+                          //[
+                          // DataRow(
+                          //     cells: List.generate(6, (index) {
+                          //   return DataCell(Container(
+                          //     padding: const EdgeInsets.symmetric(vertical: 3),
+                          //     width: (index == 0) || (index == 1) ? 150 : 60,
+                          //     child: TextFormField(
+                          //       decoration: const InputDecoration(),
+                          //       onChanged: (value) {
+                          //         item[index].name = value;
+                          //       },
+                          //     ),
+                          //   ));
+                          // }))
+
+                          controller.cartItems.map((item) {
+                        double sum = (item.quantity * item.price);
+                        RxDouble total = (sum + sum * item.gst / 100).obs;
+                        gst() {
+                          sum = (item.quantity * item.price);
+                          total.value = (sum + sum * item.gst / 100);
+                          item.total = total.value;
+                          print(sum);
+                        }
+
+                        return DataRow(cells: [
+                          DataCell(Container(
                             padding: const EdgeInsets.symmetric(vertical: 3),
-                            width: (index == 0) || (index == 1) ? 150 : 60,
+                            width: 150,
                             child: TextFormField(
-                              decoration: const InputDecoration(),
+                              // controller: itemController,
+                              // initialValue: item.item.toString(),
                               onChanged: (value) {
-                                // Handle onChanged event
+                                item.item = value;
+                                //  item[].name = value;
+                                //        _itemNameController.text = value;
+                                // Update the item name when user changes it
                               },
                             ),
-                          ));
-                        }))
-                      ]..addAll(controller.cartItems.map((item) {
-                          return DataRow(cells: [
-                            DataCell(Container(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
-                              width: 150,
-                              child: TextFormField(
-                                controller: itemController,
-                                // initialValue: item.item.toString(),
-                                onChanged: (value) {
-                                  //        _itemNameController.text = value;
-                                  // Update the item name when user changes it
-                                },
-                              ),
-                            )),
-                            DataCell(Container(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
-                              width: 150,
-                              child: TextFormField(
-                                controller: brandController,
-                                //    initialValue: item.brand.toString(),
-                                onChanged: (value) {
-                                  // Update the brand when user changes it
-                                },
-                              ),
-                            )),
-                            DataCell(Container(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
-                              width: 60,
-                              child: TextFormField(
-                                controller: quantityController,
-                                //    initialValue: item.quantity.toString(),
-                                onChanged: (value) {
-                                  // Update the quantity when user changes it
-                                },
-                              ),
-                            )),
-                            DataCell(Container(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
-                              width: 60,
-                              child: TextFormField(
-                                controller: gstController,
-                                //       initialValue: item.gst.toString(),
-                                onChanged: (value) {
-                                  // Update the GST when user changes it
-                                },
-                              ),
-                            )),
-                            DataCell(Container(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
-                              width: 60,
-                              child: TextFormField(
-                                controller: priceController,
-                                //        initialValue: item.price.toString(),
-                                onChanged: (value) {
-                                  // Update the price when user changes it
-                                },
-                              ),
-                            )),
-                            DataCell(Container(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
-                              width: 60,
-                              child: Text(
-                                '\$${(item.price * item.quantity).toStringAsFixed(2)}',
-                              ),
-                            )),
-                          ]);
-                        }).toList())),
+                          )),
+                          DataCell(Container(
+                            padding: const EdgeInsets.symmetric(vertical: 3),
+                            width: 150,
+                            child: TextFormField(
+                              // controller: brandController,
+                              //    initialValue: item.brand.toString(),
+                              onChanged: (value) {
+                                item.brand = value;
+                                // Update the brand when user changes it
+                              },
+                            ),
+                          )),
+                          DataCell(Container(
+                            padding: const EdgeInsets.symmetric(vertical: 3),
+                            width: 60,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              // controller: quantityController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              //    initialValue: item.quantity.toString(),
+                              onChanged: (value) {
+                                item.quantity = int.parse(value);
+                                //  total.value = item.quantity * item.price;
+                                gst();
+                                // Update the quantity when user changes it
+                              },
+                            ),
+                          )),
+                          DataCell(Container(
+                            padding: const EdgeInsets.symmetric(vertical: 3),
+                            width: 60,
+                            child: TextFormField(
+                              // controller: gstController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              //       initialValue: item.gst.toString(),
+                              onChanged: (value) {
+                                item.gst = double.parse(value);
+                                gst();
+                                // Update the GST when user changes it
+                              },
+                            ),
+                          )),
+                          DataCell(Container(
+                            padding: const EdgeInsets.symmetric(vertical: 3),
+                            width: 60,
+                            child: TextFormField(
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              // controller: priceController,
+                              //        initialValue: item.price.toString(),
+                              onChanged: (value) {
+                                item.price = double.parse(value);
+                                gst();
+                                controller.gettotal();
+                                // Update the price when user changes it
+                              },
+                            ),
+                          )),
+                          DataCell(Container(
+                            padding: const EdgeInsets.symmetric(vertical: 3),
+                            width: 60,
+                            child: Obx(() => Text(
+                                  '${r"$"} ${total.value.toPrecision(2)}',
+                                )),
+                          )),
+                        ]);
+                      }).toList()
+
+                      //] ..addAll(controller.cartItems.map((item) {
+                      //     return DataRow(cells: [
+                      //       DataCell(Container(
+                      //         padding: const EdgeInsets.symmetric(vertical: 3),
+                      //         width: 150,
+                      //         child: TextFormField(
+                      //           controller: itemController,
+                      //           // initialValue: item.item.toString(),
+                      //           onChanged: (value) {
+                      //             //  item[].name = value;
+                      //             //        _itemNameController.text = value;
+                      //             // Update the item name when user changes it
+                      //           },
+                      //         ),
+                      //       )),
+                      //       DataCell(Container(
+                      //         padding: const EdgeInsets.symmetric(vertical: 3),
+                      //         width: 150,
+                      //         child: TextFormField(
+                      //           controller: brandController,
+                      //           //    initialValue: item.brand.toString(),
+                      //           onChanged: (value) {
+                      //             // Update the brand when user changes it
+                      //           },
+                      //         ),
+                      //       )),
+                      //       DataCell(Container(
+                      //         padding: const EdgeInsets.symmetric(vertical: 3),
+                      //         width: 60,
+                      //         child: TextFormField(
+                      //           controller: quantityController,
+                      //           //    initialValue: item.quantity.toString(),
+                      //           onChanged: (value) {
+                      //             // Update the quantity when user changes it
+                      //           },
+                      //         ),
+                      //       )),
+                      //       DataCell(Container(
+                      //         padding: const EdgeInsets.symmetric(vertical: 3),
+                      //         width: 60,
+                      //         child: TextFormField(
+                      //           controller: gstController,
+                      //           //       initialValue: item.gst.toString(),
+                      //           onChanged: (value) {
+                      //             // Update the GST when user changes it
+                      //           },
+                      //         ),
+                      //       )),
+                      //       DataCell(Container(
+                      //         padding: const EdgeInsets.symmetric(vertical: 3),
+                      //         width: 60,
+                      //         child: TextFormField(
+                      //           controller: priceController,
+                      //           //        initialValue: item.price.toString(),
+                      //           onChanged: (value) {
+                      //             // Update the price when user changes it
+                      //           },
+                      //         ),
+                      //       )),
+                      //       DataCell(Container(
+                      //         padding: const EdgeInsets.symmetric(vertical: 3),
+                      //         width: 60,
+                      //         child: Text(
+                      //           '\$${(item.price * item.quantity).toStringAsFixed(2)}',
+                      //         ),
+                      //       )),
+                      //     ]);
+                      //   }).toList())
+                      ),
                 ),
               ),
               IconWithText(
@@ -300,12 +410,12 @@ class CashInward extends GetView<CashInwardController> {
                 onPressed: () {
                   // Add new item to the cartItems list
                   final CartItem newItem = CartItem(
-                      item: 'item',
-                      brand: 'brand',
+                      item: '',
+                      brand: '',
                       quantity: 1,
-                      gst: 18.00,
-                      price: 15,
-                      total: 15.00);
+                      gst: 0,
+                      price: 0,
+                      total: 0);
                   controller.addItem(newItem);
                 },
               ),
@@ -323,7 +433,7 @@ class CashInward extends GetView<CashInwardController> {
                             movementAmountTxt,
                             mSize: 14,
                           ),
-                          const Text('0.00 INR')
+                          Obx(() => Text('${controller.grandtotal} INR'))
                         ],
                       ),
                       verticalSpace(10),
@@ -367,7 +477,8 @@ class CashInward extends GetView<CashInwardController> {
                             grandTotalTxt,
                             mSize: 16,
                           ),
-                          const Text('0.00 INR')
+                          Obx(() => Text(
+                              '${controller.cartItems.fold(0.0, (previousValue, element) => previousValue + element.total)} INR'))
                         ],
                       ),
                     ],
@@ -430,7 +541,30 @@ class CashInward extends GetView<CashInwardController> {
               Row(
                 children: [
                   CustomButton(
-                      width: 200, text: cashInwardTxt, onPressed: () {}),
+                      width: 200,
+                      text: cashInwardTxt,
+                      onPressed: () {
+                        print(controller.cartItems.last.item);
+
+                        var data = InwardEntrymodel(
+                            paymentType: paymentMethodController.text,
+                            forUnit: uniteController.text,
+                            suplierName: suppliernameController.text,
+                            shortCode: shortCodeController.text,
+                            gstRegistration: false,
+                            individual: false,
+                            accountPerson: accountablePersonController.text,
+                            city: cityController.text,
+                            address: addressController.text,
+                            country: countryController.text,
+                            dateCreated: dateCreateController.text,
+                            remark: remarkController.text,
+                            accepted: "yes",
+                            suplierInvoiceNo: supplierInvoiceNoController.text,
+                            item: controller.cartItems);
+                        ApiServices().Addinward(data);
+                        print(data);
+                      }),
                   horizontalSpace(10),
                   CTextBlack('Or'),
                   horizontalSpace(10),

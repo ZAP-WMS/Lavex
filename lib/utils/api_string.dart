@@ -16,6 +16,8 @@ String updatecompeney = "/api/company/updateCompany/";
 String getallclient = "/api/client/allClient";
 String deleteclient = "/api/client/deleteClient/";
 String getclient = "/api/client/clientdropdown";
+String addinward = "/api/inward/addInward";
+String getInward = "/api/inward/allInward?paymentType=Cash";
 
 // --------------------------------------------------------
 String baseUrlTxt = 'https://zapwms.in/';

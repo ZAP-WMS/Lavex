@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 List<MyClientModel> MyClientModelFromJson(String str) =>
@@ -57,6 +56,7 @@ class MyClientModel {
   String? gstNumber;
   String? location;
   String? pincode;
+
   String? mobile;
   String? panNumber;
   String? city;
