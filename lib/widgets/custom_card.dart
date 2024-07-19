@@ -6,14 +6,16 @@ Widget cards(BuildContext context, String desc, String image, int index) {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.15,
-        width: MediaQuery.of(context).size.height * 0.15,
-        child: Image.asset(
-          height: 100,
-          width: 100,
-          image,
-          fit: BoxFit.cover,
+      Flexible(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.15,
+          width: MediaQuery.of(context).size.height * 0.15,
+          child: Image.asset(
+            height: 100,
+            width: 100,
+            image,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
       Expanded(child: CTextBlack(desc, mBold: true, mSize: 15))

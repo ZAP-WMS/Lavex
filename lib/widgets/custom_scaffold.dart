@@ -57,7 +57,7 @@ class CommonScaffold extends GetView<CompanyController> {
                         },
                         onChanged: (String? value) {
                           if (value != null) {
-                            if (value == "Create companey") {
+                            if (value == "Create Company") {
                             } else {
                               controller.data = controller.changeCompany(value);
                               print(controller.data.name);

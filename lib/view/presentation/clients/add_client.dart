@@ -502,7 +502,6 @@ class AddClient extends StatelessWidget {
                                             .clear();
                                         myClientController.myClientData();
                                       });
-                                      Get.offAndToNamed(AppRoutes.client_List);
                                     }
                                   }),
                               horizontalSpace(10),

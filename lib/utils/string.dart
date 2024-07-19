@@ -66,7 +66,7 @@ String betrayedTxt = 'Betrayed';
 String acceptedTxt = 'Accepted';
 String selectTxt = 'Select';
 // Invoice
-String invoiceTxt = 'invoice';
+String invoiceTxt = 'Invoice';
 
 String gradeTxt = 'Grade';
 //create invoice Button Name
@@ -320,15 +320,15 @@ final List<String> itemMasterTableName = [
   'Name',
   'Item_Code',
   'Available Quantity',
-  'Law Quantity',
+  // 'Law Quantity',
   'Quantity Type',
   'Price',
-  'GST',
+  // 'GST',
   'Stock Status',
   'Store',
-  'Category',
-  'Total Price',
-  'Status',
+  // 'Category',
+  // 'Total Price',
+  // 'Status',
   'Manage',
 ];
 

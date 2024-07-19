@@ -35,7 +35,7 @@ class MyCompaney extends GetView<CompanyController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Companey List",
+                "Company List",
                 style: boldTextStyle,
               ),
             ),
@@ -119,7 +119,7 @@ class MyCompaney extends GetView<CompanyController> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Create Companey".toString().toUpperCase() ?? "",
+                    "Create Company".toString() ?? "",
                     style: boldTextStyle,
                   ),
                 ),

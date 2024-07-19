@@ -50,7 +50,7 @@ class AddCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "Companey name",
+                                      name: "Company Name",
                                       controller: Companey_name_Controller,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -78,7 +78,7 @@ class AddCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "registrationAddress",
+                                      name: "Registration Address",
                                       controller: reqistra_Address_Controller,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -92,7 +92,7 @@ class AddCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "city",
+                                      name: "City",
                                       controller: cityController,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -113,7 +113,7 @@ class AddCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "accountPerson",
+                                      name: "Account Person",
                                       controller: acc_per_Controller,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -130,7 +130,7 @@ class AddCompaney extends StatelessWidget {
                               Row(
                                 children: [
                                   CustomButton(
-                                      text: 'Add Companey',
+                                      text: 'Add Company',
                                       onPressed: () async {
                                         if (_key.currentState!.validate()) {
                                           controller.loader.value = false;

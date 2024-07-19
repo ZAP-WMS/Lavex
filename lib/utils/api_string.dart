@@ -18,6 +18,8 @@ String deleteclient = "/api/client/deleteClient/";
 String getclient = "/api/client/clientdropdown";
 String addinward = "/api/inward/addInward";
 String getInward = "/api/inward/allInward?paymentType=Cash";
+String addItem = '/api/itemMaster/addItemMaster';
+String getallitem = '/api/itemMaster/allItemMaster';
 
 // --------------------------------------------------------
 String baseUrlTxt = 'https://zapwms.in/';

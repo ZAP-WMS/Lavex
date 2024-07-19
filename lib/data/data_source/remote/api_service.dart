@@ -20,6 +20,7 @@ import '../../model/add_item.dart';
 import '../../model/credit_note.dart';
 import '../../model/debit_note.dart';
 import '../../model/getallinwardentrymodel.dart';
+import '../../model/getitemmodel.dart';
 import '../../model/invoice.dart';
 import '../../model/register_model.dart';
 import '../local/shared_preference.dart';
@@ -67,7 +68,6 @@ class ApiServices {
           print(response.data["success"]);
           Get.snackbar("Status", response.data["message"].toString(),
               snackPosition: SnackPosition.BOTTOM);
-          Get.back();
           // Get.back();
         } else {
           print('message${response.data["message"]}');
@@ -196,7 +196,7 @@ class ApiServices {
       if (response.statusCode == 200) {
         if (response.data["success"] ?? false) {
           print(response.data["success"]);
-
+          Get.offAndToNamed(AppRoutes.client_List);
           // Get.back();
         } else {
           print('message${response.data["message"]}');
@@ -245,6 +245,30 @@ class ApiServices {
       }
     } else {
       throw Exception('Failed to create payment: ${response.statusMessage}');
+    }
+  }
+
+  Future<List<itemData>> getallItem() async {
+    try {
+      var response = await dio.get('$baseUrl$getallitem');
+
+      print(response.data["message"]);
+
+      if (response.statusCode == 200) {
+        if (response.data["success"] ?? false) {
+          getallitemmodel data = getallitemmodel.fromJson(response.data);
+
+          print(data);
+          return data.data ?? [];
+        } else {
+          print('message${response.data["message"]}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.statusMessage}');
+      }
+    } on Exception catch (e) {
+      throw Exception('Failed to create payment: ${e}');
     }
   }
 
@@ -406,8 +430,8 @@ class ApiServices {
   //   }
   // }
 
-  Future<void> postItemData(AddItemModel itemData) async {
-    final String url = baseUrlTxt + addItemUrlTxt;
+  Future<bool> postItemData(AddItemModel itemData) async {
+    final String url = baseUrl + addItem;
 
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -422,11 +446,24 @@ class ApiServices {
 
       if (response.statusCode == 200) {
         print('Success: ${response.body}');
+        var data = await jsonDecode(response.body);
+        print(data["message"]);
+        if (!data["success"]) {
+          return false;
+        } else {
+          Get.snackbar(
+            "title",
+            "message",
+          );
+          return data["success"];
+          //    Get.back();
+        }
       } else {
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
       print('Exception: $e');
     }
+    return false;
   }
 }

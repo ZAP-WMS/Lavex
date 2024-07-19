@@ -85,7 +85,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "Companey name",
+                                      name: "Company name",
                                       controller: Companey_name_Controller,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -113,7 +113,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "registrationAddress",
+                                      name: "Registration Address",
                                       controller: reqistra_Address_Controller,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -127,7 +127,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "city",
+                                      name: "City",
                                       controller: cityController,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -148,7 +148,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "accountPerson",
+                                      name: "Account Person",
                                       controller: acc_per_Controller,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -162,7 +162,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "mobile",
+                                      name: "Mobile",
                                       keyboardType: TextInputType.phone,
                                       controller: mobileController,
                                       style: normalTextStyle,
@@ -177,7 +177,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "gstNumber",
+                                      name: "Gst Number",
                                       controller: gst_number_Controller,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -191,7 +191,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "email",
+                                      name: "Email",
                                       controller: emailController,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -212,7 +212,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "website",
+                                      name: "Website",
                                       controller: webController,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -226,7 +226,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "stateCode",
+                                      name: "StateCode",
                                       controller: statecodeController,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -240,7 +240,7 @@ class UpdateCompaney extends StatelessWidget {
                                   CustomField(
                                       width: formWidth,
                                       height: 50,
-                                      name: "bankDetail",
+                                      name: "BankDetail",
                                       controller: bankdetailController,
                                       style: normalTextStyle,
                                       isreadOnly: false,
@@ -300,7 +300,7 @@ class UpdateCompaney extends StatelessWidget {
                               Row(
                                 children: [
                                   CustomButton(
-                                      text: 'Update Companey',
+                                      text: 'Update Company',
                                       onPressed: () {
                                         controller.loader.value = false;
                                         if (true
