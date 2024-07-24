@@ -25,6 +25,7 @@ import '../../model/getallinwardentrymodel.dart';
 import '../../model/getitemmodel.dart';
 import '../../model/invoice.dart';
 import '../../model/register_model.dart';
+import '../../model/singleBom.dart';
 import '../local/shared_preference.dart';
 
 class ApiServices {
@@ -97,7 +98,7 @@ class ApiServices {
           print(response.data["success"]);
           Get.snackbar("Status", response.data["message"].toString(),
               snackPosition: SnackPosition.BOTTOM);
-          // Get.back();
+          Get.back();
         } else {
           print('message${response.data["message"]}');
           throw Exception('Failed to create payment');
@@ -464,15 +465,16 @@ class ApiServices {
     }
   }
 
-  // Future<List<String>> fetchCompanies() async {
-  //   final response = await http.get(Uri.parse(baseUrlTxt + comapanyUrlTxt));
-  //   if (response.statusCode == 200) {
-  //     List<dynamic> data = json.decode(response.body);
-  //     return data.map((company) => company['name'].toString()).toList();
-  //   } else {
-  //     throw Exception('Failed to load companies');
-  //   }
-  // }
+  Future<singleBomModel> singleBom(String id) async {
+    final response = await http.get(Uri.parse(baseUrl + singlebom + id));
+    if (response.statusCode == 200) {
+      singleBomModel data = singleBomModel.fromJson(json.decode(response.body));
+      print(data);
+      return data;
+    } else {
+      throw Exception('Failed to load companies');
+    }
+  }
 
   Future<bool> postItemData(AddItemModel itemData) async {
     final String url = baseUrl + addItem;

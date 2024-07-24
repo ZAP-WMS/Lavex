@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lavex/data/data_source/remote/api_service.dart';
 import '../../../common/custom_text.dart';
 import '../../../data/model/cart_item.dart';
 import '../../../utils/colors.dart';
@@ -437,7 +438,9 @@ class AddProduction extends GetView<ProductionController> {
                     CustomButton(
                         width: 210,
                         text: createProductionTxt,
-                        onPressed: () {}),
+                        onPressed: () {
+                          ApiServices().singleBom("669f403bef177ea6ee563974");
+                        }),
                     horizontalSpace(10),
                     CTextBlack('Or'),
                     horizontalSpace(10),

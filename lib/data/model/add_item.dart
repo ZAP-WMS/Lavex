@@ -89,7 +89,7 @@ class AddItemModel {
         // "item_code": itemCode,
         "qty": quantity,
         "qtyType": quantityType,
-        "low_quantity": lowQuantity,
+        "lawqty": lowQuantity,
         "price": singlePrice,
         // "currency": currency,
         "gst": gstRate,

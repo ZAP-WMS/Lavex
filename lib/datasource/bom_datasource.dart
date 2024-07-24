@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lavex/data/model/bom.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
+import '../routes/route_pages.dart';
 import '../utils/colors.dart';
 import '../utils/style.dart';
 import '../widgets/custom_spacebar.dart';
@@ -49,7 +50,7 @@ class BomDataSource extends DataGridSource {
     DateTime? endDate1;
     final int dataRowIndex = dataGridRows.indexOf(row);
     String Pagetitle = 'Daily Report';
-
+    String name = "";
     return DataGridRowAdapter(
       cells: row.getCells().map<Widget>((dataGridCell) {
         void removeRowAtIndex(int index) {
@@ -58,6 +59,9 @@ class BomDataSource extends DataGridSource {
           notifyListeners();
         }
 
+        if (dataGridCell.columnName == "Name") {
+          name = dataGridCell.value.toString();
+        }
         return Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -70,7 +74,7 @@ class BomDataSource extends DataGridSource {
                         IconButton(
                           icon: Icon(Icons.edit, color: redColor),
                           onPressed: () {
-                            Get.toNamed('/edit-page');
+                            Get.toNamed(AppRoutes.bomAdditem, arguments: name);
                           },
                         ),
                         horizontalSpace(5),

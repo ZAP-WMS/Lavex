@@ -61,12 +61,7 @@ class AddItemMaster extends StatelessWidget {
     'Show only partially paid invoices',
   ];
   String Clients = "";
-  List<String> QtyType = [
-    'KG',
-    'Days',
-    'Meter',
-    'PKT',
-  ];
+  List<String> QtyType = ['Box', 'Roll', 'Pcs', 'Pkt'];
   String qtyType = "";
   List<String> GST = [
     '10',

@@ -11,7 +11,6 @@ class BomAddItemController extends GetxController {
 
   removeitem(index) {
     bomItems.removeAt(index);
-
     print(index);
   }
 

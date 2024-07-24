@@ -14,6 +14,7 @@ import '../view/Authentication/navbar_page.dart';
 import '../view/binding/create_invoice_binding.dart';
 import '../view/binding/index_binding.dart';
 import '../view/binding/proma_form_binding.dart';
+import '../view/presentation/BOM/bom_add_item.dart';
 import '../view/presentation/Companey/Managecompaney.dart';
 import '../view/presentation/Companey/add_company.dart';
 import '../view/presentation/Invoice/createinvoice/create_invoiceList.dart';
@@ -58,6 +59,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.update_companey,
       page: () => UpdateCompaney(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.bomAdditem,
+      page: () => BomAddItem(),
       //   binding: SplashBinding(),
     ),
     GetPage(

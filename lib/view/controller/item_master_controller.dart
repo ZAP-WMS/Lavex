@@ -19,7 +19,7 @@ class ItemMasterController extends GetxController {
     super.onInit();
   }
 
-  void itemMasterData() async {
+  Future itemMasterData() async {
     try {
       isLoading(true);
       List<itemData> mydata = await ApiServices().getallItem();
@@ -28,5 +28,20 @@ class ItemMasterController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  void filter(String data) {
+    itemMasterData().whenComplete(() {
+      if (data.isNotEmpty) {
+        List<itemData> filteredData = itemMasterModel
+            .where((item) => item.name!.toLowerCase().contains(data
+                    .toString()
+                    .toLowerCase()) // Assuming the model has a 'name' property
+                )
+            .toList();
+        itemMasterModel.clear();
+        itemMasterModel.addAll(filteredData);
+      }
+    });
   }
 }

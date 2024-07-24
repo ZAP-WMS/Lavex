@@ -14,6 +14,7 @@ class CustomField extends StatelessWidget {
   double? height;
   String? Function(String?)? validator;
   TextInputType? keyboardType;
+  Function? onchange;
   CustomField(
       {super.key,
       required this.controller,
@@ -25,6 +26,7 @@ class CustomField extends StatelessWidget {
       this.isreadOnly = false,
       this.width,
       this.keyboardType,
+      this.onchange,
       this.height});
 
   @override
@@ -42,6 +44,7 @@ class CustomField extends StatelessWidget {
                 readOnly: isreadOnly,
                 style: const TextStyle(fontSize: 15),
                 controller: controller,
+                onChanged: (value) => onchange,
                 textAlignVertical: TextAlignVertical.center,
                 validator: validator!)),
       ],
