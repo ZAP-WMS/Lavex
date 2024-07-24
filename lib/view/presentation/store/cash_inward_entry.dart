@@ -669,7 +669,7 @@ class CashInward extends GetView<CashInwardController> {
                                     await ApiServices()
                                         .Addinward(data)
                                         .whenComplete(() {
-                                      storeController.getinwardData();
+                                      storeController.getinwardData("");
                                       Loader(true);
                                     });
                                     print(data);

@@ -95,7 +95,7 @@ class itemData {
       DataGridCell(columnName: 'price', value: price),
       DataGridCell(columnName: 'qtyType', value: qtyType),
       DataGridCell(columnName: 'store', value: store),
-      DataGridCell(columnName: 'stockStatus', value: store),
+      DataGridCell(columnName: 'stockStatus', value: stockStatus),
       DataGridCell(columnName: 'Manage', value: manage),
     ]);
   }

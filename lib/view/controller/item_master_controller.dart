@@ -24,7 +24,7 @@ class ItemMasterController extends GetxController {
       isLoading(true);
       List<itemData> mydata = await ApiServices().getallItem();
       print(mydata);
-      itemMasterModel.addAll(mydata);
+      itemMasterModel.assignAll(mydata);
     } finally {
       isLoading(false);
     }

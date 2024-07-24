@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/InwardEntrymodel.dart';
+import 'package:lavex/data/model/bom_add_item.dart';
 import 'package:lavex/data/model/get_client_model.dart';
 import 'package:lavex/data/model/proforma_invoice.dart';
 import 'package:lavex/data/model/item_master.dart';
@@ -17,6 +18,7 @@ import '../../../routes/route_pages.dart';
 import '../../model/add_client_model.dart';
 import '../../model/add_companie_model.dart' as model;
 import '../../model/add_item.dart';
+import '../../model/bomitemmodel.dart';
 import '../../model/credit_note.dart';
 import '../../model/debit_note.dart';
 import '../../model/getallinwardentrymodel.dart';
@@ -84,14 +86,56 @@ class ApiServices {
     }
   }
 
-  getinward() async {
+  Future<void> AddBom(bomitemModel data) async {
     try {
-      var response = await dio.get('$baseUrl$getInward');
+      print(data);
+      var response = await dio.post('$baseUrl$addbom', data: data.toJson());
+      print(response.data["message"]);
+
+      if (response.statusCode == 200) {
+        if (response.data["success"] ?? false) {
+          print(response.data["success"]);
+          Get.snackbar("Status", response.data["message"].toString(),
+              snackPosition: SnackPosition.BOTTOM);
+          // Get.back();
+        } else {
+          print('message${response.data["message"]}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        Get.snackbar("Status", response.data["message"].toString(),
+            snackPosition: SnackPosition.BOTTOM);
+        // throw Exception('Failed to create payment: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  getinward(String type) async {
+    try {
+      var response = await dio.get('$baseUrl$getInward$type');
       print(response.data["message"]);
       if (response.statusCode == 200) {
         getallInwardEntryModel data =
             getallInwardEntryModel.fromJson(response.data);
-        print(data);
+        print(data.data!.length);
+        return data.data;
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+  getredymaterial(String type) async {
+    try {
+      var response = await dio.get('$baseUrl$getInward$type');
+      print(response.data["message"]);
+      if (response.statusCode == 200) {
+        getallInwardEntryModel data =
+            getallInwardEntryModel.fromJson(response.data);
+        print(data.data!.length);
         return data.data;
       }
     } on Exception catch (e) {

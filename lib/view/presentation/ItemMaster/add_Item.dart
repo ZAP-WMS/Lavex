@@ -93,7 +93,7 @@ class AddItemMaster extends StatelessWidget {
     "Unite 2",
   ];
   String Store = "";
-  List<String> SS = ["FIXED_ASSET", "PART", "READY_STOCK", "Raw"];
+  List<String> SS = ['Part', 'ReadyStock', 'Fixasset', 'Raw'];
   String SStatus = "";
   @override
   Widget build(BuildContext context) {

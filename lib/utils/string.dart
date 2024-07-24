@@ -321,11 +321,13 @@ final List<String> itemMasterTableName = [
   'Item_Code',
   'Available Quantity',
   // 'Law Quantity',
-  'Quantity Type',
+
   'Price',
+  'Quantity Type',
   // 'GST',
-  'Stock Status',
   'Store',
+  'Stock Status',
+
   // 'Category',
   // 'Total Price',
   // 'Status',

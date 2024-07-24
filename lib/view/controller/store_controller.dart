@@ -16,7 +16,7 @@ class StoreController extends GetxController {
 
   @override
   void onInit() {
-    getinwardData();
+    getinwardData("");
     storeData();
     super.onInit();
   }
@@ -31,10 +31,10 @@ class StoreController extends GetxController {
     }
   }
 
-  void getinwardData() async {
+  void getinwardData(String type) async {
     try {
       isLoading(true);
-      List<Data> mydata = await ApiServices().getinward();
+      List<Data> mydata = await ApiServices().getinward(type);
       inwardEntry.assignAll(mydata);
     } finally {
       isLoading(false);

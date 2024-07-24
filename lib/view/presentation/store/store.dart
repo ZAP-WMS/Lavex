@@ -99,8 +99,22 @@ class StorePage extends GetView<StoreController> {
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
                         onTap: () {
-                          controller.currentIndex.value = index;
-                          Get.toNamed(pages[index]);
+                          if (index < 3) {
+                            controller.currentIndex.value = index;
+                            Get.toNamed(pages[index]);
+                          } else {
+                            if (index == 11) {
+                              controller.currentIndex.value = index;
+                              storeController.getinwardData("Cash");
+                              print(storeTabName[index]);
+                            } else if (index == 8) {
+                              controller.currentIndex.value = index;
+                              storeController.getinwardData("");
+                              print(storeTabName[index]);
+                            } else {
+                              controller.currentIndex.value = index;
+                            }
+                          }
                         },
                         child: Container(
                           height: 50,

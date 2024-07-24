@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lavex/data/data_source/remote/api_service.dart';
+import 'package:lavex/data/model/bomitemmodel.dart';
 import '../../../common/custom_text.dart';
 import '../../../data/model/bom_add_item.dart';
+import '../../../data/model/getitemmodel.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_scaffold.dart';
@@ -10,12 +13,18 @@ import '../../../widgets/custom_textform.dart';
 import '../../../widgets/drop_downTextField.dart';
 import '../../../widgets/icon_with_text.dart';
 import '../../controller/bom_additem_controller.dart';
+import '../../controller/item_master_controller.dart';
 
 class BomAddItem extends StatelessWidget {
   BomAddItem({super.key});
   TextEditingController paymentController = TextEditingController();
   final BomAddItemController controller = Get.put(BomAddItemController());
-
+  final ItemMasterController itemMasterController =
+      Get.put(ItemMasterController());
+  List<itemData> Itemraw = [];
+  List<itemData> Itemredy = [];
+  Map<int, itemData> selectrawdata = {};
+  itemData redy = itemData();
   @override
   Widget build(BuildContext context) {
     bool isaddItem =
@@ -25,12 +34,13 @@ class BomAddItem extends StatelessWidget {
       'Stock Status',
     ];
 
-    List<String> clients = [
-      'Show only paid, unpaid invoices',
-      'Show only paid invoices',
-      'Show only unpaid invoices',
-      'Show only partially paid invoices',
-    ];
+    Itemraw = itemMasterController.itemMasterModel
+        .where((f) => f.stockStatus == "Raw")
+        .toList();
+    Itemredy = itemMasterController.itemMasterModel
+        .where((f) => f.stockStatus == "ReadyStock")
+        .toList();
+
     return CommonScaffold(
         body: Padding(
       padding: const EdgeInsets.all(10),
@@ -42,7 +52,7 @@ class BomAddItem extends StatelessWidget {
             children: paymentField.asMap().entries.map((entry) {
               //    int index = entry.key;
               String field = entry.value;
-              if (field == 'Name' || field == 'Stock Status') {
+              if (field == 'Name') {
                 // Render dropdown for Client Name
                 return Padding(
                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -55,7 +65,33 @@ class BomAddItem extends StatelessWidget {
                         width: 300,
                         height: 35,
                         child: DropdownTextField<String>(
-                            items: clients,
+                            items: field == "raw"
+                                ? Itemraw.map((f) => f.name as String).toList()
+                                : Itemredy.map((f) => f.name as String)
+                                    .toList(),
+                            hintText: field != "raw" ? field : "",
+                            itemAsString: (item) => item,
+                            onChanged: (value) {
+                              redy =
+                                  Itemredy.firstWhere((f) => f.name == value);
+                            }),
+                      ),
+                    ],
+                  ),
+                );
+              } else if (field == 'Stock Status') {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CTextBlack(field, mBold: true, mSize: 14),
+                      SizedBox(
+                        width: 300,
+                        height: 35,
+                        child: DropdownTextField<String>(
+                            items: ["Created", "Draft"],
                             hintText: field,
                             itemAsString: (item) => item,
                             onChanged: (value) {}),
@@ -99,96 +135,25 @@ class BomAddItem extends StatelessWidget {
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(border: Border.all(color: greyColor)),
-            child: Obx(
-              () => DataTable(
-                  columnSpacing: 30,
-                  columns: const <DataColumn>[
-                    DataColumn(
-                        label: Text('Item', textAlign: TextAlign.center)),
-                    DataColumn(
-                        label:
-                            Text('Quantity Type', textAlign: TextAlign.center)),
-                    DataColumn(
-                        label: Text('Quantity', textAlign: TextAlign.center)),
-                    DataColumn(
-                        label: Text('Action', textAlign: TextAlign.center)),
-                  ],
-                  rows: [
-                    DataRow(
-                        cells: List.generate(4, (index) {
-                      return DataCell(Container(
-                        padding: const EdgeInsets.symmetric(vertical: 3),
-                        width: 200,
-                        child: index == 3
-                            ? GestureDetector(
-                                onTap: () {
-                                  final BomAddItemModel newItem =
-                                      BomAddItemModel(
-                                          title: '',
-                                          quantityType: 'quantityType',
-                                          quantity: 1,
-                                          action: 'action');
-                                  controller.addItem(newItem);
-                                },
-                                child: CTextBlack('Remove Row',
-                                    mSize: 15, mBold: false))
-                            : TextFormField(
-                                decoration: const InputDecoration(),
-                                onChanged: (value) {
-                                  // Handle onChanged event
-                                },
-                              ),
-                      ));
-                    }))
-                  ]..addAll(controller.bomItems.asMap().entries.map((entry) {
-                      int indexx = entry.key;
-                      BomAddItemModel item = entry.value;
-                      bool isLastItem =
-                          indexx == controller.bomItems.length - 1;
-                      print('isLast$item $isLastItem');
-                      return DataRow(cells: [
-                        DataCell(Container(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
-                          width: 200,
-                          child: TextFormField(
-                            controller: paymentController,
-                            // initialValue: item.item.toString(),
-                            onChanged: (value) {
-                              //        _itemNameController.text = value;
-                              // Update the item name when user changes it
-                            },
-                          ),
-                        )),
-                        DataCell(Container(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
-                          width: 200,
-                          child: TextFormField(
-                            controller: paymentController,
-                            //    initialValue: item.brand.toString(),
-                            onChanged: (value) {
-                              // Update the brand when user changes it
-                            },
-                          ),
-                        )),
-                        DataCell(Container(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
-                          width: 200,
-                          child: TextFormField(
-                            controller: paymentController,
-                            //    initialValue: item.quantity.toString(),
-                            onChanged: (value) {
-                              // Update the quantity when user changes it
-                            },
-                          ),
-                        )),
-                        DataCell(Container(
-                            padding: const EdgeInsets.symmetric(vertical: 3),
-                            width: 200,
-                            child: CTextBlack('Remove Row',
-                                mSize: 15, mBold: false))),
-                      ]);
-                    }).toList())),
-            ),
+            child: Obx(() => DataTable(
+                columnSpacing: 30,
+                columns: const <DataColumn>[
+                  DataColumn(label: Text('Item', textAlign: TextAlign.center)),
+                  DataColumn(
+                      label:
+                          Text('Quantity Type', textAlign: TextAlign.center)),
+                  DataColumn(
+                      label: Text('Quantity', textAlign: TextAlign.center)),
+                  DataColumn(
+                      label: Text('Action', textAlign: TextAlign.center)),
+                ],
+                rows: controller.bomItems.asMap().entries.map((entry) {
+                  int indexx = entry.key;
+                  BomAddItemModel item = entry.value;
+                  bool isLastItem = indexx == controller.bomItems.length - 1;
+                  print('isLast : $item $isLastItem');
+                  return Datarow(indexx);
+                }).toList())),
           ),
           IconWithText(
             iconData: Icons.add,
@@ -196,15 +161,91 @@ class BomAddItem extends StatelessWidget {
             onPressed: () {
               // Add new item to the cartItems list
               BomAddItemModel newItem = BomAddItemModel(
-                  title: 'title',
-                  quantityType: 'quantityType',
-                  quantity: 1,
-                  action: 'action');
+                title: 'title',
+                quantityType: 'quantityType',
+                quantity: 1,
+              );
               controller.addItem(newItem);
+              print(selectrawdata.length);
             },
           ),
+          verticalSpace(10),
+          Container(
+              width: 100,
+              child: CustomButton(
+                  text: 'Save',
+                  onPressed: () {
+                    // print(selectrawdata.entries.map((e) => e.value.qty));
+                    bomitemModel data = bomitemModel(
+                        readyStock: redy, raw: selectrawdata.values.toList());
+                    ApiServices().AddBom(data);
+                  })),
         ],
       ),
     ));
+  }
+
+  DataRow Datarow(int indexx) {
+    TextEditingController type = TextEditingController();
+    TextEditingController qty = TextEditingController();
+    return DataRow(cells: [
+      DataCell(Container(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        width: 200,
+        child: !selectrawdata[indexx].isNull
+            ? DropdownTextField<String>(
+                items: Itemraw.map((f) => f.name as String).toList(),
+                hintText: "",
+                initialValue: !selectrawdata[indexx].isNull
+                    ? selectrawdata[indexx]!.name.toString() ?? ""
+                    : "",
+                itemAsString: (item) => item,
+                onChanged: (value) {
+                  selectrawdata.addIf(
+                      true, indexx, Itemraw.firstWhere((f) => f.name == value));
+                  type.text = selectrawdata[indexx]!.qtyType.toString();
+                })
+            : DropdownTextField<String>(
+                items: Itemraw.map((f) => f.name as String).toList(),
+                hintText: "",
+                itemAsString: (item) => item,
+                onChanged: (value) {
+                  selectrawdata.addIf(
+                      true, indexx, Itemraw.firstWhere((f) => f.name == value));
+                  type.text = selectrawdata[indexx]!.qtyType.toString();
+                }),
+      )),
+      DataCell(Container(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        width: 200,
+        child: TextFormField(
+          enabled: false,
+          controller: type,
+          // initialValue: !selectrawdata[indexx].isNull
+          //     ? selectrawdata[indexx]!.qtyType.toString() ?? ""
+          //     : "",
+          onChanged: (value) {
+            // Update the brand when user changes it
+          },
+        ),
+      )),
+      DataCell(Container(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        width: 200,
+        child: TextFormField(
+          controller: qty,
+          // initialValue: !selectrawdata[indexx].isNull
+          //     ? selectrawdata[indexx]!.qty.toString() ?? ""
+          //     : "",
+          onChanged: (value) {
+            selectrawdata[indexx]!.qty = int.parse(value);
+          },
+        ),
+      )),
+      DataCell(Container(
+          padding: const EdgeInsets.symmetric(vertical: 3),
+          width: 200,
+          child: CTextBlack('Remove Row', mSize: 15, mBold: false))),
+    ]);
   }
 }
