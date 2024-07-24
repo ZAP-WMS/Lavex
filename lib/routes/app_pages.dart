@@ -1,4 +1,5 @@
 import 'package:get/route_manager.dart';
+import 'package:lavex/data/model/add_suppllier.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/Authentication/login.dart';
 import 'package:lavex/view/Authentication/register.dart';
@@ -6,6 +7,7 @@ import 'package:lavex/view/presentation/clients/add_client.dart';
 import 'package:lavex/view/presentation/edit/edit_table.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
 import 'package:lavex/view/presentation/homepage/menu_page.dart';
+import 'package:lavex/view/presentation/payments/add_suppllier.dart';
 import 'package:lavex/view/presentation/store/cash_inward_home.dart';
 import 'package:lavex/view/presentation/store/stocks.dart';
 import 'package:lavex/view/presentation/store/store.dart';
@@ -97,6 +99,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.addClient,
       page: () => AddClient(),
+    ),
+    GetPage(
+      name: AppRoutes.addSuppllier,
+      page: () => SuppllierPage(),
     ),
   ];
 }

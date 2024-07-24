@@ -7,7 +7,9 @@ String invoiceUrl = '/api/invoice/invoiceCreate';
 String debitUrl = '/api/debitnote/debitNoteCreate';
 String creditUrl = '/api/creditnote/creditNoteCreate';
 String addClientUrl = '/api/client/addClient';
+String addSuppllierUrl = '/api/supplier/addSupplier';
 String getProForma = '/api/invoices/myInvoices?type=';
+
 
 String baseUrlTxt = 'https://zapwms.in/';
 String myPaymentsEndUrlTxt = 'lavex_api/my_payments.php';

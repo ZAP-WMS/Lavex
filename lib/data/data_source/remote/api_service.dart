@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lavex/data/model/add_suppllier.dart';
 import 'package:lavex/data/model/proforma_invoice.dart';
 import 'package:lavex/data/model/item_master.dart';
 import 'package:lavex/data/model/my_clients.dart';
@@ -165,6 +166,35 @@ class ApiServices {
   }
 
 // get proforma data
+
+// add Suppllier Data
+  Future<AddSuppllier> addSuppllierata(AddSuppllier addSuppllier) async {
+    try {
+      Uri url = Uri.parse('$baseUrl$addSuppllierUrl');
+      var response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json'
+            // Add other headers if needed
+          },
+          body: jsonEncode(addSuppllier.toJson()));
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if (responseData['success']) {
+          var data = addSuppllierFromJson(response.body);
+          return data;
+        } else {
+          print('message${responseData['message']}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
 
   Future<ProformaInvoiceModel> myProFormaData(String type) async {
     Uri url = Uri.parse('$baseUrl$getProForma$type');

@@ -19,6 +19,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../../data/model/cart_item.dart';
 import '../../../../data/model/invoice.dart';
 import '../../../../utils/style.dart';
+import '../../../controller/loading_controller.dart';
 
 class PromaForm extends GetView<CartController> {
   String? pageTitle;
@@ -64,6 +65,7 @@ class PromaForm extends GetView<CartController> {
   late CreateInvoiceDatasource _createInvoiceDatasource;
   final List<CartItem> _cartdata = [];
   final _formkey = GlobalKey<FormState>();
+  final _loader = Get.put(LoadingController());
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +109,11 @@ class PromaForm extends GetView<CartController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    Stack(
+                      alignment: Alignment.topRight,
                       children: [
                         CustomField(
-                            width: 300,
+                            width: formWidth,
                             height: 50,
                             name: clientTxt,
                             controller: clientController,
@@ -128,7 +131,7 @@ class PromaForm extends GetView<CartController> {
                       ],
                     ),
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: addressTxt,
                         controller: addressController,
@@ -142,10 +145,24 @@ class PromaForm extends GetView<CartController> {
                           return null;
                         }),
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: pageTitle,
                         controller: invoiceController,
+                        style: normalTextStyle,
+                        isreadOnly: false,
+                        isSuffixIcon: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'This Field is Required';
+                          }
+                          return null;
+                        }),
+                    CustomField(
+                        width: formWidth,
+                        height: 50,
+                        name: cityTxt,
+                        controller: cityController,
                         style: normalTextStyle,
                         isreadOnly: false,
                         isSuffixIcon: false,
@@ -169,9 +186,9 @@ class PromaForm extends GetView<CartController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     controller.individualValue.value
-                        ? const SizedBox(width: 300, height: 50)
+                        ? SizedBox(width: formWidth, height: 50)
                         : CustomField(
-                            width: 300,
+                            width: formWidth,
                             height: 50,
                             name: shortCodeTxt,
                             controller: shortCodeController,
@@ -185,23 +202,9 @@ class PromaForm extends GetView<CartController> {
                               return null;
                             }),
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
-                        name: cityTxt,
-                        controller: cityController,
-                        style: normalTextStyle,
-                        isreadOnly: false,
-                        isSuffixIcon: false,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'This Field is Required';
-                          }
-                          return null;
-                        }),
-                    CustomField(
-                        width: 300,
-                        height: 50,
-                        name: '${increaseFormaTxt} $pageTitle',
+                        name: '$increaseFormaTxt $pageTitle',
                         controller: increaseInvoiceController,
                         style: normalTextStyle,
                         isreadOnly: false,
@@ -212,24 +215,8 @@ class PromaForm extends GetView<CartController> {
                           }
                           return null;
                         }),
-                  ],
-                ),
-                verticalSpace(10),
-                controller.individualValue.value
-                    ? Container(width: 300, height: 50)
-                    : MyCheckbox(
-                        titleName: gstregistrationTxt,
-                        checkedvalue: controller.gstValue.value,
-                        onChanged: (value) {
-                          controller.toggleCheckedValue('gst', value);
-                        },
-                      ),
-                verticalSpace(10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: toShipedTxt,
                         controller: toShippedController,
@@ -243,7 +230,7 @@ class PromaForm extends GetView<CartController> {
                           return null;
                         }),
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: stateTxt,
                         controller: stateController,
@@ -256,8 +243,24 @@ class PromaForm extends GetView<CartController> {
                           }
                           return null;
                         }),
+                  ],
+                ),
+                verticalSpace(10),
+                controller.individualValue.value
+                    ? SizedBox(width: formWidth, height: 50)
+                    : MyCheckbox(
+                        titleName: gstregistrationTxt,
+                        checkedvalue: controller.gstValue.value,
+                        onChanged: (value) {
+                          controller.toggleCheckedValue('gst', value);
+                        },
+                      ),
+                verticalSpace(10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: dateTxt,
                         controller: invoiceDateController,
@@ -270,27 +273,8 @@ class PromaForm extends GetView<CartController> {
                           }
                           return null;
                         }),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
                     CustomField(
-                        width: 300,
-                        height: 50,
-                        name: forToShipped,
-                        controller: forToShippedController,
-                        style: normalTextStyle,
-                        isreadOnly: false,
-                        isSuffixIcon: false,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'This Field is Required';
-                          }
-                          return null;
-                        }),
-                    CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: stateCodeTxt,
                         controller: stateCodeController,
@@ -304,7 +288,7 @@ class PromaForm extends GetView<CartController> {
                           return null;
                         }),
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: dueDateTxt,
                         controller: dueDateController,
@@ -317,22 +301,50 @@ class PromaForm extends GetView<CartController> {
                           }
                           return null;
                         }),
+                    CustomField(
+                        width: formWidth,
+                        height: 50,
+                        name: forToShipped,
+                        controller: forToShippedController,
+                        style: normalTextStyle,
+                        isreadOnly: false,
+                        isSuffixIcon: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'This Field is Required';
+                          }
+                          return null;
+                        }),
                   ],
                 ),
+                MyCheckbox(
+                  width: formWidth,
+                  titleName: accountingTxt,
+                  checkedvalue: controller.accountingValue.value,
+                  onChanged: (value) {
+                    controller.toggleCheckedValue('account', value);
+                  },
+                ),
+                verticalSpace(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: selectedCurrencyTxt,
                         controller: selectedCurrencyController,
                         style: normalTextStyle,
                         isreadOnly: false,
                         isSuffixIcon: false,
-                        validator: (value) {}),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'This Field is Required';
+                          }
+                          return null;
+                        }),
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: countryTxt,
                         controller: countryController,
@@ -346,7 +358,7 @@ class PromaForm extends GetView<CartController> {
                           return null;
                         }),
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: poTxt,
                         controller: poNoController,
@@ -359,13 +371,8 @@ class PromaForm extends GetView<CartController> {
                           }
                           return null;
                         }),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
                     CustomField(
-                        width: 300,
+                        width: formWidth,
                         height: 50,
                         name: indicatingMaturityTxt,
                         controller: maturityDateController,
@@ -378,9 +385,15 @@ class PromaForm extends GetView<CartController> {
                           }
                           return null;
                         }),
+                  ],
+                ),
+                verticalSpace(10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     pageTitle == 'Invoice'
                         ? CustomField(
-                            width: 300,
+                            width: formWidth,
                             height: 50,
                             name: deliveryChallanTxt,
                             controller: delieveryChallanController,
@@ -394,48 +407,40 @@ class PromaForm extends GetView<CartController> {
                               return null;
                             })
                         : Container(),
-                    MyCheckbox(
-                      width: 300,
-                      titleName: accountingTxt,
-                      checkedvalue: controller.accountingValue.value,
-                      onChanged: (value) {
-                        controller.toggleCheckedValue('account', value);
-                      },
-                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyCheckbox(
-                      width: 300,
+                      width: formWidth,
                       titleName: indicatingMaturityTxt,
                       checkedvalue: controller.maturityValue.value,
                       onChanged: (value) {
                         controller.toggleCheckedValue('maturity', value);
                       },
                     ),
-                    controller.maturityValue.value
-                        ? CustomField(
-                            width: 300,
-                            height: 50,
-                            name: maturityTxt,
-                            controller: maturityDateController,
-                            style: normalTextStyle,
-                            isreadOnly: false,
-                            isSuffixIcon: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'This Field is Required';
-                              }
-                              return null;
-                            })
-                        : Container(),
-                    Container(
-                      height: 50,
-                      width: 300,
-                    )
                   ],
+                ),
+                controller.maturityValue.value
+                    ? CustomField(
+                        width: formWidth,
+                        height: 50,
+                        name: maturityTxt,
+                        controller: maturityDateController,
+                        style: normalTextStyle,
+                        isreadOnly: false,
+                        isSuffixIcon: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'This Field is Required';
+                          }
+                          return null;
+                        })
+                    : Container(),
+                SizedBox(
+                  height: 50,
+                  width: formWidth,
                 ),
                 verticalSpace(10),
                 SfDataGrid(
@@ -470,7 +475,7 @@ class PromaForm extends GetView<CartController> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(
-                    width: 300,
+                    width: formWidth,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
@@ -572,6 +577,7 @@ class PromaForm extends GetView<CartController> {
                     width: 200,
                     text: createTxt,
                     onPressed: () {
+                      _loader.showLoading();
                       if (_formkey.currentState!.validate()) {
                         String invoiceText = invoiceController.text.isNotEmpty
                             ? invoiceController.text
@@ -816,11 +822,11 @@ class PromaForm extends GetView<CartController> {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: CircleAvatar(
-        radius: 15,
+        radius: 20,
         backgroundColor: greyColor,
         child: IconButton(
           icon: const Icon(Icons.search),
-          iconSize: 15,
+          iconSize: 20,
           onPressed: () {
             showDialog(
                 context: context,

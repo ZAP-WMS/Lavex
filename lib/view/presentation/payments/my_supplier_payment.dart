@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/supplier_payments.dart';
 import 'package:lavex/datasource/supplier_payment_datasource.dart';
+import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/controller/supplier_controler.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -76,7 +77,11 @@ class MySupplierPayment extends GetView<SupplierController> {
                   Row(
                     children: [
                       verticalSpace(50),
-                      CustomButton(text: 'Add New Supplier', onPressed: () {}),
+                      CustomButton(
+                          text: 'Add New Supplier',
+                          onPressed: () {
+                            Get.toNamed(AppRoutes.addSuppllier);
+                          }),
                       horizontalSpace(10),
                       CustomButton(text: 'Delete', onPressed: () {}),
                       horizontalSpace(10),

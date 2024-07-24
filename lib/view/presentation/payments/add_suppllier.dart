@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lavex/data/data_source/remote/api_service.dart';
-import 'package:lavex/data/model/add_client_model.dart';
+import 'package:lavex/data/model/add_suppllier.dart';
 import 'package:lavex/utils/string.dart';
 import 'package:lavex/widgets/custom_button.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
@@ -9,11 +9,10 @@ import '../../../utils/style.dart';
 import '../../../widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';
 
-class AddClient extends StatelessWidget {
-  AddClient({super.key});
+class SuppllierPage extends StatelessWidget {
+  SuppllierPage({super.key});
 
-  final TextEditingController clientController = TextEditingController();
-  final TextEditingController gradeController = TextEditingController();
+  final TextEditingController suppllierController = TextEditingController();
   final TextEditingController shortCodeController = TextEditingController();
   final TextEditingController gstNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -63,22 +62,8 @@ class AddClient extends StatelessWidget {
                   CustomField(
                       width: formWidth,
                       height: 50,
-                      name: clientTxt,
-                      controller: clientController,
-                      style: normalTextStyle,
-                      isreadOnly: false,
-                      isSuffixIcon: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This Field is Required';
-                        }
-                        return null;
-                      }),
-                  CustomField(
-                      width: formWidth,
-                      height: 50,
-                      name: gradeTxt,
-                      controller: gradeController,
+                      name: suppllierTxt,
+                      controller: suppllierController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -116,12 +101,6 @@ class AddClient extends StatelessWidget {
                         }
                         return null;
                       }),
-                ],
-              ),
-              verticalSpace(10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   CustomField(
                       width: formWidth,
                       height: 50,
@@ -136,6 +115,12 @@ class AddClient extends StatelessWidget {
                         }
                         return null;
                       }),
+                ],
+              ),
+              verticalSpace(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   CustomField(
                       width: formWidth,
                       height: 50,
@@ -178,12 +163,6 @@ class AddClient extends StatelessWidget {
                         }
                         return null;
                       }),
-                ],
-              ),
-              verticalSpace(10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   CustomField(
                       width: formWidth,
                       height: 50,
@@ -198,6 +177,12 @@ class AddClient extends StatelessWidget {
                         }
                         return null;
                       }),
+                ],
+              ),
+              verticalSpace(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   CustomField(
                       width: formWidth,
                       height: 50,
@@ -229,68 +214,6 @@ class AddClient extends StatelessWidget {
                   CustomField(
                       width: formWidth,
                       height: 50,
-                      name: firstCreditLimit,
-                      controller: firstCreditController,
-                      style: normalTextStyle,
-                      isreadOnly: false,
-                      isSuffixIcon: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This Field is Required';
-                        }
-                        return null;
-                      }),
-                ],
-              ),
-              verticalSpace(10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomField(
-                      width: formWidth,
-                      height: 50,
-                      name: secondCreditLimit,
-                      controller: secondCreditController,
-                      style: normalTextStyle,
-                      isreadOnly: false,
-                      isSuffixIcon: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This Field is Required';
-                        }
-                        return null;
-                      }),
-                  CustomField(
-                      width: formWidth,
-                      height: 50,
-                      name: firstCreditLimitdays,
-                      controller: firstlimitdaysController,
-                      style: normalTextStyle,
-                      isreadOnly: false,
-                      isSuffixIcon: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This Field is Required';
-                        }
-                        return null;
-                      }),
-                  CustomField(
-                      width: formWidth,
-                      height: 50,
-                      name: secondCreditLimitdays,
-                      controller: secondlimitdaysController,
-                      style: normalTextStyle,
-                      isreadOnly: false,
-                      isSuffixIcon: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This Field is Required';
-                        }
-                        return null;
-                      }),
-                  CustomField(
-                      width: formWidth,
-                      height: 50,
                       name: panNumberTxt,
                       controller: panNumberController,
                       style: normalTextStyle,
@@ -302,12 +225,6 @@ class AddClient extends StatelessWidget {
                         }
                         return null;
                       }),
-                ],
-              ),
-              verticalSpace(10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   CustomField(
                       width: formWidth,
                       height: 50,
@@ -322,6 +239,13 @@ class AddClient extends StatelessWidget {
                         }
                         return null;
                       }),
+                ],
+              ),
+              verticalSpace(10),
+              verticalSpace(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   CustomField(
                       width: formWidth,
                       height: 50,
@@ -364,12 +288,6 @@ class AddClient extends StatelessWidget {
                         }
                         return null;
                       }),
-                ],
-              ),
-              verticalSpace(10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   CustomField(
                       width: formWidth,
                       height: 50,
@@ -384,39 +302,17 @@ class AddClient extends StatelessWidget {
                         }
                         return null;
                       }),
+                ],
+              ),
+              verticalSpace(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   CustomField(
                       width: formWidth,
                       height: 50,
                       name: beneficiaryTxt,
                       controller: beneficiaryController,
-                      style: normalTextStyle,
-                      isreadOnly: false,
-                      isSuffixIcon: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This Field is Required';
-                        }
-                        return null;
-                      }),
-                  CustomField(
-                      width: formWidth,
-                      height: 50,
-                      name: clientShortCodeTxt,
-                      controller: clientShortCodeController,
-                      style: normalTextStyle,
-                      isreadOnly: false,
-                      isSuffixIcon: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'This Field is Required';
-                        }
-                        return null;
-                      }),
-                  CustomField(
-                      width: formWidth,
-                      height: 50,
-                      name: shipToTxt,
-                      controller: shipToController,
                       style: normalTextStyle,
                       isreadOnly: false,
                       isSuffixIcon: false,
@@ -432,52 +328,36 @@ class AddClient extends StatelessWidget {
               Row(
                 children: [
                   CustomButton(
-                      text: saveClientTxt,
+                      text: saveEntryTxt,
                       onPressed: () {
-                        if (_formkey.currentState!.validate()) {
-                          String firstCreditlimitText =
-                              firstCreditController.text.isNotEmpty
-                                  ? firstCreditController.text
-                                  : '0';
+                        //  if (_formkey.currentState!.validate()) {
+                        SuppllierData suppllierData = SuppllierData(
+                            supplier: suppllierController.text,
+                            suppShortCode: clientShortCodeController.text,
+                            area: areaController.text,
+                            email: emailIdController.text,
+                            contactNo: contactNumberController.text,
+                            // firstcreditLimit: firstcreditValue,
+                            // frcreditLtDays: firstCreditController.text,
+                            // secondcreditLimit: secondcreditValue,
+                            // sdCrlmDays: secondlimitdaysController.text,
+                            address: addressController.text,
+                            accPerson: accountablePersonController.text,
+                            state: stateCodeController.text,
+                            country: countryController.text,
+                            gstNumber: gstNumberController.text,
+                            location: locationController.text,
+                            pincode: pinController.text,
+                            mobile: mobileNumberController.text,
+                            panNumber: panNumberController.text,
+                            city: cityController.text,
+                            stateCode: stateCodeController.text,
+                            beneficiary: beneficiaryController.text);
+                        AddSuppllier addSuppllier =
+                            AddSuppllier(suppllierData: suppllierData);
 
-                          String secondcreditlimitText =
-                              secondCreditController.text.isNotEmpty
-                                  ? secondCreditController.text
-                                  : '0';
-
-                          int firstcreditValue =
-                              int.parse(firstCreditlimitText);
-                          int secondcreditValue =
-                              int.parse(secondcreditlimitText);
-
-                          ClientData clientData = ClientData(
-                              client: clientController.text,
-                              clientShortCode: clientShortCodeController.text,
-                              area: areaController.text,
-                              email: emailIdController.text,
-                              contactNo: contactNumberController.text,
-                              firstcreditLimit: firstcreditValue,
-                              frcreditLtDays: firstCreditController.text,
-                              secondcreditLimit: secondcreditValue,
-                              sdCrlmDays: secondlimitdaysController.text,
-                              accPerson: accountablePersonController.text,
-                              state: stateCodeController.text,
-                              country: countryController.text,
-                              shipTo: shipToController.text,
-                              grade: gradeController.text,
-                              gstNumber: gstNumberController.text,
-                              location: locationController.text,
-                              pincode: pinController.text,
-                              mobile: mobileNumberController.text,
-                              panNumber: panNumberController.text,
-                              city: cityController.text,
-                              stateCode: stateCodeController.text,
-                              beneficiary: beneficiaryController.text);
-                          AddClientModel addClientModel =
-                              AddClientModel(clientData: clientData);
-
-                          ApiServices().addClientData(addClientModel);
-                        }
+                        ApiServices().addSuppllierata(addSuppllier);
+                        //   }
                       }),
                   horizontalSpace(10),
                   CustomButton(text: cancelTxt, onPressed: () {})

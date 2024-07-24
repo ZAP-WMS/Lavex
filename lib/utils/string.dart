@@ -19,14 +19,17 @@ String beneficiaryTxt = 'Beneficiary';
 String clientShortCodeTxt = 'Client Short Code';
 String shipToTxt = 'Ship To';
 String saveClientTxt = 'Save Client';
+String saveSuppllierTxt = 'Save Suppllier';
+String saveEntryTxt = 'Save Entry';
 String cancelTxt = 'Cancel';
 
 // create invoice
 String clientTxt = 'Client:';
+String suppllierTxt = 'Suppllier';
 String addressTxt = 'Address:';
 String locationTxt = 'Location';
-String areaTxt = 'Location';
-String pincodeTxt = 'Location';
+String areaTxt = 'Area';
+String pincodeTxt = 'PinCode';
 String emailTxt = 'Email Id';
 String mobileNumberTxt = 'Mobile Number';
 String contactNumberTxt = 'Contact Number';
