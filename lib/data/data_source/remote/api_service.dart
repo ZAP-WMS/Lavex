@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:js_interop';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +15,8 @@ import 'package:lavex/data/model/supplier_payments.dart';
 import 'package:lavex/utils/api_string.dart';
 import '../../../routes/route_pages.dart';
 import '../../model/add_client_model.dart';
-import '../../model/add_companie_model.dart' as model;
 import '../../model/add_item.dart';
+import '../../model/add_suppllier.dart';
 import '../../model/bomitemmodel.dart';
 import '../../model/credit_note.dart';
 import '../../model/debit_note.dart';
@@ -314,6 +313,35 @@ class ApiServices {
       }
     } on Exception catch (e) {
       throw Exception('Failed to create payment: ${e}');
+    }
+  }
+
+// add Suppllier Data
+  Future<AddSuppllier> addSuppllierata(AddSuppllier addSuppllier) async {
+    try {
+      Uri url = Uri.parse('$baseUrl$addSuppllierUrl');
+      var response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json'
+            // Add other headers if needed
+          },
+          body: jsonEncode(addSuppllier.toJson()));
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if (responseData['success']) {
+          var data = addSuppllierFromJson(response.body);
+          return data;
+        } else {
+          print('message${responseData['message']}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
     }
   }
 

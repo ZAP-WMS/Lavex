@@ -19,10 +19,13 @@ String beneficiaryTxt = 'Beneficiary';
 String clientShortCodeTxt = 'Client Short Code';
 String shipToTxt = 'Ship To';
 String saveClientTxt = 'Save Client';
+String saveSuppllierTxt = 'Save Suppllier';
+String saveEntryTxt = 'Save Entry';
 String cancelTxt = 'Cancel';
 
 // create invoice
 String clientTxt = 'Client:';
+String suppllierTxt = 'Suppllier';
 String addressTxt = 'Address:';
 String locationTxt = 'Location';
 String areaTxt = 'Area';
@@ -305,6 +308,12 @@ final List<String> myClientTableName = [
   'Mobile Number',
   'Area',
   'Location',
+  'Manage',
+];
+final List<String> bomTableName = [
+  'Name',
+  'Quantity Type',
+  'Quantity',
   'Manage',
 ];
 

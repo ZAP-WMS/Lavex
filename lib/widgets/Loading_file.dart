@@ -10,11 +10,9 @@ class LoadingFile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // CircularProgressIndicator()
             Image.asset('assets/tissue.gif'),
           ],
-        )
-        // Lottie.asset('animations/loading.json'),
-
-        );
+        ));
   }
 }

@@ -3,14 +3,16 @@ import 'package:get/get.dart';
 import '../../data/model/bom_add_item.dart';
 
 class BomAddItemController extends GetxController {
-  RxList<BomAddItemModel> bomItems = <BomAddItemModel>[].obs;
+  var bomItems = <BomAddItemModel>[].obs;
 
   void addItem(BomAddItemModel item) {
     bomItems.add(item);
   }
 
-  removeitem(index) {
+  void removeItem(int index) {
+    print('Before removal: ${bomItems.toList()}');
     bomItems.removeAt(index);
+
     print(index);
   }
 

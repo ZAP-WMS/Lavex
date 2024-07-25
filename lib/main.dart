@@ -4,6 +4,8 @@ import 'package:lavex/routes/app_pages.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/utils/colors.dart';
 import 'view/controller/company_controller.dart';
+import 'view/controller/loading_controller.dart';
+import 'widgets/Loading_file.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,6 +14,7 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   final CompanyController companyController = Get.put(CompanyController());
+  final _loader = Get.put(LoadingController());
 
   MaterialColor createMaterialColor(Color color) {
     List<double> strengths = <double>[.05];
@@ -37,12 +40,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(_loader.isLoading);
     return Obx(() {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.menuBar,
         getPages: AppPages.list,
         themeMode: ThemeMode.system,
+        builder: (context, child) {
+          return Stack(
+            children: [
+              Obx(() {
+                return Opacity(
+                    opacity: (_loader.isLoading == true) ? .5 : 1,
+                    child: child!);
+              }),
+
+              Obx(() {
+                return _loader.isLoading.value
+                    ? const LoadingFile()
+                    : SizedBox.shrink();
+              }), // Ensure this is part of the widget tree
+            ],
+          );
+        },
         theme: ThemeData(
           fontFamily: "Monstserrat",
           primaryColor: redColor,

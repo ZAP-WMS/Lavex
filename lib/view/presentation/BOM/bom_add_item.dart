@@ -1,34 +1,48 @@
+import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lavex/data/data_source/remote/api_service.dart';
-import 'package:lavex/data/model/bomitemmodel.dart';
+import 'package:lavex/data/model/bom_add_item.dart';
+import 'package:lavex/utils/string.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../common/custom_text.dart';
-import '../../../data/model/bom_add_item.dart';
+
 import '../../../data/model/getitemmodel.dart';
+import '../../../datasource/bom_addItem_datasource.dart';
 import '../../../utils/colors.dart';
+import '../../../utils/style.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_scaffold.dart';
 import '../../../widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';
 import '../../../widgets/drop_downTextField.dart';
-import '../../../widgets/icon_with_text.dart';
+
 import '../../controller/bom_additem_controller.dart';
 import '../../controller/item_master_controller.dart';
 
 class BomAddItem extends StatelessWidget {
   BomAddItem({super.key});
   TextEditingController paymentController = TextEditingController();
+
   final BomAddItemController controller = Get.put(BomAddItemController());
 
   final ItemMasterController itemMasterController =
       Get.put(ItemMasterController());
+
+  DataGridController dataGridController = DataGridController();
   List<itemData> Itemraw = [];
   List<itemData> Itemredy = [];
   Map<int, itemData> selectrawdata = {};
   itemData redy = itemData();
-  String data = Get.arguments ?? "";
   @override
   Widget build(BuildContext context) {
+    List<BomAddItemModel> bomModel = [];
+    bomModel
+        .add(BomAddItemModel(title: 'title', quantityType: '', quantity: 2));
+
+    BomAddItemDataSource bomAddItemDataSource =
+        BomAddItemDataSource(bomModel, context, '');
+
     bool isaddItem =
         controller.bomItems.isNotEmpty && controller.bomItems.last == true;
     List<String> paymentField = [
@@ -147,45 +161,60 @@ class BomAddItem extends StatelessWidget {
             CustomButton(text: 'Download Pdf', onPressed: () {})
           ]),
           verticalSpace(15),
-          CTextBlack('WareHouse Product Details'),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(border: Border.all(color: greyColor)),
-            child: Obx(() => DataTable(
-                columnSpacing: 30,
-                columns: const <DataColumn>[
-                  DataColumn(label: Text('Item', textAlign: TextAlign.center)),
-                  DataColumn(
-                      label:
-                          Text('Quantity Type', textAlign: TextAlign.center)),
-                  DataColumn(
-                      label: Text('Quantity', textAlign: TextAlign.center)),
-                  DataColumn(
-                      label: Text('Action', textAlign: TextAlign.center)),
-                ],
-                rows: controller.bomItems.asMap().entries.map((entry) {
-                  int indexx = entry.key;
-                  BomAddItemModel item = entry.value;
-                  bool isLastItem = indexx == controller.bomItems.length - 1;
-                  print('isLast : $item $isLastItem');
-                  return Datarow(indexx);
-                }).toList())),
-          ),
-          IconWithText(
-            iconData: Icons.add,
-            text: 'Add Item',
-            onPressed: () {
-              // Add new item to the cartItems list
-              BomAddItemModel newItem = BomAddItemModel(
-                title: 'title',
-                quantityType: 'quantityType',
-                quantity: 1,
-              );
-              controller.addItem(newItem);
-              print(selectrawdata.length);
-            },
-          ),
+          SfDataGridTheme(
+              data: SfDataGridThemeData(
+                  gridLineStrokeWidth: 2, gridLineColor: greyColor),
+              child: SfDataGrid(
+                  allowEditing: true,
+                  selectionMode: SelectionMode.single,
+                  navigationMode: GridNavigationMode.cell,
+                  editingGestureType: EditingGestureType.tap,
+                  gridLinesVisibility: GridLinesVisibility.both,
+                  controller: dataGridController,
+                  headerGridLinesVisibility: GridLinesVisibility.both,
+                  source: bomAddItemDataSource,
+                  columns: buildColumns(context))),
+
+          // CTextBlack('WareHouse Product Details'),
+          // Container(
+          //   alignment: Alignment.centerLeft,
+          //   padding: const EdgeInsets.all(10),
+          //   decoration: BoxDecoration(border: Border.all(color: greyColor)),
+          //   child: Obx(() => DataTable(
+          //       columnSpacing: 30,
+          //       columns: const <DataColumn>[
+          //         DataColumn(label: Text('Item', textAlign: TextAlign.center)),
+          //         DataColumn(
+          //             label:
+          //                 Text('Quantity Type', textAlign: TextAlign.center)),
+          //         DataColumn(
+          //             label: Text('Quantity', textAlign: TextAlign.center)),
+          //         DataColumn(
+          //             label: Text('Action', textAlign: TextAlign.center)),
+          //       ],
+          //       rows: controller.bomItems.asMap().entries.map((entry) {
+          //         int index = entry.key;
+          //         BomAddItemModel item = entry.value;
+          //         //bool isLastItem = indexx == controller.bomItems.length - 1;
+          //         //  print('isLast : $item $isLastItem');
+          //         return dataRow(index);
+          //       }).toList())),
+          // ),
+          // IconWithText(
+          //   iconData: Icons.add,
+          //   text: 'Add Item',
+          //   onPressed: () {
+          //     // Add new item to the cartItems list
+          //     BomAddItemModel newItem = BomAddItemModel(
+          //       title: 'title',
+          //       quantityType: 'quantityType',
+          //       quantity: 1,
+          //     );
+          //     controller.addItem(newItem);
+          //     print(selectrawdata.length);
+          //   },
+          // ),
+
           verticalSpace(10),
           Container(
               width: 100,
@@ -193,9 +222,9 @@ class BomAddItem extends StatelessWidget {
                   text: 'Save',
                   onPressed: () {
                     // print(selectrawdata.entries.map((e) => e.value.qty));
-                    bomitemModel data = bomitemModel(
-                        readyStock: redy, raw: selectrawdata.values.toList());
-                    ApiServices().AddBom(data);
+                    // bomitemModel data = bomitemModel(
+                    //     readyStock: redy, raw: selectrawdata.values.toList());
+                    // ApiServices().AddBom(data);
                   })),
         ],
       ),
@@ -203,14 +232,8 @@ class BomAddItem extends StatelessWidget {
   }
 
   DataRow Datarow(int indexx) {
-    TextEditingController type = TextEditingController(
-        text: !selectrawdata[indexx].isNull
-            ? selectrawdata[indexx]!.qtyType.toString() ?? ""
-            : "");
-    TextEditingController qty = TextEditingController(
-        text: !selectrawdata[indexx].isNull
-            ? selectrawdata[indexx]!.qty.toString() ?? ""
-            : "");
+    TextEditingController type = TextEditingController();
+    TextEditingController qty = TextEditingController();
     return DataRow(cells: [
       DataCell(Container(
         padding: const EdgeInsets.symmetric(vertical: 3),
@@ -268,11 +291,7 @@ class BomAddItem extends StatelessWidget {
       DataCell(Container(
           padding: const EdgeInsets.symmetric(vertical: 3),
           width: 200,
-          child: InkWell(
-              onTap: () {
-                print(data);
-              },
-              child: CTextBlack('Remove Row', mSize: 15, mBold: false)))),
+          child: CTextBlack('Remove Row', mSize: 15, mBold: false))),
     ]);
   }
 }

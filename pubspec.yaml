@@ -38,15 +38,15 @@ dependencies:
   get: null
   http: null
   path_provider: null
-  dio: ^5.5.0+1
+  dio: null
   pdf: null
   printing: null
-  progress_dialog_null_safe: ^3.0.0
+  progress_dialog_null_safe: null
   shared_preferences: ^2.2.2
   syncfusion_flutter_core: ^20.4.54
   syncfusion_flutter_datagrid: ^20.4.49
   syncfusion_flutter_xlsio: null
-  image_picker_web: ^4.0.0
+  image_picker_web: null
   tab_indicator_styler: null
   universal_html: null
 
