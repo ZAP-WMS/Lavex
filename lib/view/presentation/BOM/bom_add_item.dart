@@ -203,10 +203,6 @@ class BomAddItem extends StatelessWidget {
   }
 
   DataRow Datarow(int indexx) {
-    RxString text = "".obs;
-    text.value = !selectrawdata[indexx].isNull
-        ? selectrawdata[indexx]!.name.toString() ?? ""
-        : "";
     TextEditingController type = TextEditingController(
         text: !selectrawdata[indexx].isNull
             ? selectrawdata[indexx]!.qtyType.toString() ?? ""
@@ -216,30 +212,32 @@ class BomAddItem extends StatelessWidget {
             ? selectrawdata[indexx]!.qty.toString() ?? ""
             : "");
     return DataRow(cells: [
-      DataCell(Obx(() => Container(
-            padding: const EdgeInsets.symmetric(vertical: 3),
-            width: 200,
-            child: !text.value.isEmpty
-                ? DropdownTextField<String>(
-                    items: Itemraw.map((f) => f.name as String).toList(),
-                    hintText: "",
-                    initialValue: text.value,
-                    itemAsString: (item) => item,
-                    onChanged: (value) {
-                      selectrawdata.addIf(true, indexx,
-                          Itemraw.firstWhere((f) => f.name == value));
-                      type.text = selectrawdata[indexx]!.qtyType.toString();
-                    })
-                : DropdownTextField<String>(
-                    items: Itemraw.map((f) => f.name as String).toList(),
-                    hintText: "",
-                    itemAsString: (item) => item,
-                    onChanged: (value) {
-                      selectrawdata.addIf(true, indexx,
-                          Itemraw.firstWhere((f) => f.name == value));
-                      type.text = selectrawdata[indexx]!.qtyType.toString();
-                    }),
-          ))),
+      DataCell(Container(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        width: 200,
+        child: !selectrawdata[indexx].isNull
+            ? DropdownTextField<String>(
+                items: Itemraw.map((f) => f.name as String).toList(),
+                hintText: "",
+                initialValue: !selectrawdata[indexx].isNull
+                    ? selectrawdata[indexx]!.name.toString() ?? ""
+                    : "",
+                itemAsString: (item) => item,
+                onChanged: (value) {
+                  selectrawdata.addIf(
+                      true, indexx, Itemraw.firstWhere((f) => f.name == value));
+                  type.text = selectrawdata[indexx]!.qtyType.toString();
+                })
+            : DropdownTextField<String>(
+                items: Itemraw.map((f) => f.name as String).toList(),
+                hintText: "",
+                itemAsString: (item) => item,
+                onChanged: (value) {
+                  selectrawdata.addIf(
+                      true, indexx, Itemraw.firstWhere((f) => f.name == value));
+                  type.text = selectrawdata[indexx]!.qtyType.toString();
+                }),
+      )),
       DataCell(Container(
         padding: const EdgeInsets.symmetric(vertical: 3),
         width: 200,
@@ -272,7 +270,7 @@ class BomAddItem extends StatelessWidget {
           width: 200,
           child: InkWell(
               onTap: () {
-                controller.removeitem(indexx);
+                print(data);
               },
               child: CTextBlack('Remove Row', mSize: 15, mBold: false)))),
     ]);
