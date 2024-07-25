@@ -78,35 +78,20 @@ class BomAddItem extends StatelessWidget {
                     children: [
                       CTextBlack(field, mBold: true, mSize: 14),
                       SizedBox(
-                        width: 300,
-                        height: 35,
-                        child: (data.isNull || data.isBlank!)
-                            ? DropdownTextField<String>(
-                                items: field == "raw"
-                                    ? Itemraw.map((f) => f.name as String)
-                                        .toList()
-                                    : Itemredy.map((f) => f.name as String)
-                                        .toList(),
-                                hintText: field != "raw" ? field : "",
-                                itemAsString: (item) => item,
-                                onChanged: (value) {
-                                  redy = Itemredy.firstWhere(
-                                      (f) => f.name == value);
-                                })
-                            : DropdownTextField<String>(
-                                items: field == "raw"
-                                    ? Itemraw.map((f) => f.name as String)
-                                        .toList()
-                                    : Itemredy.map((f) => f.name as String)
-                                        .toList(),
-                                initialValue: data,
-                                hintText: field != "raw" ? field : "",
-                                itemAsString: (item) => item,
-                                onChanged: (value) {
-                                  redy = Itemredy.firstWhere(
-                                      (f) => f.name == value);
-                                }),
-                      ),
+                          width: 300,
+                          height: 35,
+                          child: DropdownTextField<String>(
+                              items: field == "raw"
+                                  ? Itemraw.map((f) => f.name as String)
+                                      .toList()
+                                  : Itemredy.map((f) => f.name as String)
+                                      .toList(),
+                              hintText: field != "raw" ? field : "",
+                              itemAsString: (item) => item,
+                              onChanged: (value) {
+                                redy =
+                                    Itemredy.firstWhere((f) => f.name == value);
+                              })),
                     ],
                   ),
                 );
