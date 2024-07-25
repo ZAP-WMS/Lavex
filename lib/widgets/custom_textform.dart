@@ -13,7 +13,7 @@ class CustomField extends StatelessWidget {
   double? width;
   double? height;
   String? Function(String?)? validator;
-
+  TextInputType? keyboardType;
   CustomField(
       {super.key,
       required this.controller,
@@ -24,6 +24,7 @@ class CustomField extends StatelessWidget {
       this.isSuffixIcon = false,
       this.isreadOnly = false,
       this.width,
+      this.keyboardType,
       this.height});
 
   @override
@@ -37,6 +38,7 @@ class CustomField extends StatelessWidget {
             width: width,
             height: height,
             child: TextFormField(
+                keyboardType: TextInputType.phone,
                 readOnly: isreadOnly,
                 style: const TextStyle(fontSize: 15),
                 controller: controller,

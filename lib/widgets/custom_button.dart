@@ -8,12 +8,14 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   double? width;
 
-  CustomButton({
-    required this.text,
-    this.image,
-    required this.onPressed,
-    this.width,
-  });
+  double? fontsie;
+
+  CustomButton(
+      {required this.text,
+      this.image,
+      required this.onPressed,
+      this.width,
+      this.fontsie});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class CustomButton extends StatelessWidget {
       height: 40,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          // backgroundColor: redColor,
+          backgroundColor: redColor,
           shape: RoundedRectangleBorder(
             borderRadius:
                 BorderRadius.circular(25.0), // Adjust the value as needed
@@ -41,7 +43,7 @@ class CustomButton extends StatelessWidget {
                 style: TextStyle(
                     color: whiteColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16),
+                    fontSize: fontsie ?? 16),
               ),
             if (image != null)
               CircleAvatar(

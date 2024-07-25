@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:lavex/data/model/my_clients.dart';
+import 'package:lavex/data/model/get_client_model.dart';
 import 'package:lavex/data/model/my_invoice_model.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -108,7 +108,8 @@ class MyClientDataSource extends DataGridSource {
   }
 
   void removeRowByInvoiceNo(String invoiceNo) {
-    _myclientModel.removeWhere((payment) => payment.shortcode == invoiceNo);
+    _myclientModel
+        .removeWhere((payment) => payment.clientShortCode == invoiceNo);
     buildDataGridRows();
     notifyListeners();
   }
@@ -135,30 +136,30 @@ class MyClientDataSource extends DataGridSource {
     if (column.columnName == 'client_name') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<double>(columnName: 'client_name', value: newCellValue);
-      _myclientModel[dataRowIndex].clientName = newCellValue;
+      _myclientModel[dataRowIndex].client = newCellValue;
     } else if (column.columnName == 'client_bulstat') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(
               columnName: 'client_bulstat', value: newCellValue);
-      _myclientModel[dataRowIndex].clientBulstat = newCellValue;
+      _myclientModel[dataRowIndex].clientShortCode = newCellValue;
     } else if (column.columnName == 'shortcode') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'shortcode', value: newCellValue);
-      _myclientModel[dataRowIndex].shortcode = newCellValue;
+      _myclientModel[dataRowIndex].clientShortCode = newCellValue;
     } else if (column.columnName == 'client_contact_no') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(
               columnName: 'client_contact_no', value: newCellValue);
-      _myclientModel[dataRowIndex].clientContactNo = newCellValue;
+      _myclientModel[dataRowIndex].contactNo = newCellValue;
     } else if (column.columnName == 'client_area') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'client_area', value: newCellValue);
-      _myclientModel[dataRowIndex].clientArea = newCellValue;
+      _myclientModel[dataRowIndex].area = newCellValue;
     } else if (column.columnName == 'client_location') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(
               columnName: 'client_location', value: newCellValue);
-      _myclientModel[dataRowIndex].clientLocation = newCellValue;
+      _myclientModel[dataRowIndex].location = newCellValue;
     } else {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'Manage', value: newCellValue);

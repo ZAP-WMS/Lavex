@@ -1,13 +1,30 @@
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+
 class BomAddItemModel {
-  final String title;
-  final String quantityType;
-  final int quantity;
-  dynamic action;
+  String title;
+  String quantityType;
+  int quantity;
+  dynamic manage;
 
   BomAddItemModel({
     required this.title,
     required this.quantityType,
     required this.quantity,
-    required this.action,
   });
+
+  factory BomAddItemModel.fromjson(Map<String, dynamic> json) {
+    return BomAddItemModel(
+        title: json['name'],
+        quantityType: json['quantity Type'],
+        quantity: json['Quantity']);
+  }
+
+  DataGridRow dataGridRow() {
+    return DataGridRow(cells: <DataGridCell>[
+      DataGridCell(columnName: 'name', value: title),
+      DataGridCell(columnName: 'quantity Type', value: quantityType),
+      DataGridCell(columnName: 'Quantity', value: quantity),
+      DataGridCell(columnName: 'Manage', value: manage),
+    ]);
+  }
 }

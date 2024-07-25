@@ -3,6 +3,7 @@ import 'package:lavex/data/model/add_suppllier.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/Authentication/login.dart';
 import 'package:lavex/view/Authentication/register.dart';
+import 'package:lavex/view/presentation/Companey/update_company.dart';
 import 'package:lavex/view/presentation/clients/add_client.dart';
 import 'package:lavex/view/presentation/edit/edit_table.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
@@ -15,11 +16,15 @@ import '../view/Authentication/navbar_page.dart';
 import '../view/binding/create_invoice_binding.dart';
 import '../view/binding/index_binding.dart';
 import '../view/binding/proma_form_binding.dart';
+import '../view/presentation/Companey/Managecompaney.dart';
+import '../view/presentation/Companey/add_company.dart';
 import '../view/presentation/Invoice/createinvoice/create_invoiceList.dart';
 import '../view/presentation/Invoice/createinvoice/create_invoice.dart';
 import '../view/presentation/Invoice/createinvoice/pro_forma.dart';
 import '../view/presentation/Invoice/myinvoice/myInvoice_home.dart';
 import '../view/presentation/Invoice/myinvoice/myInvoice..dart';
+import '../view/presentation/ItemMaster/item_master.dart';
+import '../view/presentation/clients/my_clients.dart';
 import '../view/presentation/store/add_item.dart';
 
 class AppPages {
@@ -29,8 +34,32 @@ class AppPages {
       //   binding: SplashBinding(),
     ),
     GetPage(
+      name: AppRoutes.client_List, page: () => MyClient(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
       name: AppRoutes.menuBar,
       page: () => const MenuPage(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.itemmaster,
+      page: () => ItemMaster(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.managecompaney,
+      page: () => MyCompaney(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.addcompaney,
+      page: () => AddCompaney(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.update_companey,
+      page: () => UpdateCompaney(),
       //   binding: SplashBinding(),
     ),
     GetPage(

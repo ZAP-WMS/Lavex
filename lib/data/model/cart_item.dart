@@ -25,6 +25,15 @@ class CartItem {
         price: json['Price'],
         total: json['Total']);
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.item;
+    data['brand'] = this.brand;
+    data['quantity'] = this.quantity;
+    data['price'] = this.price;
+    data['gst'] = this.gst;
+    return data;
+  }
 
   DataGridRow dataGridRow() {
     return DataGridRow(cells: <DataGridCell>[

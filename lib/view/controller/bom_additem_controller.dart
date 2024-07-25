@@ -8,4 +8,15 @@ class BomAddItemController extends GetxController {
   void addItem(BomAddItemModel item) {
     bomItems.add(item);
   }
+
+  void removeItem(int index) {
+    print('Before removal: ${bomItems.toList()}');
+    bomItems.removeAt(index);
+    print('After removal: ${bomItems.toList()}');
+  }
+
+  getitem() {
+    List<BomAddItemModel> data = bomItems.map((f) => f).toList();
+    return data;
+  }
 }

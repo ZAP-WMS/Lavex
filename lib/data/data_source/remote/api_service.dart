@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lavex/data/model/add_suppllier.dart';
+import 'package:lavex/data/model/InwardEntrymodel.dart';
+import 'package:lavex/data/model/bom_add_item.dart';
+import 'package:lavex/data/model/get_client_model.dart';
 import 'package:lavex/data/model/proforma_invoice.dart';
 import 'package:lavex/data/model/item_master.dart';
-import 'package:lavex/data/model/my_clients.dart';
+
 import 'package:lavex/data/model/my_payments.dart';
 import 'package:http/http.dart' as http;
 import 'package:lavex/data/model/store_model.dart';
@@ -13,13 +16,18 @@ import 'package:lavex/utils/api_string.dart';
 import '../../../routes/route_pages.dart';
 import '../../model/add_client_model.dart';
 import '../../model/add_item.dart';
+import '../../model/add_suppllier.dart';
+import '../../model/bomitemmodel.dart';
 import '../../model/credit_note.dart';
 import '../../model/debit_note.dart';
+import '../../model/getallinwardentrymodel.dart';
+import '../../model/getitemmodel.dart';
 import '../../model/invoice.dart';
 import '../../model/register_model.dart';
 import '../local/shared_preference.dart';
 
 class ApiServices {
+  final dio = Dio();
   Future<ProformaInvoiceModel> proFormaData(
       ProformaInvoiceModel proformaData) async {
     try {
@@ -47,6 +55,90 @@ class ApiServices {
     } catch (e) {
       print('Error: $e');
       throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  Future<void> Addinward(InwardEntrymodel data) async {
+    try {
+      print(data);
+      var response = await dio.post('$baseUrl$addinward', data: data.toJson());
+      print(response.data["message"]);
+
+      if (response.statusCode == 200) {
+        if (response.data["success"] ?? false) {
+          print(response.data["success"]);
+          Get.snackbar("Status", response.data["message"].toString(),
+              snackPosition: SnackPosition.BOTTOM);
+          // Get.back();
+        } else {
+          print('message${response.data["message"]}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        Get.snackbar("Status", response.data["message"].toString(),
+            snackPosition: SnackPosition.BOTTOM);
+        // throw Exception('Failed to create payment: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  Future<void> AddBom(bomitemModel data) async {
+    try {
+      print(data);
+      var response = await dio.post('$baseUrl$addbom', data: data.toJson());
+      print(response.data["message"]);
+
+      if (response.statusCode == 200) {
+        if (response.data["success"] ?? false) {
+          print(response.data["success"]);
+          Get.snackbar("Status", response.data["message"].toString(),
+              snackPosition: SnackPosition.BOTTOM);
+          // Get.back();
+        } else {
+          print('message${response.data["message"]}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        Get.snackbar("Status", response.data["message"].toString(),
+            snackPosition: SnackPosition.BOTTOM);
+        // throw Exception('Failed to create payment: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  getinward(String type) async {
+    try {
+      var response = await dio.get('$baseUrl$getInward$type');
+      print(response.data["message"]);
+      if (response.statusCode == 200) {
+        getallInwardEntryModel data =
+            getallInwardEntryModel.fromJson(response.data);
+        print(data.data!.length);
+        return data.data;
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+  getredymaterial(String type) async {
+    try {
+      var response = await dio.get('$baseUrl$getInward$type');
+      print(response.data["message"]);
+      if (response.statusCode == 200) {
+        getallInwardEntryModel data =
+            getallInwardEntryModel.fromJson(response.data);
+        print(data.data!.length);
+        return data.data;
+      }
+    } on Exception catch (e) {
+      print(e);
     }
   }
 
@@ -137,27 +229,24 @@ class ApiServices {
   }
 
 // Add client APi
-  Future<AddClientModel> addClientData(AddClientModel addClientModel) async {
+  Future<void> addClientData(AddClientModel addClientModel) async {
     try {
-      Uri url = Uri.parse('$baseUrl$addClientUrl');
-      var response = await http.post(url,
-          headers: {
-            'Content-Type': 'application/json'
-            // Add other headers if needed
-          },
-          body: jsonEncode(addClientModel.toJson()));
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-
+      var response = await dio.post('$baseUrl$addClientUrl',
+          data: addClientModel.clientData.toJson());
+      print(response.data["message"]);
+      Get.snackbar("Status", response.data["message"].toString(),
+          snackPosition: SnackPosition.BOTTOM);
       if (response.statusCode == 200) {
-        if (responseData['success']) {
-          var data = addClientModelFromJson(response.body);
-          return data;
+        if (response.data["success"] ?? false) {
+          print(response.data["success"]);
+          Get.offAndToNamed(AppRoutes.client_List);
+          // Get.back();
         } else {
-          print('message${responseData['message']}');
+          print('message${response.data["message"]}');
           throw Exception('Failed to create payment');
         }
       } else {
-        throw Exception('Failed to create payment: ${response.reasonPhrase}');
+        throw Exception('Failed to create payment: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error: $e');
@@ -165,7 +254,66 @@ class ApiServices {
     }
   }
 
-// get proforma data
+  Future<void> DeleteClient(String id) async {
+    var response = await dio.delete('$baseUrl$deleteclient$id');
+
+    print(response.data["message"]);
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] ?? false) {
+        print(response.data["success"]);
+      } else {
+        print('message${response.data["message"]}');
+        throw Exception('Failed to create payment');
+      }
+    } else {
+      throw Exception('Failed to create payment: ${response.statusMessage}');
+    }
+  }
+
+  Future<List<String>> getClientlist() async {
+    var response = await dio.get('$baseUrl$getclient');
+
+    print(response.data["message"]);
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] ?? false) {
+        List<String>? clientlist = response.data["data"].cast<String>() ?? [];
+
+        print(clientlist);
+        return clientlist ?? [];
+      } else {
+        print('message${response.data["message"]}');
+        throw Exception('Failed to create payment');
+      }
+    } else {
+      throw Exception('Failed to create payment: ${response.statusMessage}');
+    }
+  }
+
+  Future<List<itemData>> getallItem() async {
+    try {
+      var response = await dio.get('$baseUrl$getallitem');
+
+      print(response.data["message"]);
+
+      if (response.statusCode == 200) {
+        if (response.data["success"] ?? false) {
+          getallitemmodel data = getallitemmodel.fromJson(response.data);
+
+          print(data);
+          return data.data ?? [];
+        } else {
+          print('message${response.data["message"]}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.statusMessage}');
+      }
+    } on Exception catch (e) {
+      throw Exception('Failed to create payment: ${e}');
+    }
+  }
 
 // add Suppllier Data
   Future<AddSuppllier> addSuppllierata(AddSuppllier addSuppllier) async {
@@ -232,11 +380,19 @@ class ApiServices {
   }
 
   Future<List<MyClientModel>> myClient() async {
-    Uri url = Uri.parse('$baseUrlTxt$myClientEndUrlTxt');
+    Uri url = Uri.parse('$baseUrl$getallclient');
     var response = await http.get(url);
+
+    print(response.body);
     if (response.statusCode == 200) {
-      var data = MyClientModelFromJson(response.body);
-      return data;
+      getClient? data;
+      try {
+        data = getClient.fromJson(jsonDecode(response.body));
+        print(data);
+      } on Exception catch (e) {
+        print(e);
+      }
+      return data!.data ?? [];
     } else {
       throw Exception('Failed to load data');
     }
@@ -336,19 +492,18 @@ class ApiServices {
     }
   }
 
-  Future<List<String>> fetchCompanies() async {
-    final response = await http.get(Uri.parse(baseUrlTxt + comapanyUrlTxt));
+  // Future<List<String>> fetchCompanies() async {
+  //   final response = await http.get(Uri.parse(baseUrlTxt + comapanyUrlTxt));
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> data = json.decode(response.body);
+  //     return data.map((company) => company['name'].toString()).toList();
+  //   } else {
+  //     throw Exception('Failed to load companies');
+  //   }
+  // }
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((company) => company['name'].toString()).toList();
-    } else {
-      throw Exception('Failed to load companies');
-    }
-  }
-
-  Future<void> postItemData(AddItemModel itemData) async {
-    final String url = baseUrlTxt + addItemUrlTxt;
+  Future<bool> postItemData(AddItemModel itemData) async {
+    final String url = baseUrl + addItem;
 
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -363,11 +518,24 @@ class ApiServices {
 
       if (response.statusCode == 200) {
         print('Success: ${response.body}');
+        var data = await jsonDecode(response.body);
+        print(data["message"]);
+        if (!data["success"]) {
+          return false;
+        } else {
+          Get.snackbar(
+            "title",
+            "message",
+          );
+          return data["success"];
+          //    Get.back();
+        }
       } else {
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
       print('Exception: $e');
     }
+    return false;
   }
 }

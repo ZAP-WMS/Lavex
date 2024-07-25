@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:lavex/data/model/bom.dart';
+import 'package:lavex/common/custom_text.dart';
+import 'package:lavex/data/model/bom_add_item.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../utils/colors.dart';
 import '../utils/style.dart';
 import '../widgets/custom_spacebar.dart';
 
-class BomDataSource extends DataGridSource {
+class BomAddItemDataSource extends DataGridSource {
   // String cityName;
   // String depoName;
   String userId;
@@ -15,7 +16,7 @@ class BomDataSource extends DataGridSource {
   BuildContext mainContext;
   List data = [];
 
-  BomDataSource(this._bomModel, this.mainContext, this.userId) {
+  BomAddItemDataSource(this._bomModel, this.mainContext, this.userId) {
     buildDataGridRows();
   }
   void buildDataGridRows() {
@@ -25,7 +26,7 @@ class BomDataSource extends DataGridSource {
   }
 
   @override
-  List<BomModel> _bomModel = [];
+  List<BomAddItemModel> _bomModel = [];
   List<DataGridRow> dataGridRows = [];
 
   /// [DataGridCell] on [onSubmitCell] method.
@@ -47,7 +48,10 @@ class BomDataSource extends DataGridSource {
     DateTime? date1;
     DateTime? endDate1;
     final int dataRowIndex = dataGridRows.indexOf(row);
+    int last = dataGridRows.length - 1;
     String Pagetitle = 'Daily Report';
+
+    int lastRowIndex = dataGridRows.length - 1;
 
     return DataGridRowAdapter(
       cells: row.getCells().map<Widget>((dataGridCell) {
@@ -57,55 +61,34 @@ class BomDataSource extends DataGridSource {
           notifyListeners();
         }
 
+        void addRowAtIndex(int index, BomAddItemModel rowData) {
+          _bomModel.insert(index, rowData);
+          buildDataGridRows();
+          notifyListeners();
+        }
+
         return Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: (dataGridCell.columnName == 'Manage')
-              ? Container(
-                  height: 500,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.edit, color: redColor),
-                          onPressed: () {
-                            Get.toNamed('/edit-page');
-                          },
-                        ),
-                        horizontalSpace(5),
-                        PopupMenuButton<String>(
-                          icon: Icon(Icons.menu, color: redColor),
-                          onSelected: (String result) {
-                            switch (result) {
-                              case 'Delete':
-                                // Handle Option 1
-                                break;
-                              case 'Option 2':
-                                // Handle Option 2
-                                break;
-                              case 'Option 3':
-                                // Handle Option 3
-                                break;
-                            }
-                          },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'Option 1',
-                              child: Text('Option 1'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Option 2',
-                              child: Text('Option 2'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Option 3',
-                              child: Text('Option 3'),
-                            ),
-                          ],
-                        )
-                      ]),
-                )
+              ? ElevatedButton(
+                  onPressed: () {
+                    if (dataRowIndex == lastRowIndex) {
+                      addRowAtIndex(
+                          dataRowIndex,
+                          BomAddItemModel(
+                              title: 'title',
+                              quantityType: 'quantityType',
+                              quantity: 3));
+                    } else {
+                      removeRowAtIndex(dataRowIndex);
+                    }
+                  },
+                  child: CTextWhite(
+                    dataRowIndex == lastRowIndex ? 'Add Row' : 'Remove',
+                    mBold: true,
+                    mSize: 16,
+                  ))
               : Text(
                   dataGridCell.value.toString(),
                   textAlign: TextAlign.center,
@@ -139,22 +122,23 @@ class BomDataSource extends DataGridSource {
     if (newCellValue == null || oldValue == newCellValue) {
       return;
     }
-    if (column.columnName == 'Name') {
+       if (column.columnName == 'Name') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'Name', value: newCellValue);
-      _bomModel[dataRowIndex].name = newCellValue;
-    } else if (column.columnName == 'Store') {
+      _bomModel[dataRowIndex].title = newCellValue;
+    } else if (column.columnName == 'Quantity Type') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'Store', value: newCellValue);
-      _bomModel[dataRowIndex].store = newCellValue;
-    } else if (column.columnName == 'Status') {
+          DataGridCell<String>(
+              columnName: 'Quantity Type', value: newCellValue);
+      _bomModel[dataRowIndex].quantityType = newCellValue;
+    } else if (column.columnName == 'Quantity') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'Status', value: newCellValue);
-      _bomModel[dataRowIndex].status = newCellValue;
+          DataGridCell<int>(columnName: 'Quantity', value: newCellValue);
+      _bomModel[dataRowIndex].quantity = newCellValue;
     } else {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'Manage', value: newCellValue);
-      _bomModel[dataRowIndex].status = newCellValue;
+      _bomModel[dataRowIndex].manage = newCellValue;
     }
   }
 
@@ -182,7 +166,7 @@ class BomDataSource extends DataGridSource {
     // into the current non-modified [DataGridCell].
     newCellValue = '';
 
-    final bool isNumericType = column.columnName == 'SiNo';
+    final bool isNumericType = column.columnName == 'Quantity';
 
     final bool isDateTimeType = column.columnName == 'StartDate' ||
         column.columnName == 'EndDate' ||

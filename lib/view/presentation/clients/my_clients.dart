@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/my_clients.dart';
@@ -18,9 +19,9 @@ class MyClient extends GetView<MyClientController> {
   late DataGridController _dataGridController;
 
   List<MyClientModel> clientModel = [];
-
+  List<String> Cid = [];
   List<GridColumn> columns = [];
-
+  DataGridController Data_Grid_Controller = DataGridController();
   late MyClientDataSource myClientDataSource;
   final MyClientController myClientController = Get.put(MyClientController());
 
@@ -30,7 +31,7 @@ class MyClient extends GetView<MyClientController> {
       columns.add(
         GridColumn(
           columnName: columnName,
-          visible: true,
+          visible: columnName == "CId" ? false : true,
           allowEditing: columnName == 'Add' ||
                   columnName == 'Delete' ||
                   columnName == columnName[0]
@@ -77,9 +78,19 @@ class MyClient extends GetView<MyClientController> {
                           Get.toNamed(AppRoutes.addClient);
                         }),
                     horizontalSpace(10),
-                    CustomButton(text: 'Delete', onPressed: () {}),
+                    CustomButton(
+                        text: 'Delete',
+                        onPressed: () {
+                          print('object');
+
+                          Deleteclient();
+                        }),
                     horizontalSpace(10),
-                    CustomButton(text: 'Export Data', onPressed: () {}),
+                    CustomButton(
+                        text: 'Export Data',
+                        onPressed: () {
+                          myClientController.isLoading(true);
+                        }),
                     verticalSpace(10),
                   ],
                 ),
@@ -122,8 +133,18 @@ class MyClient extends GetView<MyClientController> {
                           allowFiltering: false,
                           allowSorting: true,
                           selectionMode: SelectionMode.multiple,
+                          onSelectionChanging: (addedRows, removedRows) {
+                            var _selectedRows = !addedRows.isEmpty
+                                ? addedRows[0].getCells().first.value
+                                : removedRows[0].getCells().first.value;
+                            !addedRows.isEmpty
+                                ? Cid.add(_selectedRows)
+                                : Cid.remove(_selectedRows);
+                            print(Cid);
+                            return true;
+                          },
                           gridLinesVisibility: GridLinesVisibility.both,
-                          controller: DataGridController(),
+                          controller: Data_Grid_Controller,
                           headerGridLinesVisibility: GridLinesVisibility.both,
                           source: myClientDataSource,
                           columns: buildColumns(context))),
@@ -135,4 +156,26 @@ class MyClient extends GetView<MyClientController> {
       ),
     );
   }
+
+  void Deleteclient() {
+    try {
+      myClientController.isLoading(true);
+      Cid.forEach((e) async {
+        var data = await myClientController.deleteClient(e).whenComplete(() {
+          myClientController.myClientModel.clear();
+        });
+        myClientController.myClientModel.assignAll(data);
+        Cid.remove(e);
+      });
+    } on Exception catch (e) {
+      print("Error:123  " + e.toString());
+      // TODO
+    } finally {
+      myClientController.isLoading(false);
+    }
+  }
+  // Timer(
+  //     Duration(seconds: 5),
+  //     () =>
+  //         {myClientController.isLoading.value = false});
 }

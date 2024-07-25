@@ -29,7 +29,7 @@ String suppllierTxt = 'Suppllier';
 String addressTxt = 'Address:';
 String locationTxt = 'Location';
 String areaTxt = 'Area';
-String pincodeTxt = 'PinCode';
+String pincodeTxt = 'Pincode';
 String emailTxt = 'Email Id';
 String mobileNumberTxt = 'Mobile Number';
 String contactNumberTxt = 'Contact Number';
@@ -69,7 +69,7 @@ String betrayedTxt = 'Betrayed';
 String acceptedTxt = 'Accepted';
 String selectTxt = 'Select';
 // Invoice
-String invoiceTxt = 'invoice';
+String invoiceTxt = 'Invoice';
 
 String gradeTxt = 'Grade';
 //create invoice Button Name
@@ -301,12 +301,19 @@ final List<String> supplierPayments = [
 
 // client
 final List<String> myClientTableName = [
+  "CId",
   'Name',
   'ShortCode',
   'Client Short-Code',
   'Mobile Number',
   'Area',
   'Location',
+  'Manage',
+];
+final List<String> bomTableName = [
+  'Name',
+  'Quantity Type',
+  'Quantity',
   'Manage',
 ];
 
@@ -322,15 +329,17 @@ final List<String> itemMasterTableName = [
   'Name',
   'Item_Code',
   'Available Quantity',
-  'Law Quantity',
-  'Quantity Type',
+  // 'Law Quantity',
+
   'Price',
-  'GST',
-  'Stock Status',
+  'Quantity Type',
+  // 'GST',
   'Store',
-  'Category',
-  'Total Price',
-  'Status',
+  'Stock Status',
+
+  // 'Category',
+  // 'Total Price',
+  // 'Status',
   'Manage',
 ];
 
@@ -357,4 +366,16 @@ final List<String> storeTabName = [
   'All Cash Inward Entry',
   'All DC Entry',
   'Store Setting',
+];
+
+final List<String> InwardTabName = [
+  'suplierInvoiceNo',
+  'dateCreated',
+  'remark',
+  'movementNumber',
+  'country',
+  'accountPerson',
+  'gstRegistration',
+  'status',
+  'Manage',
 ];

@@ -57,9 +57,9 @@ class ReportPage extends GetView<ReportController> {
 
     // Add some data to the document
     var sheet = excel['Sheet1'];
-    sheet.appendRow(['Header1', 'Header2', 'Header3']);
-    sheet.appendRow(['Row1-Col1', 'Row1-Col2', 'Row1-Col3']);
-    sheet.appendRow(['Row2-Col1', 'Row2-Col2', 'Row2-Col3']);
+    // sheet.appendRow(['Header1', 'Header2', 'Header3']);
+    // sheet.appendRow(['Row1-Col1', 'Row1-Col2', 'Row1-Col3']);
+    // sheet.appendRow(['Row2-Col1', 'Row2-Col2', 'Row2-Col3']);
 
     // Encode the document to a byte array
     var bytes = excel.encode();
@@ -176,12 +176,14 @@ class ReportPage extends GetView<ReportController> {
                 Row(children: [
                   CustomButton(
                       text: 'Download Excel',
+                      fontsie: 14,
                       onPressed: () {
                         downloadExcel();
                       }),
                   horizontalSpace(10),
                   CustomButton(
                       text: 'Download Pdf',
+                      fontsie: 14,
                       onPressed: () {
                         reportController.generateDailyPDF();
                       })
@@ -204,10 +206,16 @@ class ReportPage extends GetView<ReportController> {
                     ),
                     horizontalSpace(10),
                     CustomButton(
-                        width: 150, text: 'Download Excel', onPressed: () {}),
+                        width: 150,
+                        fontsie: 14,
+                        text: 'Download Excel',
+                        onPressed: () {}),
                     horizontalSpace(10),
                     CustomButton(
-                        width: 150, text: 'Download Pdf', onPressed: () {}),
+                        width: 150,
+                        fontsie: 14,
+                        text: 'Download Pdf',
+                        onPressed: () {}),
                     horizontalSpace(10),
                   ],
                 ),

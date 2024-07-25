@@ -32,15 +32,17 @@ class CTextBlack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      this.mTitle,
-      textAlign: TextAlign.center,
-      style: AppStyles.getTextStyleBlack(
-          this.mBold!,
-          getSize(
-            this.mSize!,
-            context,
-          )),
+    return Container(
+      child: Text(
+        this.mTitle,
+        textAlign: TextAlign.center,
+        style: AppStyles.getTextStyleBlack(
+            this.mBold!,
+            getSize(
+              this.mSize!,
+              context,
+            )),
+      ),
     );
   }
 }

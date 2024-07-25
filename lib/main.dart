@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lavex/routes/app_pages.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/utils/colors.dart';
-
 import 'view/controller/company_controller.dart';
 import 'view/controller/loading_controller.dart';
 import 'widgets/Loading_file.dart';
