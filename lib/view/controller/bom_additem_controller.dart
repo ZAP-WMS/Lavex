@@ -12,7 +12,6 @@ class BomAddItemController extends GetxController {
   void removeItem(int index) {
     print('Before removal: ${bomItems.toList()}');
     bomItems.removeAt(index);
-
     print(index);
   }
 
