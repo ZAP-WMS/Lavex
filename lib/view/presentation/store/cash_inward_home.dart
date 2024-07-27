@@ -19,8 +19,8 @@ class CashInwardHome extends GetView<CashInwardController> {
   Widget build(BuildContext context) {
     final CashInwardController controller = Get.put(CashInwardController());
     List<String> tabIcon = [
-      'assets/store/Cash Inward Entry.png',
       'assets/store/inward Entry.png',
+      'assets/store/Cash Inward Entry.png',
       'assets/store/Add new production.png'
     ];
 

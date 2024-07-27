@@ -38,6 +38,9 @@ class CustomField extends StatelessWidget {
             width: width,
             height: height,
             child: TextFormField(
+                decoration: isSuffixIcon
+                    ? InputDecoration(suffixIcon: Icon(Icons.calendar_month))
+                    : InputDecoration(),
                 keyboardType: TextInputType.phone,
                 readOnly: isreadOnly,
                 style: const TextStyle(fontSize: 15),

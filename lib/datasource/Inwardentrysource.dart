@@ -6,6 +6,7 @@ import 'package:lavex/data/model/my_invoice_model.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../data/model/getallinwardentrymodel.dart';
+import '../routes/route_pages.dart';
 import '../utils/colors.dart';
 import '../utils/style.dart';
 import '../widgets/custom_spacebar.dart';
@@ -59,7 +60,7 @@ class Inwardentrysource extends DataGridSource {
                         IconButton(
                           icon: Icon(Icons.edit, color: redColor),
                           onPressed: () {
-                            Get.toNamed('/edit-page');
+                            Get.toNamed(AppRoutes.updateinward);
                           },
                         ),
                         horizontalSpace(5),

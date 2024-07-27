@@ -15,7 +15,7 @@ import '../../controller/item_master_controller.dart';
 
 class AddItemMaster extends StatelessWidget {
   AddItemMaster({super.key});
-  TextEditingController nameController = TextEditingController();
+  TextEditingController nameController = TextEditingController(text: "hello");
   TextEditingController qtyController = TextEditingController();
   TextEditingController qtyTypeController = TextEditingController();
   TextEditingController itemCodeController = TextEditingController();
@@ -55,7 +55,7 @@ class AddItemMaster extends StatelessWidget {
     'Currency',
     'Status',
   ];
-  List<itemData> Itemraw = [];
+  List<ItemMasterData> Itemraw = [];
 
   List<String> clients = [
     'Show only paid, unpaid invoices',
@@ -261,7 +261,8 @@ class AddItemMaster extends StatelessWidget {
                       } else {
                         return Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: SStatus != "ReadyStock" && field == 'Name'
+                          child: SStatus.value != "ReadyStock" &&
+                                  field == 'Name'
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -313,7 +314,7 @@ class AddItemMaster extends StatelessWidget {
                               .postItemData(AddItemModel(
                                   forUser: 101,
                                   forCompany: 102,
-                                  name: SStatus != "ReadyStock"
+                                  name: SStatus.value == "ReadyStock"
                                       ? nameController.text
                                       : name,
                                   manufacturerName: manufacturerController.text,

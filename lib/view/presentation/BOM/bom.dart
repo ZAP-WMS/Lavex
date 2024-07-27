@@ -24,7 +24,7 @@ class BomPage extends StatelessWidget {
   List<String> tabClass = [AppRoutes.bomAdditem];
   final ItemMasterController itemMasterController =
       Get.put(ItemMasterController());
-  List<itemData> Itemredy = [];
+  List<ItemMasterData> Itemredy = [];
   late BomDataSource _bomDataSource;
   @override
   Widget build(BuildContext context) {

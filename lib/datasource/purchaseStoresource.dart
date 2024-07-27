@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:lavex/data/model/item_master.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import '../data/model/getitemmodel.dart';
+import '../data/model/purchaseStoreModel.dart';
+import '../routes/route_pages.dart';
 import '../utils/colors.dart';
 import '../utils/style.dart';
 import '../widgets/custom_spacebar.dart';
 
-class ItemMasterDataSource extends DataGridSource {
+class purchaseStoresource extends DataGridSource {
   dynamic userId;
   BuildContext mainContext;
 
   List data = [];
-  ItemMasterDataSource(this._itemMasterModel, this.mainContext, this.userId) {
+  purchaseStoresource(this._myPurchaseItem, this.mainContext, this.userId) {
     buildDataGridRows();
   }
   void buildDataGridRows() {
-    dataGridRows = _itemMasterModel
+    dataGridRows = _myPurchaseItem
         .map<DataGridRow>((dataGridRow) => dataGridRow.dataGridRow())
         .toList();
   }
 
-  List<ItemMasterData> _itemMasterModel = [];
+  List<Purchaseitem> _myPurchaseItem = [];
 
   List<DataGridRow> dataGridRows = [];
 
@@ -36,7 +36,7 @@ class ItemMasterDataSource extends DataGridSource {
   List<DataGridRow> get rows => dataGridRows;
 
   void removeRowAtIndex(int index) {
-    _itemMasterModel.removeAt(index);
+    _myPurchaseItem.removeAt(index);
     buildDataGridRows();
     notifyListeners();
   }
@@ -57,7 +57,7 @@ class ItemMasterDataSource extends DataGridSource {
                         IconButton(
                           icon: Icon(Icons.edit, color: redColor),
                           onPressed: () {
-                            Get.toNamed('/edit-page');
+                            Get.toNamed(AppRoutes.updateinward);
                           },
                         ),
                         horizontalSpace(5),
@@ -107,7 +107,7 @@ class ItemMasterDataSource extends DataGridSource {
   }
 
   void removeRowByInvoiceNo(String invoiceNo) {
-    _itemMasterModel.removeWhere((payment) => payment.itemCode == invoiceNo);
+    _myPurchaseItem.removeWhere((payment) => payment.id == invoiceNo);
     buildDataGridRows();
     notifyListeners();
   }
@@ -131,59 +131,30 @@ class ItemMasterDataSource extends DataGridSource {
     if (newCellValue == null || oldValue == newCellValue) {
       return;
     }
-    if (column.columnName == 'id') {
+    if (column.columnName == 'Name') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<double>(columnName: 'id', value: newCellValue);
-      _itemMasterModel[dataRowIndex].sId = newCellValue;
-    } else if (column.columnName == 'name') {
+          DataGridCell<double>(columnName: 'Name', value: newCellValue);
+      _myPurchaseItem[dataRowIndex].name = newCellValue;
+    } else if (column.columnName == 'brand') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'name', value: newCellValue);
-      _itemMasterModel[dataRowIndex].name = newCellValue;
-    } else if (column.columnName == 'item_code') {
-      dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'item_code', value: newCellValue);
-      _itemMasterModel[dataRowIndex].itemCode = newCellValue;
+          DataGridCell<String>(columnName: 'brand', value: newCellValue);
+      _myPurchaseItem[dataRowIndex].brand = newCellValue;
     } else if (column.columnName == 'quantity') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'quantity', value: newCellValue);
-      _itemMasterModel[dataRowIndex].qty = newCellValue;
-    } else if (column.columnName == 'low_quantity') {
-      // dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-      //     DataGridCell<String>(columnName: 'low_quantity', value: newCellValue);
-      // _itemMasterModel[dataRowIndex].lowQuantity = newCellValue;
-    } else if (column.columnName == 'quantity_type') {
+      _myPurchaseItem[dataRowIndex].quantity = newCellValue;
+    } else if (column.columnName == 'gst') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(
-              columnName: 'quantity_type', value: newCellValue);
-      _itemMasterModel[dataRowIndex].qtyType = newCellValue;
-    } else if (column.columnName == 'single_price') {
-      // dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-      //     DataGridCell<String>(columnName: 'single_price', value: newCellValue);
-      // _itemMasterModel[dataRowIndex].singlePrice = newCellValue;
-    } else if (column.columnName == 'gst_rate') {
-      // dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-      //     DataGridCell<String>(columnName: 'gst_rate', value: newCellValue);
-      // _itemMasterModel[dataRowIndex].gstRate = newCellValue;
-    } else if (column.columnName == 'stock_status') {
+          DataGridCell<String>(columnName: 'gst', value: newCellValue);
+      _myPurchaseItem[dataRowIndex].gst = newCellValue;
+    } else if (column.columnName == 'price') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'stock_status', value: newCellValue);
-      _itemMasterModel[dataRowIndex].stockStatus = newCellValue;
-    } else if (column.columnName == 'store_name') {
-      dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'store_name', value: newCellValue);
-      _itemMasterModel[dataRowIndex].store = newCellValue;
-    } else if (column.columnName == 'category') {
-      // dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-      //     DataGridCell<String>(columnName: 'category', value: newCellValue);
-      // _itemMasterModel[dataRowIndex].category = newCellValue;
-    } else if (column.columnName == 'total') {
-      // dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-      //     DataGridCell<String>(columnName: 'total', value: newCellValue);
-      // _itemMasterModel[dataRowIndex].total = newCellValue;
+          DataGridCell<String>(columnName: 'price', value: newCellValue);
+      _myPurchaseItem[dataRowIndex].price = newCellValue;
     } else {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'Manage', value: newCellValue);
-      _itemMasterModel[dataRowIndex].manage = newCellValue;
+      _myPurchaseItem[dataRowIndex].manage = newCellValue;
     }
   }
 

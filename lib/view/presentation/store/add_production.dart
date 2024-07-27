@@ -12,6 +12,7 @@ import '../../../widgets/custom_checkbox.dart';
 import '../../../widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';
 import '../../../widgets/cutom_textformfield.dart';
+import '../../../widgets/drop_downTextField.dart';
 import '../../../widgets/icon_with_text.dart';
 import '../../controller/production_controller.dart';
 
@@ -410,13 +411,15 @@ class AddProduction extends GetView<ProductionController> {
                         horizontalSpace(20),
                         CTextBlack(betrayedTxt, mSize: 14, mBold: true),
                         horizontalSpace(20),
-                        CustomTextFormField(
+                        Container(
                           width: 250,
                           height: 30,
-                          controller: paymentMethodController,
-                          name: '',
-                          style: normalTextStyle,
-                          validator: (p0) {},
+                          child: DropdownTextField(
+                            items: ["Cash"],
+                            onChanged: (String? value) {},
+                            itemAsString: (item) => item,
+                            hintText: '',
+                          ),
                         ),
                         horizontalSpace(20),
                         CTextBlack(acceptedTxt, mSize: 14, mBold: true),

@@ -15,16 +15,14 @@ import '../../../widgets/custom_checkbox.dart';
 import '../../../widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';
 import '../../../widgets/cutom_textformfield.dart';
-import '../../../widgets/drop_downTextField.dart';
 import '../../../widgets/icon_with_text.dart';
 import '../../controller/cash_inward_controller.dart';
 import '../../controller/store_controller.dart';
 
-class CashInward extends GetView<CashInwardController> {
-  CashInward({super.key});
+class UpdateInward extends GetView<CashInwardController> {
+  UpdateInward({super.key});
 
-  final TextEditingController uniteController =
-      TextEditingController(text: "Unit1");
+  final TextEditingController uniteController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cashMovementNoController =
       TextEditingController();
@@ -91,7 +89,7 @@ class CashInward extends GetView<CashInwardController> {
                                     name: forUnitTxt,
                                     controller: uniteController,
                                     style: normalTextStyle,
-                                    isreadOnly: true,
+                                    isreadOnly: false,
                                     isSuffixIcon: false,
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -105,9 +103,7 @@ class CashInward extends GetView<CashInwardController> {
                             CustomField(
                                 width: 300,
                                 // height: 40,
-                                name: !controller.individualValue.value
-                                    ? accountablePersonTxt
-                                    : Identificationnumber,
+                                name: accountablePersonTxt,
                                 controller: accountablePersonController,
                                 style: normalTextStyle,
                                 isreadOnly: false,
@@ -136,10 +132,7 @@ class CashInward extends GetView<CashInwardController> {
                         ),
                         MyCheckbox(
                           titleName: individualTxt,
-                          checkedvalue: controller.individualValue.value,
-                          onChanged: (value) {
-                            controller.toggleCheckedValue("Individual", value);
-                          },
+                          onChanged: (value) {},
                         ),
                         verticalSpace(10),
                         Row(
@@ -193,25 +186,20 @@ class CashInward extends GetView<CashInwardController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            !controller.individualValue.value
-                                ? CustomField(
-                                    width: 300,
-                                    // height: 40,
-                                    name: shortCodeTxt,
-                                    controller: shortCodeController,
-                                    style: normalTextStyle,
-                                    isreadOnly: false,
-                                    isSuffixIcon: false,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        print("object");
-                                        return "this field is required";
-                                      }
-                                    })
-                                : Container(
-                                    width: 300,
-                                    height: 40,
-                                  ),
+                            CustomField(
+                                width: 300,
+                                // height: 40,
+                                name: shortCodeTxt,
+                                controller: shortCodeController,
+                                style: normalTextStyle,
+                                isreadOnly: false,
+                                isSuffixIcon: false,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    print("object");
+                                    return "this field is required";
+                                  }
+                                }),
                             CustomField(
                                 width: 300,
                                 // height: 40,
@@ -276,10 +264,8 @@ class CashInward extends GetView<CashInwardController> {
                           ],
                         ),
                         MyCheckbox(
-                          titleName: acceptedTxt,
-                          onChanged: (value) {
-                            controller.toggleCheckedValue("Individual", value);
-                          },
+                          titleName: accountingTxt,
+                          onChanged: (value) {},
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
@@ -592,31 +578,18 @@ class CashInward extends GetView<CashInwardController> {
                                 CTextBlack(paymentMethodTxt,
                                     mSize: 14, mBold: true),
                                 horizontalSpace(20),
-                                // CustomTextFormField(
-                                //   width: 250,
-                                //   // height: 30,
-                                //   controller: paymentMethodController,
-                                //   name: '',
-                                //   style: normalTextStyle,
-                                //   validator: (p0) {
-                                //     if (p0!.isEmpty) {
-                                //       print("object");
-                                //       return "this field is required";
-                                //     }
-                                //   },
-                                // ),
-                                Container(
+                                CustomTextFormField(
                                   width: 250,
-                                  height: 30,
-                                  child: DropdownTextField(
-                                    items: ["Cash"],
-                                    onChanged: (String? value) {
-                                      paymentMethodController.text =
-                                          value ?? "";
-                                    },
-                                    itemAsString: (item) => item,
-                                    hintText: '',
-                                  ),
+                                  // height: 30,
+                                  controller: paymentMethodController,
+                                  name: '',
+                                  style: normalTextStyle,
+                                  validator: (p0) {
+                                    if (p0!.isEmpty) {
+                                      print("object");
+                                      return "this field is required";
+                                    }
+                                  },
                                 ),
                                 horizontalSpace(20),
                                 // CTextBlack(betrayedTxt, mSize: 14, mBold: true),
@@ -667,7 +640,7 @@ class CashInward extends GetView<CashInwardController> {
                           children: [
                             CustomButton(
                                 width: 200,
-                                text: cashInwardTxt,
+                                text: UpdateInwardTxt,
                                 onPressed: () async {
                                   // print(controller.cartItems.last.item);
 
@@ -700,6 +673,7 @@ class CashInward extends GetView<CashInwardController> {
                                       Loader(true);
                                     });
                                     print(data);
+                                    Get.offAndToNamed(AppRoutes.storePage);
                                   }
                                 }),
                             horizontalSpace(10),

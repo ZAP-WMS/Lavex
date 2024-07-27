@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../common/custom_text.dart';
 import '../../../datasource/Inwardentrysource.dart';
+import '../../../datasource/purchaseStoresource.dart';
 import '../../../utils/asset_image.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/string.dart';
@@ -19,11 +20,13 @@ class StorePage extends GetView<StoreController> {
 
   final ScrollController scrollController = ScrollController();
   late Inwardentrysource storeDataSource;
-  final StoreController storeController = Get.put(StoreController());
+  late purchaseStoresource purchaseStoreSource;
 
   List<GridColumn> buildColumns(BuildContext context) {
     List<GridColumn> columns = [];
-    for (String columnName in InwardTabName) {
+    List<String> TabName =
+        controller.currentIndex == 14 ? purchaseStoreTabName : InwardTabName;
+    for (String columnName in TabName) {
       columns.add(
         GridColumn(
           columnName: columnName,
@@ -38,7 +41,9 @@ class StorePage extends GetView<StoreController> {
               : MediaQuery.of(context).size.width *
                   0.09, // You can adjust this width as needed
           label: createColumnLabel(
-            InwardTabName[InwardTabName.indexOf(columnName)],
+            controller.currentIndex == 14
+                ? purchaseStoreTabName[purchaseStoreTabName.indexOf(columnName)]
+                : InwardTabName[InwardTabName.indexOf(columnName)],
           ),
         ),
       );
@@ -56,8 +61,10 @@ class StorePage extends GetView<StoreController> {
     );
   }
 
+  late final StoreController storeController;
   @override
   Widget build(BuildContext context) {
+    storeController = Get.put(StoreController());
     List<String> tabIcon = [
       'assets/store/Cash Inward Entry.png',
       'assets/store/inward Entry.png',
@@ -80,7 +87,7 @@ class StorePage extends GetView<StoreController> {
     List<String> pages = [
       AppRoutes.cashInwardHome,
       AppRoutes.cashInwardHome,
-      AppRoutes.cashInwardHome,
+      AppRoutes.addproduction,
       AppRoutes.stockPage
     ];
     return CommonScaffold(
@@ -160,6 +167,9 @@ class StorePage extends GetView<StoreController> {
     } else {
       storeDataSource =
           Inwardentrysource(storeController.inwardEntry, context, 'userId');
+      purchaseStoreSource =
+          purchaseStoresource(storeController.purchaseStore, context, 'userId');
+      // print(storeController.purchaseStore);
       return SizedBox(
         height: MediaQuery.of(context).size.height,
         child: SfDataGridTheme(
@@ -174,7 +184,9 @@ class StorePage extends GetView<StoreController> {
                 gridLinesVisibility: GridLinesVisibility.both,
                 controller: DataGridController(),
                 headerGridLinesVisibility: GridLinesVisibility.both,
-                source: storeDataSource,
+                source: controller.currentIndex == 14
+                    ? purchaseStoreSource
+                    : storeDataSource,
                 columns: buildColumns(context))),
       );
     }

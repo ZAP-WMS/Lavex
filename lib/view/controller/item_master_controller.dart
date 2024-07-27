@@ -5,7 +5,7 @@ import 'package:lavex/data/model/item_master.dart';
 import '../../data/model/getitemmodel.dart';
 
 class ItemMasterController extends GetxController {
-  var itemMasterModel = <itemData>[].obs;
+  var itemMasterModel = <ItemMasterData>[].obs;
   var isLoading = true.obs;
   var currentIndex = 0.obs;
 
@@ -22,7 +22,7 @@ class ItemMasterController extends GetxController {
   Future itemMasterData() async {
     try {
       isLoading(true);
-      List<itemData> mydata = await ApiServices().getallItem();
+      List<ItemMasterData> mydata = await ApiServices().getallItem();
       print(mydata);
       itemMasterModel.assignAll(mydata);
     } finally {
@@ -33,7 +33,7 @@ class ItemMasterController extends GetxController {
   void filter(String data) {
     itemMasterData().whenComplete(() {
       if (data.isNotEmpty) {
-        List<itemData> filteredData = itemMasterModel
+        List<ItemMasterData> filteredData = itemMasterModel
             .where((item) => item.name!.toLowerCase().contains(data
                     .toString()
                     .toLowerCase()) // Assuming the model has a 'name' property

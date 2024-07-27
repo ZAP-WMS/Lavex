@@ -26,6 +26,7 @@ String singlebom = "/api/bom/getBom/";
 String addproduction = "/api/production/addProduction2";
 String deleteinward = "/api/inward/delInward/";
 String getallbom = "/api/bom/allbom";
+String getPurchaseStore = "/api/production/purchaseStore";
 
 // --------------------------------------------------------
 String baseUrlTxt = 'https://zapwms.in/';

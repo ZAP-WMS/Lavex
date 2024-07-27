@@ -7,13 +7,18 @@ import '../../data/model/bomitemmodel.dart';
 class BomAddItemController extends GetxController {
   var bomItems = <BomAddItemModel>[].obs;
   List<bomitemModel> listAllbom = <bomitemModel>[].obs;
+  @override
+  void onInit() {
+    getallBom();
+    super.onInit();
+  }
 
   void addItem(BomAddItemModel item) {
     bomItems.add(item);
   }
 
-  getallBom() {
-    ApiServices().getallBom();
+  getallBom() async {
+    listAllbom.assignAll(await ApiServices().getallBom());
   }
 
   void removeItem(int index) {

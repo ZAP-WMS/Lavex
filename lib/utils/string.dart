@@ -77,6 +77,7 @@ String createTxt = 'Create Incvoice';
 
 // Cash Inward Entry
 String cashInwardTxt = 'Cash Inward Entry';
+String UpdateInwardTxt = 'Update Inward Entry';
 
 // Cash Inward Entry
 String createProductionTxt = 'Create Production Entry';
@@ -101,6 +102,7 @@ String exportDataTxt = 'Export Data';
 // cash Inward
 String forUnitTxt = 'For Unit';
 String accountablePersonTxt = 'Accountable Person';
+String Identificationnumber = 'Identification number';
 String cashMovementNo = 'Cash Movement No';
 String supplierName = "Supplier's Name";
 String supplierInvoiceNo = 'Supplier Invoice No';
@@ -352,8 +354,8 @@ final List<String> itemMasterTabName = [
 ];
 
 final List<String> storeTabName = [
-  'Cash Inward Entry',
   'Inward Entry',
+  'Cash Inward Entry',
   'Add New Production',
   'Stocks',
   'Cancelled Stock list',
@@ -380,4 +382,13 @@ final List<String> InwardTabName = [
   'gstRegistration',
   'status',
   'Manage',
+];
+final List<String> purchaseStoreTabName = [
+  "Name",
+  "brand",
+  "quantity",
+  "gst",
+  "price",
+  // "id",
+  "Manage"
 ];

@@ -17,7 +17,8 @@ import '../../controller/cash_inward_controller.dart';
 class InwardEntry extends GetView<CashInwardController> {
   InwardEntry({super.key});
 
-  final TextEditingController clientController = TextEditingController();
+  final TextEditingController clientController =
+      TextEditingController(text: "Unit1");
   final TextEditingController addressController = TextEditingController();
   final TextEditingController invoiceController = TextEditingController();
   final TextEditingController shortCodeController = TextEditingController();
@@ -73,7 +74,7 @@ class InwardEntry extends GetView<CashInwardController> {
                           name: forUnitTxt,
                           controller: clientController,
                           style: normalTextStyle,
-                          isreadOnly: false,
+                          isreadOnly: true,
                           isSuffixIcon: false,
                           validator: (value) {}),
                       //    customAlertDialog(context, clientController)
@@ -101,7 +102,9 @@ class InwardEntry extends GetView<CashInwardController> {
               ),
               MyCheckbox(
                 titleName: individualTxt,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  controller.toggleCheckedValue("Individual", value);
+                },
               ),
               verticalSpace(10),
               Row(
@@ -400,27 +403,37 @@ class InwardEntry extends GetView<CashInwardController> {
                         style: normalTextStyle,
                         validator: (p0) {},
                       ),
+                      // horizontalSpace(20),
+                      // CTextBlack(betrayedTxt, mSize: 14, mBold: true),
                       horizontalSpace(20),
-                      CTextBlack(betrayedTxt, mSize: 14, mBold: true),
-                      horizontalSpace(20),
-                      CustomTextFormField(
-                        width: 250,
-                        height: 30,
-                        controller: paymentMethodController,
-                        name: '',
-                        style: normalTextStyle,
-                        validator: (p0) {},
-                      ),
+                      // CustomTextFormField(
+                      //   width: 250,
+                      //   height: 30,
+                      //   controller: paymentMethodController,
+                      //   name: '',
+                      //   style: normalTextStyle,
+                      //   validator: (p0) {},
+                      // ),
                       horizontalSpace(20),
                       CTextBlack(acceptedTxt, mSize: 14, mBold: true),
                       horizontalSpace(20),
-                      CustomTextFormField(
+                      // CustomTextFormField(
+                      //   width: 250,
+                      //   height: 30,
+                      //   controller: paymentMethodController,
+                      //   name: '',
+                      //   style: normalTextStyle,
+                      //   validator: (p0) {},
+                      // )
+                      Container(
                         width: 250,
                         height: 30,
-                        controller: paymentMethodController,
-                        name: '',
-                        style: normalTextStyle,
-                        validator: (p0) {},
+                        child: MyCheckbox(
+                          titleName: acceptedTxt,
+                          onChanged: (value) {
+                            controller.toggleCheckedValue("Individual", value);
+                          },
+                        ),
                       )
                     ],
                   ),

@@ -9,6 +9,7 @@ import 'package:lavex/view/presentation/edit/edit_table.dart';
 import 'package:lavex/view/presentation/homepage/home_page.dart';
 import 'package:lavex/view/presentation/homepage/menu_page.dart';
 import 'package:lavex/view/presentation/payments/add_suppllier.dart';
+import 'package:lavex/view/presentation/store/add_production.dart';
 import 'package:lavex/view/presentation/store/cash_inward_home.dart';
 import 'package:lavex/view/presentation/store/stocks.dart';
 import 'package:lavex/view/presentation/store/store.dart';
@@ -27,6 +28,7 @@ import '../view/presentation/Invoice/myinvoice/myInvoice..dart';
 import '../view/presentation/ItemMaster/item_master.dart';
 import '../view/presentation/clients/my_clients.dart';
 import '../view/presentation/store/add_item.dart';
+import '../view/presentation/store/updateInward.dart';
 
 class AppPages {
   static var list = [
@@ -66,6 +68,16 @@ class AppPages {
     GetPage(
       name: AppRoutes.bomAdditem,
       page: () => BomAddItem(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.addproduction,
+      page: () => AddProduction(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.updateinward,
+      page: () => UpdateInward(),
       //   binding: SplashBinding(),
     ),
     GetPage(

@@ -29,10 +29,10 @@ class BomAddItem extends StatelessWidget {
       Get.put(ItemMasterController());
 
   DataGridController dataGridController = DataGridController();
-  List<itemData> Itemraw = [];
-  List<itemData> Itemredy = [];
-  Map<int, itemData> selectrawdata = {};
-  itemData redy = itemData();
+  List<ItemMasterData> Itemraw = [];
+  List<ItemMasterData> Itemredy = [];
+  Map<int, ItemMasterData> selectrawdata = {};
+  ItemMasterData redy = ItemMasterData();
 
   List<GridColumn> buildColumns(BuildContext context) {
     List<GridColumn> columns = [];

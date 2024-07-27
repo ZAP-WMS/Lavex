@@ -11,8 +11,8 @@ import '../widgets/drop_downTextField.dart';
 class BomAddItemDataSource extends DataGridSource {
   String userId;
   BuildContext mainContext;
-  List<itemData> Itemraw = [];
-  List<itemData> Itemredy = [];
+  List<ItemMasterData> Itemraw = [];
+  List<ItemMasterData> Itemredy = [];
   List data = [];
   List<String> name = [];
   BomAddItemDataSource(this._bomModel, this.mainContext, this.userId,

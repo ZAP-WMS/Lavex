@@ -12,7 +12,7 @@ class AppRoutes {
   static const String myInvoice = '/my-invoice';
   static const String createInvoiceList = '/create-invoice-list';
   static const String storePage = '/store-page';
-  static const String cashInwardHome = '/cash-inward';
+  static const String cashInwardHome = '/Add-inward';
   static const String stockPage = '/stock-page';
   static const String addItem = '/item-page';
   static const String editPage = '/edit-page';
@@ -24,4 +24,6 @@ class AppRoutes {
   static const String client_List = '/clientList';
   static const String itemmaster = '/itemmaster';
   static const String bomAdditem = '/bomAdditem';
+  static const String addproduction = '/addproduction';
+  static const String updateinward = '/updateinward';
 }

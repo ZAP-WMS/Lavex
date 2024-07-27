@@ -1,19 +1,19 @@
 import 'package:lavex/data/model/getitemmodel.dart';
 
 class bomitemModel {
-  itemData? readyStock;
-  List<itemData>? raw;
+  ItemMasterData? readyStock;
+  List<ItemMasterData>? raw;
 
   bomitemModel({this.readyStock, this.raw});
 
   bomitemModel.fromJson(Map<String, dynamic> json) {
     readyStock = json['readyStock'] != null
-        ? new itemData.fromJson(json['readyStock'])
+        ? new ItemMasterData.fromJson(json['readyStock'])
         : null;
     if (json['raw'] != null) {
-      raw = <itemData>[];
+      raw = <ItemMasterData>[];
       json['raw'].forEach((v) {
-        raw!.add(new itemData.fromJson(v));
+        raw!.add(new ItemMasterData.fromJson(v));
       });
     }
   }

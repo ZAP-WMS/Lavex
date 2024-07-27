@@ -23,7 +23,9 @@ import '../../model/credit_note.dart';
 import '../../model/debit_note.dart';
 import '../../model/getallinwardentrymodel.dart';
 import '../../model/getitemmodel.dart';
+import '../../model/getitemmodel.dart';
 import '../../model/invoice.dart';
+import '../../model/purchaseStoreModel.dart' as pa;
 import '../../model/register_model.dart';
 import '../../model/singleBom.dart';
 import '../local/shared_preference.dart';
@@ -74,7 +76,9 @@ class ApiServices {
           // Get.back();
         } else {
           print('message${response.data["message"]}');
-          throw Exception('Failed to create payment');
+          Get.snackbar("Status", response.data["message"].toString(),
+              snackPosition: SnackPosition.BOTTOM);
+          // throw Exception('Failed to create payment');
         }
       } else {
         Get.snackbar("Status", response.data["message"].toString(),
@@ -129,19 +133,23 @@ class ApiServices {
     }
   }
 
-  getallBom() async {
+  Future<List<bomitemModel>> getallBom() async {
     try {
       var response = await dio.get('$baseUrl$getallbom');
       print(response.data["message"]);
       if (response.statusCode == 200) {
-        // List<bomitemModel> data = response.data["data"].map((e)=>  e.)
-        ;
-        // print(data.data!.length);
-        return "";
+        List<bomitemModel> data = [];
+        response.data["data"].forEach((v) {
+          data.add(bomitemModel.fromJson(v));
+        });
+
+        print(data);
+        return data;
       }
     } on Exception catch (e) {
       print(e);
     }
+    return [];
   }
 
   getredymaterial(String type) async {
@@ -325,7 +333,7 @@ class ApiServices {
     }
   }
 
-  Future<List<itemData>> getallItem() async {
+  Future<List<ItemMasterData>> getallItem() async {
     try {
       var response = await dio.get('$baseUrl$getallitem');
 
@@ -457,6 +465,18 @@ class ApiServices {
     }
   }
 
+  Future<pa.PurchaseStoreModel> purchaseStoreData() async {
+    Uri url = Uri.parse('$baseUrl$getPurchaseStore');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      pa.PurchaseStoreModel data = pa.purchaseStoreModelFromJson(response.body);
+      print(data);
+      return data;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   Future<void> registerUser(RegisterModel registerModel) async {
     final String apiUrl = baseUrl + registerUrl;
 
@@ -539,7 +559,7 @@ class ApiServices {
 
   Future<bool> postItemData(AddItemModel itemData) async {
     final String url = baseUrl + addItem;
-
+    print(itemData);
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
     };
@@ -550,18 +570,17 @@ class ApiServices {
         headers: headers,
         body: jsonEncode(itemData.toJson()),
       );
-
+      var data;
       if (response.statusCode == 200) {
         print('Success: ${response.body}');
-        var data = await jsonDecode(response.body);
+        data = await jsonDecode(response.body);
         print(data["message"]);
         if (!data["success"]) {
+          Get.snackbar("Message", data["message"]);
           return false;
         } else {
-          Get.snackbar(
-            "title",
-            "message",
-          );
+          Get.snackbar("Message", data["message"],
+              snackPosition: SnackPosition.BOTTOM);
           return data["success"];
           //    Get.back();
         }

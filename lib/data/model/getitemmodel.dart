@@ -3,7 +3,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 class getallitemmodel {
   String? message;
   bool? success;
-  List<itemData>? data;
+  List<ItemMasterData>? data;
 
   getallitemmodel({this.message, this.success, this.data});
 
@@ -11,9 +11,9 @@ class getallitemmodel {
     message = json['message'];
     success = json['success'];
     if (json['data'] != null) {
-      data = <itemData>[];
+      data = <ItemMasterData>[];
       json['data'].forEach((v) {
-        data!.add(new itemData.fromJson(v));
+        data!.add(new ItemMasterData.fromJson(v));
       });
     }
   }
@@ -29,45 +29,60 @@ class getallitemmodel {
   }
 }
 
-class itemData {
+class ItemMasterData {
   String? sId;
   String? name;
-  String? itemCode;
+  int? itemCode;
+  int? hsnCode;
   int? qty;
   int? price;
   String? qtyType;
+  String? qtyType2;
+  int? gst;
+  int? lawqty;
+  String? category;
   String? store;
   String? brand;
+  Null? manufacturar;
   String? stockStatus;
-  int? iV;
   dynamic manage;
-  int? gst;
+  int? iV;
 
-  itemData(
+  ItemMasterData(
       {this.sId,
       this.name,
       this.itemCode,
+      this.hsnCode,
       this.qty,
       this.price,
       this.qtyType,
+      this.qtyType2,
+      this.gst,
+      this.lawqty,
+      this.category,
       this.store,
       this.brand,
+      this.manufacturar,
       this.stockStatus,
-      this.iV,
-      this.gst});
+      this.iV});
 
-  itemData.fromJson(Map<String, dynamic> json) {
+  ItemMasterData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
     itemCode = json['itemCode'];
+    hsnCode = json['hsnCode'];
     qty = json['qty'];
     price = json['price'];
     qtyType = json['qtyType'];
+    qtyType2 = json['qtyType2'];
+    gst = json['gst'];
+    lawqty = json['lawqty'];
+    category = json['category'];
     store = json['store'];
     brand = json['brand'];
+    manufacturar = json['manufacturar'];
     stockStatus = json['stockStatus'];
     iV = json['__v'];
-    gst = json['gst'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,14 +90,19 @@ class itemData {
     data['_id'] = this.sId;
     data['name'] = this.name;
     data['itemCode'] = this.itemCode;
+    data['hsnCode'] = this.hsnCode;
     data['qty'] = this.qty;
     data['price'] = this.price;
     data['qtyType'] = this.qtyType;
+    data['qtyType2'] = this.qtyType2;
+    data['gst'] = this.gst;
+    data['lawqty'] = this.lawqty;
+    data['category'] = this.category;
     data['store'] = this.store;
     data['brand'] = this.brand;
+    data['manufacturar'] = this.manufacturar;
     data['stockStatus'] = this.stockStatus;
     data['__v'] = this.iV;
-    data['gst'] = this.gst;
     return data;
   }
 
