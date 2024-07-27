@@ -21,8 +21,8 @@ class BomAddItemModel {
 
   DataGridRow dataGridRow() {
     return DataGridRow(cells: <DataGridCell>[
-      DataGridCell(columnName: 'name', value: title),
-      DataGridCell(columnName: 'quantity Type', value: quantityType),
+      DataGridCell(columnName: 'Name', value: title),
+      DataGridCell(columnName: 'Quantity Type', value: quantityType),
       DataGridCell(columnName: 'Quantity', value: quantity),
       DataGridCell(columnName: 'Manage', value: manage),
     ]);

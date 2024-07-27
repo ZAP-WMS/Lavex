@@ -41,7 +41,6 @@ dependencies:
   dio: null
   pdf: null
   printing: null
-  progress_dialog_null_safe: null
   shared_preferences: ^2.2.2
   syncfusion_flutter_core: ^20.4.54
   syncfusion_flutter_datagrid: ^20.4.49

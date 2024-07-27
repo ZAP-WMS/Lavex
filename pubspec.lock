@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "7b875fd4a20b165a3084bd2d210439b22ebc653f21cea4842729c0c30c82596b"
+      sha256: "22600aa1e926be775fa5fe7e6894e7fb3df9efda8891c73f70fb3262399a432d"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.9"
+    version: "3.4.10"
   args:
     dependency: transitive
     description:
@@ -488,14 +488,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.10.4"
-  progress_dialog_null_safe:
-    dependency: "direct main"
-    description:
-      name: progress_dialog_null_safe
-      sha256: "390fd023761c84cefae974f55f01b63ec6b846ae15ece866cbb589daf00d3274"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   qr:
     dependency: transitive
     description:

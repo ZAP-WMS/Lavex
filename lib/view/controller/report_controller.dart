@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
-import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:universal_html/html.dart';
@@ -16,7 +15,7 @@ class ReportController extends GetxController {
 
   var fields = <String>[].obs;
   BuildContext? context;
-  ProgressDialog? pr;
+  // ProgressDialog? pr;
   List<int> pdfData = [];
 
   @override

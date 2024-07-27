@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lavex/data/model/bom.dart';
+import 'package:lavex/data/model/getitemmodel.dart';
 import 'package:lavex/datasource/bom_datasource.dart';
 import 'package:lavex/widgets/custom_button.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:lavex/widgets/custom_spacebar.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import '../../../routes/route_pages.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/string.dart';
+import '../../controller/item_master_controller.dart';
 import '../Invoice/myinvoice/myInvoice..dart';
 import 'bom_add_item.dart';
 
@@ -17,14 +21,21 @@ class BomPage extends StatelessWidget {
   late DataGridController _dataGridController;
   List<BomModel> bomModel = [];
   List<GridColumn> columns = [];
-  List<Widget> tabClass = [
-    BomAddItem(),
-  ];
+  List<String> tabClass = [AppRoutes.bomAdditem];
+  final ItemMasterController itemMasterController =
+      Get.put(ItemMasterController());
+  List<itemData> Itemredy = [];
   late BomDataSource _bomDataSource;
   @override
   Widget build(BuildContext context) {
-    bomModel.add(BomModel(
-        name: 'pratyush', store: 'Maruti', status: 'Pending', manage: 'dfd'));
+    bomModel.clear();
+    Itemredy = itemMasterController.itemMasterModel
+        .where((f) => f.stockStatus == "ReadyStock")
+        .toList();
+    Itemredy.forEach((e) => {
+          bomModel.add(BomModel(
+              name: e.name, store: e.store, status: 'Pending', manage: 'dfd'))
+        });
 
     _bomDataSource = BomDataSource(bomModel, context, 'userId');
     _dataGridController = DataGridController();
@@ -55,14 +66,10 @@ class BomPage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CustomButton( 
+                  CustomButton(
                       text: 'Add New',
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => tabClass[0],
-                            ));
+                        Get.toNamed(tabClass[0], arguments: "");
                       }),
                   horizontalSpace(5),
                   CustomButton(text: 'Delete', onPressed: () {}),

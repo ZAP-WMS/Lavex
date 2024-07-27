@@ -73,6 +73,8 @@ class StorePage extends GetView<StoreController> {
       'assets/store/All cash inward Entry.png',
       'assets/store/All DC Entry.png',
       'assets/store/Store settings.png',
+      'assets/store/All DC Entry.png',
+      'assets/store/Store settings.png',
     ];
 
     List<String> pages = [

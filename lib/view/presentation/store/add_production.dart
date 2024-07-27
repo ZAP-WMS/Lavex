@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../common/custom_text.dart';
+import '../../../data/data_source/remote/api_service.dart';
+import '../../../data/model/add_productionModel.dart';
 import '../../../data/model/cart_item.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/string.dart';
@@ -437,7 +439,40 @@ class AddProduction extends GetView<ProductionController> {
                     CustomButton(
                         width: 210,
                         text: createProductionTxt,
-                        onPressed: () {}),
+                        onPressed: () {
+                          List<ReadyStock> listredy = [];
+                          listredy.add(ReadyStock.fromJson({
+                            "name": "foil5",
+                            "qty": 10,
+                            "price": 100,
+                            "gst": 18,
+                            "brand": "brand2"
+                          }));
+                          listredy.add(ReadyStock.fromJson({
+                            "name": "foil1",
+                            "qty": 10,
+                            "price": 100,
+                            "gst": 18,
+                            "brand": "brand2"
+                          }));
+                          List<Raw> listRaw = [];
+
+                          listRaw.add(Raw.fromJson({
+                            "name": "foil5",
+                            "quantity": 5,
+                            "price": 100,
+                            "brand": "brand2",
+                            "gst": 18
+                          }));
+                          addProductionModel model = addProductionModel(
+                              prodNum: 1,
+                              accepted: "yes",
+                              remark: "Abc",
+                              dateCreated: "12-02-2005",
+                              readyStock: listredy,
+                              raw: listRaw);
+                          ApiServices().Addproduction(model);
+                        }),
                     horizontalSpace(10),
                     CTextBlack('Or'),
                     horizontalSpace(10),

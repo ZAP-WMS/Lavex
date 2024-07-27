@@ -366,6 +366,8 @@ final List<String> storeTabName = [
   'All Cash Inward Entry',
   'All DC Entry',
   'Store Setting',
+  'Purchase Store',
+  'Production Store'
 ];
 
 final List<String> InwardTabName = [

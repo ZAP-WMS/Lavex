@@ -16,6 +16,7 @@ import 'package:lavex/utils/api_string.dart';
 import '../../../routes/route_pages.dart';
 import '../../model/add_client_model.dart';
 import '../../model/add_item.dart';
+import '../../model/add_productionModel.dart';
 import '../../model/add_suppllier.dart';
 import '../../model/bomitemmodel.dart';
 import '../../model/credit_note.dart';
@@ -24,6 +25,7 @@ import '../../model/getallinwardentrymodel.dart';
 import '../../model/getitemmodel.dart';
 import '../../model/invoice.dart';
 import '../../model/register_model.dart';
+import '../../model/singleBom.dart';
 import '../local/shared_preference.dart';
 
 class ApiServices {
@@ -96,7 +98,7 @@ class ApiServices {
           print(response.data["success"]);
           Get.snackbar("Status", response.data["message"].toString(),
               snackPosition: SnackPosition.BOTTOM);
-          // Get.back();
+          Get.back();
         } else {
           print('message${response.data["message"]}');
           throw Exception('Failed to create payment');
@@ -121,6 +123,21 @@ class ApiServices {
             getallInwardEntryModel.fromJson(response.data);
         print(data.data!.length);
         return data.data;
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+  getallBom() async {
+    try {
+      var response = await dio.get('$baseUrl$getallbom');
+      print(response.data["message"]);
+      if (response.statusCode == 200) {
+        // List<bomitemModel> data = response.data["data"].map((e)=>  e.)
+        ;
+        // print(data.data!.length);
+        return "";
       }
     } on Exception catch (e) {
       print(e);
@@ -256,6 +273,23 @@ class ApiServices {
 
   Future<void> DeleteClient(String id) async {
     var response = await dio.delete('$baseUrl$deleteclient$id');
+
+    print(response.data["message"]);
+
+    if (response.statusCode == 200) {
+      if (response.data["success"] ?? false) {
+        print(response.data["success"]);
+      } else {
+        print('message${response.data["message"]}');
+        throw Exception('Failed to create payment');
+      }
+    } else {
+      throw Exception('Failed to create payment: ${response.statusMessage}');
+    }
+  }
+
+  Future<void> DeleteInward(String id) async {
+    var response = await dio.delete('$baseUrl$deleteinward$id');
 
     print(response.data["message"]);
 
@@ -492,15 +526,16 @@ class ApiServices {
     }
   }
 
-  // Future<List<String>> fetchCompanies() async {
-  //   final response = await http.get(Uri.parse(baseUrlTxt + comapanyUrlTxt));
-  //   if (response.statusCode == 200) {
-  //     List<dynamic> data = json.decode(response.body);
-  //     return data.map((company) => company['name'].toString()).toList();
-  //   } else {
-  //     throw Exception('Failed to load companies');
-  //   }
-  // }
+  Future<singleBomModel> singleBom(String id) async {
+    final response = await http.get(Uri.parse(baseUrl + singlebom + id));
+    if (response.statusCode == 200) {
+      singleBomModel data = singleBomModel.fromJson(json.decode(response.body));
+      print(data);
+      return data;
+    } else {
+      throw Exception('Failed to load companies');
+    }
+  }
 
   Future<bool> postItemData(AddItemModel itemData) async {
     final String url = baseUrl + addItem;
@@ -513,6 +548,43 @@ class ApiServices {
       final response = await http.post(
         Uri.parse(url),
         headers: headers,
+        body: jsonEncode(itemData.toJson()),
+      );
+
+      if (response.statusCode == 200) {
+        print('Success: ${response.body}');
+        var data = await jsonDecode(response.body);
+        print(data["message"]);
+        if (!data["success"]) {
+          return false;
+        } else {
+          Get.snackbar(
+            "title",
+            "message",
+          );
+          return data["success"];
+          //    Get.back();
+        }
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+    }
+    return false;
+  }
+
+  Future<bool> Addproduction(addProductionModel itemData) async {
+    final String url = baseUrl + addproduction;
+
+    // final Map<String, String> headers = {
+    //   'Content-Type': 'application/json',
+    // };
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        // headers: headers,
         body: jsonEncode(itemData.toJson()),
       );
 

@@ -1,12 +1,19 @@
 import 'package:get/get.dart';
+import 'package:lavex/data/data_source/remote/api_service.dart';
 
 import '../../data/model/bom_add_item.dart';
+import '../../data/model/bomitemmodel.dart';
 
 class BomAddItemController extends GetxController {
   var bomItems = <BomAddItemModel>[].obs;
+  List<bomitemModel> listAllbom = <bomitemModel>[].obs;
 
   void addItem(BomAddItemModel item) {
     bomItems.add(item);
+  }
+
+  getallBom() {
+    ApiServices().getallBom();
   }
 
   void removeItem(int index) {

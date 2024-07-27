@@ -4,25 +4,26 @@ import 'package:get/get.dart';
 import 'package:lavex/common/custom_text.dart';
 import 'package:lavex/data/model/bom_add_item.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import '../utils/colors.dart';
+import '../data/model/getitemmodel.dart';
 import '../utils/style.dart';
-import '../widgets/custom_spacebar.dart';
+import '../widgets/drop_downTextField.dart';
 
 class BomAddItemDataSource extends DataGridSource {
-  // String cityName;
-  // String depoName;
   String userId;
-  // String selectedDate;
   BuildContext mainContext;
+  List<itemData> Itemraw = [];
+  List<itemData> Itemredy = [];
   List data = [];
-
-  BomAddItemDataSource(this._bomModel, this.mainContext, this.userId) {
+  List<String> name = [];
+  BomAddItemDataSource(this._bomModel, this.mainContext, this.userId,
+      this.Itemraw, this.Itemredy) {
     buildDataGridRows();
   }
   void buildDataGridRows() {
     dataGridRows = _bomModel
         .map<DataGridRow>((dataGridRow) => dataGridRow.dataGridRow())
         .toList();
+    name = Itemraw.map((f) => f.name as String).toList();
   }
 
   @override
@@ -69,31 +70,71 @@ class BomAddItemDataSource extends DataGridSource {
 
         return Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: (dataGridCell.columnName == 'Manage')
-              ? ElevatedButton(
-                  onPressed: () {
-                    if (dataRowIndex == lastRowIndex) {
-                      addRowAtIndex(
-                          dataRowIndex,
-                          BomAddItemModel(
-                              title: 'title',
-                              quantityType: 'quantityType',
-                              quantity: 3));
-                    } else {
-                      removeRowAtIndex(dataRowIndex);
+          child: (dataGridCell.columnName == 'Name')
+              ? DropdownButton<String>(
+                  value: dataGridCell.value,
+                  hint: Text('Select Value'),
+                  autofocus: true,
+                  focusColor: Colors.transparent,
+                  underline: const Text(''),
+                  itemHeight: 50,
+                  icon: const Icon(Icons.arrow_drop_down_sharp),
+                  isExpanded: true,
+
+                  //8   style: textStyle,
+                  onChanged: (String? value) {
+                    // selectedValue = value;
+                    final dynamic oldValue = row
+                            .getCells()
+                            .firstWhereOrNull((DataGridCell dataCell) =>
+                                dataCell.columnName == dataGridCell.columnName)
+                            ?.value ??
+                        '';
+                    if (oldValue == value || value == null) {
+                      return;
                     }
+
+                    final int dataRowIndex = dataGridRows.indexOf(row);
+                    dataGridRows[dataRowIndex].getCells()[0] =
+                        DataGridCell<String>(columnName: 'Name', value: value);
+                    _bomModel[dataRowIndex].title = value.toString();
+
+                    notifyListeners();
+                    // updateDatagridSource();
                   },
-                  child: CTextWhite(
-                    dataRowIndex == lastRowIndex ? 'Add Row' : 'Remove',
-                    mBold: true,
-                    mSize: 16,
-                  ))
-              : Text(
-                  dataGridCell.value.toString(),
-                  textAlign: TextAlign.center,
-                  style: tablefontsize,
-                ),
+                  items: name.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList())
+              : (dataGridCell.columnName == 'Manage')
+                  ? ElevatedButton(
+                      onPressed: () {
+                        if (dataRowIndex == lastRowIndex) {
+                          addRowAtIndex(
+                              dataRowIndex,
+                              BomAddItemModel(
+                                  title: 'material',
+                                  quantityType: 'quantityType',
+                                  quantity: 3));
+                        } else {
+                          removeRowAtIndex(dataRowIndex);
+                        }
+                      },
+                      child: CTextWhite(
+                        dataRowIndex == lastRowIndex ? 'Add Row' : 'Remove',
+                        mBold: true,
+                        mSize: 14,
+                      ))
+                  : Text(
+                      dataGridCell.value.toString(),
+                      textAlign: TextAlign.center,
+                      style: tablefontsize,
+                    ),
         );
       }).toList(),
     );
@@ -122,7 +163,7 @@ class BomAddItemDataSource extends DataGridSource {
     if (newCellValue == null || oldValue == newCellValue) {
       return;
     }
-       if (column.columnName == 'Name') {
+    if (column.columnName == 'Name') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'Name', value: newCellValue);
       _bomModel[dataRowIndex].title = newCellValue;
@@ -133,8 +174,9 @@ class BomAddItemDataSource extends DataGridSource {
       _bomModel[dataRowIndex].quantityType = newCellValue;
     } else if (column.columnName == 'Quantity') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<int>(columnName: 'Quantity', value: newCellValue);
-      _bomModel[dataRowIndex].quantity = newCellValue;
+          DataGridCell<int>(
+              columnName: 'Quantity', value: int.parse(newCellValue));
+      _bomModel[dataRowIndex].quantity = int.parse(newCellValue);
     } else {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'Manage', value: newCellValue);

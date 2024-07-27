@@ -5,7 +5,6 @@ import 'package:lavex/utils/string.dart';
 import 'package:lavex/utils/style.dart';
 import 'package:lavex/view/controller/item_master_controller.dart';
 import 'package:lavex/view/presentation/ItemMaster/add_Item.dart';
-import 'package:lavex/view/presentation/store/add_item.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:lavex/widgets/custom_spacebar.dart';
 import 'package:lavex/widgets/custom_textform.dart';
@@ -125,35 +124,52 @@ class ItemMaster extends GetView<ItemMasterController> {
                 ),
                 Row(
                   children: [
-                    CustomField(
-                        width: 200,
-                        height: 30,
-                        controller: nameController,
-                        name: 'Item Name',
-                        validator: (p0) {},
-                        style: normalTextStyle),
-                    horizontalSpace(20),
-                    CustomField(
-                        width: 200,
-                        height: 30,
-                        controller: nameController,
-                        name: 'Amount From',
-                        validator: (p0) {},
-                        style: normalTextStyle),
-                    horizontalSpace(20),
-                    CustomField(
-                        width: 200,
-                        height: 30,
-                        controller: nameController,
-                        name: toTxt,
-                        validator: (p0) {},
-                        style: normalTextStyle),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            textAlign: TextAlign.start,
+                            "Name",
+                            style: smallTextStyle),
+                        SizedBox(
+                            width: 200,
+                            height: 30,
+                            child: TextFormField(
+                              keyboardType: TextInputType.phone,
+                              readOnly: false,
+                              style: const TextStyle(fontSize: 15),
+                              controller: nameController,
+                              onChanged: (value) => {},
+                              textAlignVertical: TextAlignVertical.center,
+                            )),
+                      ],
+                    ),
+                    // horizontalSpace(20),
+                    // CustomField(
+                    //     width: 200,
+                    //     height: 30,
+                    //     controller: nameController,
+                    //     name: 'Amount From',
+                    //     validator: (p0) {},
+                    //     style: normalTextStyle),
+                    // horizontalSpace(20),
+                    // CustomField(
+                    //     width: 200,
+                    //     height: 30,
+                    //     controller: nameController,
+                    //     name: toTxt,
+                    //     validator: (p0) {},
+                    //     style: normalTextStyle),
                   ],
                 ),
                 verticalSpace(20),
                 Row(
                   children: [
-                    CustomButton(text: 'Search', onPressed: () {}),
+                    CustomButton(
+                        text: 'Search',
+                        onPressed: () {
+                          controller.filter(nameController.text);
+                        }),
                     horizontalSpace(10),
                     CustomButton(text: 'Clear Search', onPressed: () {}),
                   ],

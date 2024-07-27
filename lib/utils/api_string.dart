@@ -17,12 +17,15 @@ String updatecompeney = "/api/company/updateCompany/";
 String getallclient = "/api/client/allClient";
 String deleteclient = "/api/client/deleteClient/";
 String getclient = "/api/client/clientdropdown";
-String addinward = "/api/inward/addInward";
+String addinward = "/api/inward/addInward2";
 String getInward = "/api/inward/allInward?paymentType=";
 String addItem = '/api/itemMaster/addItemMaster';
 String getallitem = '/api/itemMaster/allItemMaster';
 String addbom = "/api/bom/addBom";
-// String addbom = "/api/bom/addBom";
+String singlebom = "/api/bom/getBom/";
+String addproduction = "/api/production/addProduction2";
+String deleteinward = "/api/inward/delInward/";
+String getallbom = "/api/bom/allbom";
 
 // --------------------------------------------------------
 String baseUrlTxt = 'https://zapwms.in/';

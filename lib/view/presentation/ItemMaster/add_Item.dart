@@ -5,6 +5,7 @@ import 'package:lavex/data/model/add_item.dart';
 import 'package:lavex/utils/string.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import '../../../common/custom_text.dart';
+import '../../../data/model/getitemmodel.dart';
 import '../../../routes/route_pages.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_spacebar.dart';
@@ -34,6 +35,7 @@ class AddItemMaster extends StatelessWidget {
   final ItemMasterController itemMasterController =
       Get.put(ItemMasterController());
   Rx<bool> Loader = Rx<bool>(true);
+  String name = "";
   List<String> paymentField = [
     'Name',
     'Qty',
@@ -53,6 +55,7 @@ class AddItemMaster extends StatelessWidget {
     'Currency',
     'Status',
   ];
+  List<itemData> Itemraw = [];
 
   List<String> clients = [
     'Show only paid, unpaid invoices',
@@ -62,11 +65,12 @@ class AddItemMaster extends StatelessWidget {
   ];
   String Clients = "";
   List<String> QtyType = [
-    'KG',
-    'Days',
-    'Meter',
-    'PKT',
+    'Box',
+    'Roll',
+    'Pcs',
+    'Pkt',
   ];
+
   String qtyType = "";
   List<String> GST = [
     '10',
@@ -92,9 +96,10 @@ class AddItemMaster extends StatelessWidget {
     "Unite 1",
     "Unite 2",
   ];
+
   String Store = "";
   List<String> SS = ['Part', 'ReadyStock', 'Fixasset', 'Raw'];
-  String SStatus = "";
+  RxString SStatus = "".obs;
   @override
   Widget build(BuildContext context) {
     var controller = [
@@ -116,6 +121,9 @@ class AddItemMaster extends StatelessWidget {
       currencyController,
       statusController,
     ];
+    Itemraw = itemMasterController.itemMasterModel
+        .where((f) => f.stockStatus != "ReadyStock")
+        .toList();
     return CommonScaffold(
         body: Obx(() => Loader.value
             ? Column(
@@ -195,7 +203,7 @@ class AddItemMaster extends StatelessWidget {
                                   hintText: field,
                                   itemAsString: (item) => item,
                                   onChanged: (value) {
-                                    SStatus = value ?? "";
+                                    SStatus.value = value ?? "";
                                   },
                                 ),
                               ),
@@ -253,23 +261,44 @@ class AddItemMaster extends StatelessWidget {
                       } else {
                         return Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: CustomField(
-                            width: 300,
-                            height: 35,
-                            name: field,
-                            controller: controller[index],
-                            style:
-                                TextStyle(), // Define your normalTextStyle here
-                            isreadOnly: false,
-                            isSuffixIcon: false,
-                            validator: (value) {
-                              // Define your validator logic here
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter $field';
-                              }
-                              return null;
-                            },
-                          ),
+                          child: SStatus != "ReadyStock" && field == 'Name'
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CTextBlack(field, mBold: true, mSize: 14),
+                                    Container(
+                                      width: 300,
+                                      height: 35,
+                                      child: DropdownTextField<String>(
+                                        items:
+                                            Itemraw.map((f) => f.name as String)
+                                                .toList(),
+                                        hintText: field,
+                                        itemAsString: (item) => item,
+                                        onChanged: (value) {
+                                          name = value ?? "";
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : CustomField(
+                                  width: 300,
+                                  height: 35,
+                                  name: field,
+                                  controller: controller[index],
+                                  style:
+                                      TextStyle(), // Define your normalTextStyle here
+                                  isreadOnly: false,
+                                  isSuffixIcon: false,
+                                  validator: (value) {
+                                    // Define your validator logic here
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter $field';
+                                    }
+                                    return null;
+                                  },
+                                ),
                         );
                       }
                     }).toList(),
@@ -284,7 +313,9 @@ class AddItemMaster extends StatelessWidget {
                               .postItemData(AddItemModel(
                                   forUser: 101,
                                   forCompany: 102,
-                                  name: nameController.text,
+                                  name: SStatus != "ReadyStock"
+                                      ? nameController.text
+                                      : name,
                                   manufacturerName: manufacturerController.text,
                                   itemCode: itemCodeController.text,
                                   quantity: int.parse(quantityController.text),
@@ -294,7 +325,7 @@ class AddItemMaster extends StatelessWidget {
                                   currency: currencyController.text,
                                   gstRate: int.parse(gst),
                                   hsnCode: hsnCodeController.text,
-                                  stockStatus: SStatus,
+                                  stockStatus: SStatus.value,
                                   storeId: 10,
                                   brandName: Brand,
                                   category: categoryController.text,

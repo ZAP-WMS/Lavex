@@ -40,7 +40,7 @@ class BomAddItem extends StatelessWidget {
       columns.add(
         GridColumn(
           columnName: columnName,
-          allowEditing: true,
+          allowEditing: columnName == 'Name' ? false : true,
           width: columnName == 'Name' || columnName == 'Client Short-Code'
               ? MediaQuery.of(context).size.width * 0.2
               : MediaQuery.of(context).size.width *
@@ -66,12 +66,18 @@ class BomAddItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Itemraw = itemMasterController.itemMasterModel
+        .where((f) => f.stockStatus == "Raw")
+        .toList();
+    Itemredy = itemMasterController.itemMasterModel
+        .where((f) => f.stockStatus == "ReadyStock")
+        .toList();
     List<BomAddItemModel> bomModel = [];
     bomModel
-        .add(BomAddItemModel(title: 'title', quantityType: '', quantity: 2));
+        .add(BomAddItemModel(title: 'material', quantityType: '', quantity: 2));
 
     BomAddItemDataSource bomAddItemDataSource =
-        BomAddItemDataSource(bomModel, context, '');
+        BomAddItemDataSource(bomModel, context, '', Itemraw, Itemredy);
 
     bool isaddItem =
         controller.bomItems.isNotEmpty && controller.bomItems.last == true;
@@ -79,13 +85,6 @@ class BomAddItem extends StatelessWidget {
       'Name',
       'Stock Status',
     ];
-
-    Itemraw = itemMasterController.itemMasterModel
-        .where((f) => f.stockStatus == "Raw")
-        .toList();
-    Itemredy = itemMasterController.itemMasterModel
-        .where((f) => f.stockStatus == "ReadyStock")
-        .toList();
 
     return CommonScaffold(
         body: Padding(
@@ -236,6 +235,14 @@ class BomAddItem extends StatelessWidget {
               child: CustomButton(
                   text: 'Save',
                   onPressed: () {
+                    Map<String, dynamic> getdata = Map();
+                    for (var i in bomAddItemDataSource.dataGridRows) {
+                      for (var j in i.getCells()) {
+                        getdata[j.columnName] = j.value;
+                      }
+                    }
+
+                    print(getdata.values.toList());
                     // print(selectrawdata.entries.map((e) => e.value.qty));
                     // bomitemModel data = bomitemModel(
                     //     readyStock: redy, raw: selectrawdata.values.toList());
