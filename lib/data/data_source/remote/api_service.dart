@@ -21,6 +21,7 @@ import '../../model/add_suppllier.dart';
 import '../../model/bomitemmodel.dart';
 import '../../model/credit_note.dart';
 import '../../model/debit_note.dart';
+import '../../model/getallBom.dart';
 import '../../model/getallinwardentrymodel.dart';
 import '../../model/getitemmodel.dart';
 import '../../model/getitemmodel.dart';
@@ -28,6 +29,7 @@ import '../../model/invoice.dart';
 import '../../model/purchaseStoreModel.dart' as pa;
 import '../../model/register_model.dart';
 import '../../model/singleBom.dart';
+import '../../model/update_itemModel.dart';
 import '../local/shared_preference.dart';
 
 class ApiServices {
@@ -91,7 +93,7 @@ class ApiServices {
     }
   }
 
-  Future<void> AddBom(bomitemModel data) async {
+  Future<void> AddBom(BomitemModel data) async {
     try {
       print(data);
       var response = await dio.post('$baseUrl$addbom', data: data.toJson());
@@ -102,15 +104,14 @@ class ApiServices {
           print(response.data["success"]);
           Get.snackbar("Status", response.data["message"].toString(),
               snackPosition: SnackPosition.BOTTOM);
-          Get.back();
         } else {
+          Get.snackbar("Status", response.data["message"].toString(),
+              snackPosition: SnackPosition.BOTTOM);
           print('message${response.data["message"]}');
           throw Exception('Failed to create payment');
         }
       } else {
-        Get.snackbar("Status", response.data["message"].toString(),
-            snackPosition: SnackPosition.BOTTOM);
-        // throw Exception('Failed to create payment: ${response.statusMessage}');
+        throw Exception('Failed to create payment: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error: $e');
@@ -133,18 +134,15 @@ class ApiServices {
     }
   }
 
-  Future<List<bomitemModel>> getallBom() async {
+  Future<List<Allbom>> getallBom() async {
     try {
       var response = await dio.get('$baseUrl$getallbom');
       print(response.data["message"]);
       if (response.statusCode == 200) {
-        List<bomitemModel> data = [];
-        response.data["data"].forEach((v) {
-          data.add(bomitemModel.fromJson(v));
-        });
-
+        print(response.data);
+        GetAllbomModel data = GetAllbomModel.fromJson(response.data);
         print(data);
-        return data;
+        return data.data ?? [];
       }
     } on Exception catch (e) {
       print(e);
@@ -568,6 +566,38 @@ class ApiServices {
       final response = await http.post(
         Uri.parse(url),
         headers: headers,
+        body: jsonEncode(itemData.toJson()),
+      );
+      var data;
+      if (response.statusCode == 200) {
+        print('Success: ${response.body}');
+        data = await jsonDecode(response.body);
+        print(data["message"]);
+        if (!data["success"]) {
+          Get.snackbar("Message", data["message"]);
+          return false;
+        } else {
+          Get.snackbar("Message", data["message"],
+              snackPosition: SnackPosition.BOTTOM);
+          return data["success"];
+          //    Get.back();
+        }
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+    }
+    return false;
+  }
+
+  Future<bool> updateItemData(updateItemMasterModel itemData, String id) async {
+    final String url = baseUrl + updateItem + id;
+    print(itemData);
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
         body: jsonEncode(itemData.toJson()),
       );
       var data;

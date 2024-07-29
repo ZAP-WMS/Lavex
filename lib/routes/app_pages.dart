@@ -14,6 +14,7 @@ import 'package:lavex/view/presentation/store/cash_inward_home.dart';
 import 'package:lavex/view/presentation/store/stocks.dart';
 import 'package:lavex/view/presentation/store/store.dart';
 import '../view/Authentication/navbar_page.dart';
+import '../view/binding/Bombinding.dart';
 import '../view/binding/create_invoice_binding.dart';
 import '../view/binding/index_binding.dart';
 import '../view/binding/proma_form_binding.dart';
@@ -68,7 +69,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.bomAdditem,
       page: () => BomAddItem(),
-      //   binding: SplashBinding(),
+      binding: BomBinding(),
     ),
     GetPage(
       name: AppRoutes.addproduction,

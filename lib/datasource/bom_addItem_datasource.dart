@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lavex/common/custom_text.dart';
 import 'package:lavex/data/model/bom_add_item.dart';
+import 'package:lavex/data/model/getallinwardentrymodel.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../data/model/getitemmodel.dart';
 import '../utils/style.dart';
@@ -23,7 +24,7 @@ class BomAddItemDataSource extends DataGridSource {
     dataGridRows = _bomModel
         .map<DataGridRow>((dataGridRow) => dataGridRow.dataGridRow())
         .toList();
-    name = Itemraw.map((f) => f.name as String).toList();
+    name.assignAll(Itemraw.map((f) => f.name as String).toList());
   }
 
   @override
@@ -72,7 +73,7 @@ class BomAddItemDataSource extends DataGridSource {
           alignment: Alignment.center,
           child: (dataGridCell.columnName == 'Name')
               ? DropdownButton<String>(
-                  value: dataGridCell.value,
+                  value: name.isNotEmpty ? dataGridCell.value : "",
                   hint: Text('Select Value'),
                   autofocus: true,
                   focusColor: Colors.transparent,
@@ -98,27 +99,42 @@ class BomAddItemDataSource extends DataGridSource {
                     dataGridRows[dataRowIndex].getCells()[0] =
                         DataGridCell<String>(columnName: 'Name', value: value);
                     _bomModel[dataRowIndex].title = value.toString();
+                    ItemMasterData element =
+                        Itemraw.firstWhere((element) => element.name == value);
+                    dataGridRows[dataRowIndex].getCells()[1] =
+                        DataGridCell<String>(
+                            columnName: 'Quantity Type',
+                            value: element.qtyType);
+                    // _bomModel[dataRowIndex].quantityType =
+                    //     element.qtyType.toString();
 
                     notifyListeners();
                     // updateDatagridSource();
                   },
-                  items: name.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    );
-                  }).toList())
+                  items: name.isNotEmpty
+                      ? name.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList()
+                      : [
+                          DropdownMenuItem<String>(
+                            value: "",
+                            child: Text(""),
+                          )
+                        ])
               : (dataGridCell.columnName == 'Manage')
                   ? ElevatedButton(
                       onPressed: () {
                         if (dataRowIndex == lastRowIndex) {
                           addRowAtIndex(
-                              dataRowIndex,
+                              dataRowIndex + 1,
                               BomAddItemModel(
-                                  title: 'material',
+                                  title: name.isEmpty ? "" : name[0],
                                   quantityType: 'quantityType',
                                   quantity: 3));
                         } else {
@@ -248,6 +264,8 @@ class BomAddItemDataSource extends DataGridSource {
           if (value.isNotEmpty) {
             if (isNumericType) {
               newCellValue = int.parse(value);
+              _bomModel[dataGridRows.indexOf(dataGridRow)].quantity =
+                  int.parse(value);
             } else if (isDateTimeType) {
               newCellValue = value;
             } else {

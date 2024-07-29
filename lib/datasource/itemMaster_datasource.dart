@@ -6,6 +6,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../data/model/getitemmodel.dart';
 import '../utils/colors.dart';
 import '../utils/style.dart';
+import '../view/presentation/ItemMaster/update_item_master.dart';
 import '../widgets/custom_spacebar.dart';
 
 class ItemMasterDataSource extends DataGridSource {
@@ -45,6 +46,7 @@ class ItemMasterDataSource extends DataGridSource {
   DataGridRowAdapter? buildRow(DataGridRow row) {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((dataGridCell) {
+      final int dataRowIndex = dataGridRows.indexOf(row);
       return Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -57,7 +59,11 @@ class ItemMasterDataSource extends DataGridSource {
                         IconButton(
                           icon: Icon(Icons.edit, color: redColor),
                           onPressed: () {
-                            Get.toNamed('/edit-page');
+                            print(_itemMasterModel[dataRowIndex].name);
+                            Get.to(UpdateItemMaster(
+                              itemMasterModel: _itemMasterModel[dataRowIndex],
+                            ));
+                            // Get.toNamed('/edit-page');
                           },
                         ),
                         horizontalSpace(5),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lavex/routes/app_pages.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/utils/colors.dart';
+import 'package:lavex/view/controller/bom_additem_controller.dart';
 import 'view/controller/company_controller.dart';
 import 'view/controller/loading_controller.dart';
 import 'widgets/Loading_file.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
   final CompanyController companyController = Get.put(CompanyController());
   final _loader = Get.put(LoadingController());
-
+  final BomAddItemController controller = Get.put(BomAddItemController());
   MaterialColor createMaterialColor(Color color) {
     List<double> strengths = <double>[.05];
     final Map<int, Color> swatch = {};

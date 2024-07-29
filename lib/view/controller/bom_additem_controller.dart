@@ -3,10 +3,13 @@ import 'package:lavex/data/data_source/remote/api_service.dart';
 
 import '../../data/model/bom_add_item.dart';
 import '../../data/model/bomitemmodel.dart';
+import '../../data/model/getallBom.dart';
 
 class BomAddItemController extends GetxController {
   var bomItems = <BomAddItemModel>[].obs;
-  List<bomitemModel> listAllbom = <bomitemModel>[].obs;
+  RxString serch = ''.obs;
+  RxBool loading = false.obs;
+  var listAllbom = <Allbom>[].obs;
   @override
   void onInit() {
     getallBom();
@@ -18,7 +21,19 @@ class BomAddItemController extends GetxController {
   }
 
   getallBom() async {
-    listAllbom.assignAll(await ApiServices().getallBom());
+    loading(true);
+    if (serch.isEmpty) {
+      listAllbom.assignAll(await ApiServices().getallBom());
+    } else {
+      List<Allbom> data =
+          await ApiServices().getallBom().whenComplete(() => null);
+      var data1 = data.where((element) => element.readyStock!.name!
+          .toLowerCase()
+          .contains(serch.value.toString().toLowerCase()));
+      listAllbom.assignAll(data1);
+      print(data1);
+    }
+    loading(false);
   }
 
   void removeItem(int index) {

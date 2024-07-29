@@ -7,6 +7,8 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../common/custom_text.dart';
 
+import '../../../data/data_source/remote/api_service.dart';
+import '../../../data/model/bomitemmodel.dart';
 import '../../../data/model/getitemmodel.dart';
 import '../../../datasource/bom_addItem_datasource.dart';
 import '../../../utils/colors.dart';
@@ -31,9 +33,9 @@ class BomAddItem extends StatelessWidget {
   DataGridController dataGridController = DataGridController();
   List<ItemMasterData> Itemraw = [];
   List<ItemMasterData> Itemredy = [];
-  Map<int, ItemMasterData> selectrawdata = {};
+  List<ItemMasterData> selectrawdata = [];
   ItemMasterData redy = ItemMasterData();
-
+  String Stock_Status = '';
   List<GridColumn> buildColumns(BuildContext context) {
     List<GridColumn> columns = [];
     for (String columnName in bomTableName) {
@@ -73,8 +75,10 @@ class BomAddItem extends StatelessWidget {
         .where((f) => f.stockStatus == "ReadyStock")
         .toList();
     List<BomAddItemModel> bomModel = [];
-    bomModel
-        .add(BomAddItemModel(title: 'material', quantityType: '', quantity: 2));
+    bomModel.add(BomAddItemModel(
+        title: Itemraw.isNotEmpty ? Itemraw[0].name.toString() : "",
+        quantityType: Itemraw.isNotEmpty ? Itemraw[0].qtyType.toString() : "",
+        quantity: 2));
 
     BomAddItemDataSource bomAddItemDataSource =
         BomAddItemDataSource(bomModel, context, '', Itemraw, Itemredy);
@@ -139,7 +143,9 @@ class BomAddItem extends StatelessWidget {
                             items: ["Created", "Draft"],
                             hintText: field,
                             itemAsString: (item) => item,
-                            onChanged: (value) {}),
+                            onChanged: (value) {
+                              Stock_Status = value ?? "";
+                            }),
                       ),
                     ],
                   ),
@@ -236,88 +242,104 @@ class BomAddItem extends StatelessWidget {
                   text: 'Save',
                   onPressed: () {
                     Map<String, dynamic> getdata = Map();
+                    selectrawdata.clear();
                     for (var i in bomAddItemDataSource.dataGridRows) {
-                      for (var j in i.getCells()) {
-                        getdata[j.columnName] = j.value;
-                      }
+                      int index = Itemraw.indexWhere(
+                          (element) => element.name == i.getCells()[0].value);
+                      Itemraw[index].qty = i.getCells()[2].value;
+                      selectrawdata.add(Itemraw.firstWhere(
+                          (element) => element.name == i.getCells()[0].value));
                     }
+                    print(selectrawdata.length);
+                    //     .getCells()[0]
+                    //     .value);
 
-                    print(getdata.values.toList());
-                    // print(selectrawdata.entries.map((e) => e.value.qty));
-                    // bomitemModel data = bomitemModel(
-                    //     readyStock: redy, raw: selectrawdata.values.toList());
-                    // ApiServices().AddBom(data);
+                    print(selectrawdata.map((e) => e.name).toList());
+                    List<ReadyStock> rawitem = [];
+                    selectrawdata.forEach((x) {
+                      rawitem.add(ReadyStock.fromJson(x.toJson()));
+                    });
+
+                    print(selectrawdata.length);
+
+                    BomitemModel data = BomitemModel(
+                        readyStock: ReadyStock.fromJson(redy.toJson()),
+                        raw: rawitem,
+                        status: Stock_Status);
+                    ApiServices()
+                        .AddBom(data)
+                        .whenComplete(() => {controller.getallBom()});
                   })),
         ],
       ),
     ));
   }
 
-  DataRow dataRow(int indexx) {
-    TextEditingController type = TextEditingController();
-    TextEditingController qty = TextEditingController();
-    return DataRow(cells: [
-      DataCell(Container(
-        padding: const EdgeInsets.symmetric(vertical: 3),
-        width: 200,
-        child: !selectrawdata[indexx].isNull
-            ? DropdownTextField<String>(
-                items: Itemraw.map((f) => f.name as String).toList(),
-                hintText: "",
-                initialValue: !selectrawdata[indexx].isNull
-                    ? selectrawdata[indexx]!.name.toString() ?? ""
-                    : "",
-                itemAsString: (item) => item,
-                onChanged: (value) {
-                  selectrawdata.addIf(
-                      true, indexx, Itemraw.firstWhere((f) => f.name == value));
-                  type.text = selectrawdata[indexx]!.qtyType.toString();
-                })
-            : DropdownTextField<String>(
-                items: Itemraw.map((f) => f.name as String).toList(),
-                hintText: "",
-                itemAsString: (item) => item,
-                onChanged: (value) {
-                  selectrawdata.addIf(
-                      true, indexx, Itemraw.firstWhere((f) => f.name == value));
-                  type.text = selectrawdata[indexx]!.qtyType.toString();
-                }),
-      )),
-      DataCell(Container(
-        padding: const EdgeInsets.symmetric(vertical: 3),
-        width: 200,
-        child: TextFormField(
-          enabled: false,
-          controller: type,
-          // initialValue: !selectrawdata[indexx].isNull
-          //     ? selectrawdata[indexx]!.qtyType.toString() ?? ""
-          //     : "",
-          onChanged: (value) {
-            // Update the brand when user changes it
-          },
-        ),
-      )),
-      DataCell(Container(
-        padding: const EdgeInsets.symmetric(vertical: 3),
-        width: 200,
-        child: TextFormField(
-          controller: qty,
-          // initialValue: !selectrawdata[indexx].isNull
-          //     ? selectrawdata[indexx]!.qty.toString() ?? ""
-          //     : "",
-          onChanged: (value) {
-            selectrawdata[indexx]!.qty = int.parse(value);
-          },
-        ),
-      )),
-      DataCell(Container(
-          padding: const EdgeInsets.symmetric(vertical: 3),
-          width: 200,
-          child: GestureDetector(
-              onTap: () {
-                controller.removeItem(indexx);
-              },
-              child: CTextBlack('Remove Row', mSize: 15, mBold: false)))),
-    ]);
-  }
+  // DataRow dataRow(int indexx) {
+  //   TextEditingController type = TextEditingController();
+  //   TextEditingController qty = TextEditingController();
+  //   return DataRow(cells: [
+  //     DataCell(Container(
+  //       padding: const EdgeInsets.symmetric(vertical: 3),
+  //       width: 200,
+  //       child: !selectrawdata[indexx].isNull
+  //           ? DropdownTextField<String>(
+  //               items: Itemraw.map((f) => f.name as String).toList(),
+  //               hintText: "",
+  //               initialValue: !selectrawdata[indexx].isNull
+  //                   ? selectrawdata[indexx]!.name.toString() ?? ""
+  //                   : "",
+  //               itemAsString: (item) => item,
+  //               onChanged: (value) {
+  //                 selectrawdata.addIf(
+  //                     true, indexx, Itemraw.firstWhere((f) => f.name == value));
+  //                 type.text = selectrawdata[indexx]!.qtyType.toString();
+  //               })
+  //           : DropdownTextField<String>(
+  //               items: Itemraw.map((f) => f.name as String).toList(),
+  //               hintText: "",
+  //               itemAsString: (item) => item,
+  //               onChanged: (value) {
+  //                 selectrawdata.addIf(
+  //                     true, indexx, Itemraw.firstWhere((f) => f.name == value));
+  //                 type.text = selectrawdata[indexx]!.qtyType.toString();
+  //               }),
+  //     )),
+  //     DataCell(Container(
+  //       padding: const EdgeInsets.symmetric(vertical: 3),
+  //       width: 200,
+  //       child: TextFormField(
+  //         enabled: false,
+  //         controller: type,
+  //         // initialValue: !selectrawdata[indexx].isNull
+  //         //     ? selectrawdata[indexx]!.qtyType.toString() ?? ""
+  //         //     : "",
+  //         onChanged: (value) {
+  //           // Update the brand when user changes it
+  //         },
+  //       ),
+  //     )),
+  //     DataCell(Container(
+  //       padding: const EdgeInsets.symmetric(vertical: 3),
+  //       width: 200,
+  //       child: TextFormField(
+  //         controller: qty,
+  //         // initialValue: !selectrawdata[indexx].isNull
+  //         //     ? selectrawdata[indexx]!.qty.toString() ?? ""
+  //         //     : "",
+  //         onChanged: (value) {
+  //           selectrawdata[indexx]!.qty = int.parse(value);
+  //         },
+  //       ),
+  //     )),
+  //     DataCell(Container(
+  //         padding: const EdgeInsets.symmetric(vertical: 3),
+  //         width: 200,
+  //         child: GestureDetector(
+  //             onTap: () {
+  //               controller.removeItem(indexx);
+  //             },
+  //             child: CTextBlack('Remove Row', mSize: 15, mBold: false)))),
+  //   ]);
+  // }
 }
