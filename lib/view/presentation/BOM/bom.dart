@@ -13,7 +13,6 @@ import '../../../utils/colors.dart';
 import '../../../utils/string.dart';
 import '../../controller/item_master_controller.dart';
 import '../Invoice/myinvoice/myInvoice..dart';
-import 'bom_add_item.dart';
 
 class BomPage extends StatelessWidget {
   BomPage({super.key});

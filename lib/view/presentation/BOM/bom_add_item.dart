@@ -40,7 +40,8 @@ class BomAddItem extends StatelessWidget {
       columns.add(
         GridColumn(
           columnName: columnName,
-          allowEditing: columnName == 'Name' ? false : true,
+          allowEditing:
+              columnName == 'Name' || columnName == 'Manage' ? false : true,
           width: columnName == 'Name' || columnName == 'Client Short-Code'
               ? MediaQuery.of(context).size.width * 0.2
               : MediaQuery.of(context).size.width *

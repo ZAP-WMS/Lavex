@@ -85,7 +85,7 @@ class CashInward extends GetView<CashInwardController> {
                               children: [
                                 CustomField(
                                     width: 300,
-                                    // height: 40,
+                                    // height: 40,  
                                     name: forUnitTxt,
                                     controller: uniteController,
                                     style: normalTextStyle,
@@ -281,24 +281,9 @@ class CashInward extends GetView<CashInwardController> {
                                 DataColumn(label: Text('GST')),
                                 DataColumn(label: Text('Price')),
                                 DataColumn(label: Text('Total')),
+                                DataColumn(label: Text('Manage')),
                               ],
-                              rows:
-                                  //[
-                                  // DataRow(
-                                  //     cells: List.generate(6, (index) {
-                                  //   return DataCell(Container(
-                                  //     padding: const EdgeInsets.symmetric(vertical: 3),
-                                  //     width: (index == 0) || (index == 1) ? 150 : 60,
-                                  //     child: TextFormField(
-                                  //       decoration: const InputDecoration(),
-                                  //       onChanged: (value) {
-                                  //         item[index].name = value;
-                                  //       },
-                                  //     ),
-                                  //   ));
-                                  // }))
-
-                                  controller.cartItems.map((item) {
+                              rows: controller.cartItems.map((item) {
                                 double sum = (item.quantity * item.price);
                                 RxDouble total =
                                     (sum + sum * item.gst / 100).obs;
@@ -400,78 +385,18 @@ class CashInward extends GetView<CashInwardController> {
                                       '${r"$"} ${total.value.toPrecision(2)}',
                                     ),
                                   )),
+                                  DataCell(Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 3),
+                                      width: 120,
+                                      child: ElevatedButton(
+                                        child: const Text('Remove Row'),
+                                        onPressed: () {
+                                          controller.removeItem(item);
+                                        },
+                                      ))),
                                 ]);
-                              }).toList()
-
-                              //] ..addAll(controller.cartItems.map((item) {
-                              //     return DataRow(cells: [
-                              //       DataCell(Container(
-                              //         padding: const EdgeInsets.symmetric(vertical: 3),
-                              //         width: 150,
-                              //         child: TextFormField(
-                              //           controller: itemController,
-                              //           // initialValue: item.item.toString(),
-                              //           onChanged: (value) {
-                              //             //  item[].name = value;
-                              //             //        _itemNameController.text = value;
-                              //             // Update the item name when user changes it
-                              //           },
-                              //         ),
-                              //       )),
-                              //       DataCell(Container(
-                              //         padding: const EdgeInsets.symmetric(vertical: 3),
-                              //         width: 150,
-                              //         child: TextFormField(
-                              //           controller: brandController,
-                              //           //    initialValue: item.brand.toString(),
-                              //           onChanged: (value) {
-                              //             // Update the brand when user changes it
-                              //           },
-                              //         ),
-                              //       )),
-                              //       DataCell(Container(
-                              //         padding: const EdgeInsets.symmetric(vertical: 3),
-                              //         width: 60,
-                              //         child: TextFormField(
-                              //           controller: quantityController,
-                              //           //    initialValue: item.quantity.toString(),
-                              //           onChanged: (value) {
-                              //             // Update the quantity when user changes it
-                              //           },
-                              //         ),
-                              //       )),
-                              //       DataCell(Container(
-                              //         padding: const EdgeInsets.symmetric(vertical: 3),
-                              //         width: 60,
-                              //         child: TextFormField(
-                              //           controller: gstController,
-                              //           //       initialValue: item.gst.toString(),
-                              //           onChanged: (value) {
-                              //             // Update the GST when user changes it
-                              //           },
-                              //         ),
-                              //       )),
-                              //       DataCell(Container(
-                              //         padding: const EdgeInsets.symmetric(vertical: 3),
-                              //         width: 60,
-                              //         child: TextFormField(
-                              //           controller: priceController,
-                              //           //        initialValue: item.price.toString(),
-                              //           onChanged: (value) {
-                              //             // Update the price when user changes it
-                              //           },
-                              //         ),
-                              //       )),
-                              //       DataCell(Container(
-                              //         padding: const EdgeInsets.symmetric(vertical: 3),
-                              //         width: 60,
-                              //         child: Text(
-                              //           '\$${(item.price * item.quantity).toStringAsFixed(2)}',
-                              //         ),
-                              //       )),
-                              //     ]);
-                              //   }).toList())
-                              ),
+                              }).toList()),
                         ),
                         IconWithText(
                           iconData: Icons.add,
@@ -592,36 +517,12 @@ class CashInward extends GetView<CashInwardController> {
                                   },
                                 ),
                                 horizontalSpace(20),
-                                // CTextBlack(betrayedTxt, mSize: 14, mBold: true),
-                                // horizontalSpace(20),
-                                // CustomTextFormField(
-                                //   width: 250,
-                                //   // height: 30,
-                                //   controller: paymentMethodController,
-                                //   name: '',
-                                //   style: normalTextStyle,
-                                //   validator: (p0) {
-                                //     if (p0!.isEmpty) {
-                                //       print("object");
-                                //       return "this field is required";
-                                //     }
-                                //   },
+
                                 // ),
                                 horizontalSpace(20),
                                 CTextBlack(acceptedTxt, mSize: 14, mBold: true),
                                 horizontalSpace(20),
-                                // CustomTextFormField(
-                                //   width: 250,
-                                //   controller: paymentMethodController,
-                                //   name: '',
-                                //   style: normalTextStyle,
-                                //   validator: (p0) {
-                                //     if (p0!.isEmpty) {
-                                //       print("object");
-                                //       return "this field is required";
-                                //     }
-                                //   },
-                                // )
+
                                 Flexible(
                                   child: MyCheckbox(
                                     titleName: "",

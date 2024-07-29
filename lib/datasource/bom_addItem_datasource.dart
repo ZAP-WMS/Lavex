@@ -116,7 +116,7 @@ class BomAddItemDataSource extends DataGridSource {
                       onPressed: () {
                         if (dataRowIndex == lastRowIndex) {
                           addRowAtIndex(
-                              dataRowIndex,
+                              dataRowIndex + 1,
                               BomAddItemModel(
                                   title: 'material',
                                   quantityType: 'quantityType',

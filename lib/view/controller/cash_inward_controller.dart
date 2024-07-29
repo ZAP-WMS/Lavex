@@ -18,4 +18,9 @@ class CashInwardController extends GetxController {
   void addItem(CartItem item) {
     cartItems.add(item);
   }
+
+
+    void removeItem(CartItem item) {
+    cartItems.remove(item);
+  }
 }

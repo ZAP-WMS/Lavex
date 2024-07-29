@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
               Obx(() {
                 return _loader.isLoading.value
                     ? const LoadingFile()
-                    : SizedBox.shrink();
+                    : const SizedBox.shrink();
               }), // Ensure this is part of the widget tree
             ],
           );
