@@ -5,14 +5,17 @@ import 'package:lavex/common/custom_text.dart';
 import 'package:lavex/data/model/bom_add_item.dart';
 import 'package:lavex/data/model/getallinwardentrymodel.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import '../data/model/bomitemmodel.dart';
+import '../data/model/getallBom.dart';
 import '../data/model/getitemmodel.dart';
 import '../utils/style.dart';
+import '../view/controller/bom_additem_controller.dart';
 import '../widgets/drop_downTextField.dart';
 
 class Addproductiondatasource extends DataGridSource {
   String userId;
   BuildContext mainContext;
-  List<ItemMasterData> Itemraw = [];
+  List<Allbom> Itemraw = [];
   List<ItemMasterData> Itemredy = [];
   List data = [];
   List<String> name = [];
@@ -24,7 +27,8 @@ class Addproductiondatasource extends DataGridSource {
     dataGridRows = _bomModel
         .map<DataGridRow>((dataGridRow) => dataGridRow.dataGridRow())
         .toList();
-    name.assignAll(Itemraw.map((f) => f.name as String).toList());
+    name.assignAll(Itemraw.map((f) => f.readyStock!.name as String).toList());
+    print(name);
   }
 
   @override
@@ -99,16 +103,16 @@ class Addproductiondatasource extends DataGridSource {
                     dataGridRows[dataRowIndex].getCells()[0] =
                         DataGridCell<String>(columnName: 'Name', value: value);
                     _bomModel[dataRowIndex].title = value.toString();
-                    ItemMasterData element =
-                        Itemraw.firstWhere((element) => element.name == value);
+                    Allbom element = Itemraw.firstWhere(
+                        (element) => element.readyStock!.name == value);
                     dataGridRows[dataRowIndex].getCells()[1] =
                         DataGridCell<String>(
                             columnName: 'Quantity Type',
-                            value: element.qtyType);
+                            value: element.readyStock!.qtyType);
                     dataGridRows[dataRowIndex].getCells()[2] =
                         DataGridCell<String>(
                             columnName: 'Quantity',
-                            value: element.qty.toString());
+                            value: element.readyStock!.qty.toString());
                     // _bomModel[dataRowIndex].quantityType =
                     //     element.qtyType.toString();
 
@@ -142,13 +146,15 @@ class Addproductiondatasource extends DataGridSource {
                                       title: name.isEmpty ? "" : name[0],
                                       quantityType: name.isEmpty
                                           ? 'quantityType'
-                                          : Itemraw.firstWhere(
-                                                  (e) => e.name == name[0])
+                                          : Itemraw.firstWhere((e) =>
+                                                  e.readyStock!.name == name[0])
+                                              .readyStock!
                                               .qtyType
                                               .toString(),
-                                      quantity: Itemraw.firstWhere(
-                                              (e) => e.name == name[0]).qty
-                                          as int));
+                                      quantity: Itemraw.firstWhere((e) =>
+                                              e.readyStock!.name == name[0])
+                                          .readyStock!
+                                          .qty as int));
                             } else {
                               removeRowAtIndex(dataRowIndex);
                             }

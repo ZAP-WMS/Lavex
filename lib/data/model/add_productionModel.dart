@@ -1,5 +1,4 @@
 class addProductionModel {
-  int? prodNum;
   String? accepted;
   String? remark;
   String? dateCreated;
@@ -7,15 +6,13 @@ class addProductionModel {
   List<Raw>? raw;
 
   addProductionModel(
-      {this.prodNum,
-      this.accepted,
+      {this.accepted,
       this.remark,
       this.dateCreated,
       this.readyStock,
       this.raw});
 
   addProductionModel.fromJson(Map<String, dynamic> json) {
-    prodNum = json['prodNum'];
     accepted = json['accepted'];
     remark = json['remark'];
     dateCreated = json['dateCreated'];
@@ -35,7 +32,6 @@ class addProductionModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['prodNum'] = this.prodNum;
     data['accepted'] = this.accepted;
     data['remark'] = this.remark;
     data['dateCreated'] = this.dateCreated;

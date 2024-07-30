@@ -624,23 +624,21 @@ class ApiServices {
 
   Future<bool> Addproduction(addProductionModel itemData) async {
     final String url = baseUrl + addproduction;
-
+    print(itemData);
     // final Map<String, String> headers = {
     //   'Content-Type': 'application/json',
     // };
 
     try {
-      final response = await http.post(
-        Uri.parse(url),
-        // headers: headers,
-        body: jsonEncode(itemData.toJson()),
-      );
+      var response = await dio.post(url, data: itemData.toJson());
 
       if (response.statusCode == 200) {
-        print('Success: ${response.body}');
-        var data = await jsonDecode(response.body);
+        print('Success: ${response.data}');
+        var data = (response.data);
         print(data["message"]);
         if (!data["success"]) {
+          Get.snackbar("title", data["message"],
+              snackPosition: SnackPosition.BOTTOM);
           return false;
         } else {
           Get.snackbar(
