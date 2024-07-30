@@ -594,32 +594,31 @@ class ApiServices {
   Future<bool> updateItemData(updateItemMasterModel itemData, String id) async {
     final String url = baseUrl + updateItem + id;
     print(itemData);
+    print(jsonEncode(itemData.toJson()));
 
     try {
-      final response = await http.post(
-        Uri.parse(url),
-        body: jsonEncode(itemData.toJson()),
-      );
-      var data;
+      var response = await dio.put(url, data: itemData.toJson());
+
       if (response.statusCode == 200) {
-        print('Success: ${response.body}');
-        data = await jsonDecode(response.body);
-        print(data["message"]);
-        if (!data["success"]) {
-          Get.snackbar("Message", data["message"]);
+        print('Success: ${response.data}');
+
+        print(response.data);
+        if (!response.data["success"]) {
+          Get.snackbar("Message", response.data["message"]);
           return false;
         } else {
-          Get.snackbar("Message", data["message"],
+          Get.snackbar("Message", response.data["message"],
               snackPosition: SnackPosition.BOTTOM);
-          return data["success"];
+          return response.data["success"];
           //    Get.back();
         }
       } else {
         print('Error: ${response.statusCode}');
       }
-    } catch (e) {
-      print('Exception: $e');
+    } on Exception catch (e) {
+      // TODO
     }
+
     return false;
   }
 

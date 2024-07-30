@@ -6,12 +6,14 @@ import 'package:lavex/utils/string.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import '../../../common/custom_text.dart';
 import '../../../data/model/getitemmodel.dart';
+import '../../../data/model/purchaseStoreModel.dart';
 import '../../../routes/route_pages.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';
 import '../../../widgets/drop_downTextField.dart';
 import '../../controller/item_master_controller.dart';
+import '../../controller/store_controller.dart';
 
 class AddItemMaster extends StatelessWidget {
   AddItemMaster({super.key});
@@ -32,8 +34,7 @@ class AddItemMaster extends StatelessWidget {
   TextEditingController stockStatusController = TextEditingController();
   TextEditingController currencyController = TextEditingController();
   TextEditingController statusController = TextEditingController();
-  final ItemMasterController itemMasterController =
-      Get.put(ItemMasterController());
+  final StoreController itemMasterController = Get.put(StoreController());
   Rx<bool> Loader = Rx<bool>(true);
   String name = "";
   List<String> paymentField = [
@@ -55,7 +56,7 @@ class AddItemMaster extends StatelessWidget {
     'Currency',
     'Status',
   ];
-  List<ItemMasterData> Itemraw = [];
+  List<Purchaseitem> Itemraw = [];
 
   List<String> clients = [
     'Show only paid, unpaid invoices',
@@ -121,9 +122,7 @@ class AddItemMaster extends StatelessWidget {
       currencyController,
       statusController,
     ];
-    Itemraw = itemMasterController.itemMasterModel
-        .where((f) => f.stockStatus != "ReadyStock")
-        .toList();
+    Itemraw = itemMasterController.purchaseStore.where((f) => true).toList();
     return CommonScaffold(
         body: Obx(() => Loader.value
             ? Column(
@@ -336,7 +335,7 @@ class AddItemMaster extends StatelessWidget {
                                   qtyTypeSingleP: qtyController.text,
                                   status: statusController.text))
                               .whenComplete(() {
-                            itemMasterController.itemMasterData();
+                            itemMasterController.storeData();
                             Loader(true);
                           });
                           if (check) {

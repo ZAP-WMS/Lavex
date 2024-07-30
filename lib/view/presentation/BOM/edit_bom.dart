@@ -1,3 +1,4 @@
+import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/bom_add_item.dart';
@@ -5,6 +6,7 @@ import 'package:lavex/utils/string.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../common/custom_text.dart';
+
 import '../../../data/data_source/remote/api_service.dart';
 import '../../../data/model/bomitemmodel.dart';
 import '../../../data/model/getitemmodel.dart';
@@ -16,18 +18,18 @@ import '../../../widgets/custom_scaffold.dart';
 import '../../../widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';
 import '../../../widgets/drop_downTextField.dart';
+
 import '../../controller/bom_additem_controller.dart';
 import '../../controller/item_master_controller.dart';
-import '../../controller/store_controller.dart';
 
-class BomAddItem extends StatelessWidget {
-  BomAddItem({super.key});
+class EditBomItem extends StatelessWidget {
+  EditBomItem({super.key});
   TextEditingController paymentController = TextEditingController();
 
   final BomAddItemController controller = Get.put(BomAddItemController());
   final ItemMasterController itemMasterController =
       Get.put(ItemMasterController());
-  final StoreController storecontroller = Get.put(StoreController());
+
   DataGridController dataGridController = DataGridController();
   List<ItemMasterData> Itemraw = [];
   List<ItemMasterData> Itemredy = [];
@@ -79,7 +81,7 @@ class BomAddItem extends StatelessWidget {
         quantity: (Itemraw.isNotEmpty ? Itemraw[0].qty : 0) ?? 0));
 
     BomAddItemDataSource bomAddItemDataSource =
-        BomAddItemDataSource(bomModel, context, '', Itemraw, Itemredy);
+        BomAddItemDataSource(bomModel, context, 'detail', Itemraw, Itemredy);
 
     bool isaddItem =
         controller.bomItems.isNotEmpty && controller.bomItems.last == true;

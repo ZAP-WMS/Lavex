@@ -45,11 +45,13 @@ class BomPage extends StatelessWidget {
     //     });
     controller.listAllbom.forEach((e) => {
           bomModel.add(BomModel(
+              id: e.sId,
               name: e.readyStock!.name,
               store: e.readyStock!.brand,
               status: e.status.toString(),
               manage: 'dfd'))
         });
+    print(bomModel);
     _bomDataSource = BomDataSource(bomModel, context, 'userId');
     _dataGridController = DataGridController();
     columns.clear();
@@ -100,6 +102,7 @@ class BomPage extends StatelessWidget {
                     controller.getallBom();
                     controller.listAllbom.forEach((e) => {
                           bomModel.add(BomModel(
+                              id: e.sId,
                               name: e.readyStock!.name,
                               store: e.readyStock!.brand,
                               status: e.status.toString(),
@@ -124,6 +127,7 @@ class BomPage extends StatelessWidget {
               bomModel.clear();
               controller.listAllbom.forEach((e) => {
                     bomModel.add(BomModel(
+                        id: e.sId,
                         name: e.readyStock!.name,
                         store: e.readyStock!.brand,
                         status: e.status.toString(),

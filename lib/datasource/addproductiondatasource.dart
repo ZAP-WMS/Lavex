@@ -9,14 +9,14 @@ import '../data/model/getitemmodel.dart';
 import '../utils/style.dart';
 import '../widgets/drop_downTextField.dart';
 
-class BomAddItemDataSource extends DataGridSource {
+class Addproductiondatasource extends DataGridSource {
   String userId;
   BuildContext mainContext;
   List<ItemMasterData> Itemraw = [];
   List<ItemMasterData> Itemredy = [];
   List data = [];
   List<String> name = [];
-  BomAddItemDataSource(this._bomModel, this.mainContext, this.userId,
+  Addproductiondatasource(this._bomModel, this.mainContext, this.userId,
       this.Itemraw, this.Itemredy) {
     buildDataGridRows();
   }

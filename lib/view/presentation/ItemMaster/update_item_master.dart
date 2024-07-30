@@ -74,6 +74,8 @@ class UpdateItemMaster extends StatelessWidget {
   ];
 
   String qtyType = "";
+  String qtyType2 = "";
+
   List<String> GST = [
     '10',
     '15',
@@ -135,7 +137,9 @@ class UpdateItemMaster extends StatelessWidget {
     lawQtyController.text = itemMasterModel.lawqty.toString();
     manufacturerController.text = itemMasterModel.manufacturar.toString();
     qtyType = itemMasterModel.qtyType.toString();
+    qtyType2 = itemMasterModel.qtyType2.toString();
     gst = itemMasterModel.gst.toString();
+    name = itemMasterModel.name.toString();
     Itemraw = itemMasterController.itemMasterModel
         .where((f) => f.stockStatus != "ReadyStock")
         .toList();
@@ -150,7 +154,6 @@ class UpdateItemMaster extends StatelessWidget {
                       String field = entry.value;
                       if (field == 'Qty Type' ||
                           field == 'Manufacturer' ||
-                          field == 'Quantity Type' ||
                           field == 'Currency' ||
                           field == 'Status') {
                         // Render dropdown for Client Name
@@ -172,6 +175,30 @@ class UpdateItemMaster extends StatelessWidget {
                                   itemAsString: (item) => item,
                                   onChanged: (value) {
                                     qtyType = value ?? "";
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (field == 'Quantity Type') {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CTextBlack(field, mBold: true, mSize: 14),
+                              Container(
+                                width: 300,
+                                height: 35,
+                                child: DropdownTextField<String>(
+                                  items: QtyType,
+                                  hintText: field,
+                                  itemAsString: (item) => item,
+                                  onChanged: (value) {
+                                    qtyType2 = value ?? "";
                                   },
                                 ),
                               ),
@@ -345,7 +372,7 @@ class UpdateItemMaster extends StatelessWidget {
                               gst: int.parse(gst),
                               lawqty: int.parse(lawQtyController.text),
                               brand: Brand,
-                              qtyType2: quantityTypeController.text,
+                              qtyType2: qtyType2.toString(),
                               price: int.parse(priceController.text));
                           print(data);
                           // Loader(false);

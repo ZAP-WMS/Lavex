@@ -4,14 +4,15 @@ class BomModel {
   String? name;
   String? store;
   String? status;
+  String? id;
   dynamic manage;
 
-  BomModel({
-    required this.name,
-    required this.store,
-    required this.status,
-    required this.manage,
-  });
+  BomModel(
+      {required this.name,
+      required this.store,
+      required this.status,
+      required this.manage,
+      this.id});
 
   factory BomModel.fromjson(Map<String, dynamic> json) {
     return BomModel(

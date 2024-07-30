@@ -3,8 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/bom.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import '../data/model/getallBom.dart';
+import '../routes/route_pages.dart';
 import '../utils/colors.dart';
 import '../utils/style.dart';
+import '../view/controller/bom_additem_controller.dart';
 import '../widgets/custom_spacebar.dart';
 
 class BomDataSource extends DataGridSource {
@@ -27,6 +30,7 @@ class BomDataSource extends DataGridSource {
   @override
   List<BomModel> _bomModel = [];
   List<DataGridRow> dataGridRows = [];
+  final BomAddItemController controller = Get.put(BomAddItemController());
 
   /// [DataGridCell] on [onSubmitCell] method.
   dynamic newCellValue;
@@ -69,41 +73,53 @@ class BomDataSource extends DataGridSource {
                         IconButton(
                           icon: Icon(Icons.edit, color: redColor),
                           onPressed: () {
-                            Get.toNamed('/edit-page');
+                            // Get.toNamed(AppRoutes.editBom);
                           },
                         ),
                         horizontalSpace(5),
-                        PopupMenuButton<String>(
-                          icon: Icon(Icons.menu, color: redColor),
-                          onSelected: (String result) {
-                            switch (result) {
-                              case 'Delete':
-                                // Handle Option 1
-                                break;
-                              case 'Option 2':
-                                // Handle Option 2
-                                break;
-                              case 'Option 3':
-                                // Handle Option 3
-                                break;
-                            }
+                        IconButton(
+                          icon: Icon(Icons.details, color: redColor),
+                          onPressed: () {
+                            print(_bomModel[dataRowIndex].id);
+                            Allbom element = controller.listAllbom.firstWhere(
+                                (element) =>
+                                    element.sId == _bomModel[dataRowIndex].id);
+                            print(element);
+                            Get.toNamed(AppRoutes.detailBom,
+                                arguments: element);
                           },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'Option 1',
-                              child: Text('Option 1'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Option 2',
-                              child: Text('Option 2'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Option 3',
-                              child: Text('Option 3'),
-                            ),
-                          ],
                         )
+                        // PopupMenuButton<String>(
+                        //   icon: Icon(Icons.menu, color: redColor),
+                        //   onSelected: (String result) {
+                        //     switch (result) {
+                        //       case 'Delete':
+                        //         // Handle Option 1
+                        //         break;
+                        //       case 'Option 2':
+                        //         // Handle Option 2
+                        //         break;
+                        //       case 'Option 3':
+                        //         // Handle Option 3
+                        //         break;
+                        //     }
+                        //   },
+                        //   itemBuilder: (BuildContext context) =>
+                        //       <PopupMenuEntry<String>>[
+                        //     const PopupMenuItem<String>(
+                        //       value: 'Option 1',
+                        //       child: Text('Option 1'),
+                        //     ),
+                        //     const PopupMenuItem<String>(
+                        //       value: 'Option 2',
+                        //       child: Text('Option 2'),
+                        //     ),
+                        //     const PopupMenuItem<String>(
+                        //       value: 'Option 3',
+                        //       child: Text('Option 3'),
+                        //     ),
+                        //   ],
+                        // )
                       ]),
                 )
               : Text(

@@ -19,6 +19,8 @@ import '../view/binding/create_invoice_binding.dart';
 import '../view/binding/index_binding.dart';
 import '../view/binding/proma_form_binding.dart';
 import '../view/presentation/BOM/bom_add_item.dart';
+import '../view/presentation/BOM/detailBom.dart';
+import '../view/presentation/BOM/edit_bom.dart';
 import '../view/presentation/Companey/Managecompaney.dart';
 import '../view/presentation/Companey/add_company.dart';
 import '../view/presentation/Invoice/createinvoice/create_invoiceList.dart';
@@ -43,7 +45,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.menuBar,
-      page: () => const MenuPage(),
+      page: () => MenuPage(),
       //   binding: SplashBinding(),
     ),
     GetPage(
@@ -62,8 +64,18 @@ class AppPages {
       //   binding: SplashBinding(),
     ),
     GetPage(
+      name: AppRoutes.editBom,
+      page: () => EditBomItem(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
       name: AppRoutes.update_companey,
       page: () => UpdateCompaney(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.detailBom,
+      page: () => DetailBom(),
       //   binding: SplashBinding(),
     ),
     GetPage(

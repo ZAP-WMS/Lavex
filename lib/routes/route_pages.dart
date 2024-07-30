@@ -26,4 +26,6 @@ class AppRoutes {
   static const String bomAdditem = '/bomAdditem';
   static const String addproduction = '/addproduction';
   static const String updateinward = '/updateinward';
+  static const String editBom = '/editBom';
+  static const String detailBom = '/detailBom';
 }

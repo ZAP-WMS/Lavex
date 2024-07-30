@@ -61,10 +61,8 @@ class StorePage extends GetView<StoreController> {
     );
   }
 
-  late final StoreController storeController;
   @override
   Widget build(BuildContext context) {
-    storeController = Get.put(StoreController());
     List<String> tabIcon = [
       'assets/store/Cash Inward Entry.png',
       'assets/store/inward Entry.png',
@@ -114,11 +112,11 @@ class StorePage extends GetView<StoreController> {
                           } else {
                             if (index == 11) {
                               controller.currentIndex.value = index;
-                              storeController.getinwardData("Cash");
+                              controller.getinwardData("Cash");
                               print(storeTabName[index]);
                             } else if (index == 8) {
                               controller.currentIndex.value = index;
-                              storeController.getinwardData("");
+                              controller.getinwardData("");
                               print(storeTabName[index]);
                             } else {
                               controller.currentIndex.value = index;
@@ -162,13 +160,13 @@ class StorePage extends GetView<StoreController> {
   }
 
   Widget _buildDataGrid(BuildContext context) {
-    if (storeController.isLoading.value) {
+    if (controller.isLoading.value) {
       return const Center(child: CircularProgressIndicator());
     } else {
       storeDataSource =
-          Inwardentrysource(storeController.inwardEntry, context, 'userId');
+          Inwardentrysource(controller.inwardEntry, context, 'userId');
       purchaseStoreSource =
-          purchaseStoresource(storeController.purchaseStore, context, 'userId');
+          purchaseStoresource(controller.purchaseStore, context, 'userId');
       // print(storeController.purchaseStore);
       return SizedBox(
         height: MediaQuery.of(context).size.height,

@@ -17,7 +17,7 @@ import '../BOM/bom.dart';
 import '../store/store.dart';
 
 class MenuPage extends StatelessWidget {
-  const MenuPage({super.key});
+  MenuPage({super.key});
 
   @override
   Widget build(BuildContext context) {
