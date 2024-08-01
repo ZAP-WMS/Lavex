@@ -20,6 +20,8 @@ class CreateInvoiceDatasource extends DataGridSource {
   }
 
   List<CartItem> _cartModel = [];
+  List<String> name = ['item', 'abdul'];
+  List<String> brand = ['Softex', 'Lavex'];
 
   List<DataGridRow> dataGridRows = [];
 
@@ -57,22 +59,110 @@ class CreateInvoiceDatasource extends DataGridSource {
                 removeRowAtIndex(dataIndex);
               },
               icon: Icon(Icons.delete, color: redColor, size: 15))
-          :
-          //  (dataGridCell.columnName == 'Total')
-          //     ? Container(
-          //         alignment: Alignment.center,
-          //         padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          //         child: Text(
-          //           totalValue.toString(),
-          //           textAlign: TextAlign.center,
-          //           style: tablefontsize,
-          //         ))
-          //     :
-          Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: Text(dataGridCell.value.toString(),
-                  textAlign: TextAlign.center, style: tablefontsize));
+          : (dataGridCell.columnName == 'Item')
+              ? DropdownButton<String>(
+                  value: _cartModel.isNotEmpty ? dataGridCell.value : "",
+                  hint: const Text('Select Value'),
+                  autofocus: true,
+                  focusColor: Colors.transparent,
+                  underline: const Text(''),
+                  itemHeight: 50,
+                  icon: const Icon(Icons.arrow_drop_down_sharp),
+                  isExpanded: true,
+
+                  //8   style: textStyle,
+                  onChanged: (String? value) {
+                    // selectedValue = value;
+                    final dynamic oldValue = row
+                            .getCells()
+                            .firstWhereOrNull((DataGridCell dataCell) =>
+                                dataCell.columnName == dataGridCell.columnName)
+                            ?.value ??
+                        '';
+                    if (oldValue == value || value == null) {
+                      return;
+                    }
+
+                    final int dataRowIndex = dataGridRows.indexOf(row);
+                    dataGridRows[dataRowIndex].getCells()[0] =
+                        DataGridCell<String>(columnName: 'Item', value: value);
+                    _cartModel[dataRowIndex].item = value.toString();
+
+                    notifyListeners();
+                    // updateDatagridSource();
+                  },
+                  items: name.isNotEmpty
+                      ? name.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList()
+                      : [
+                          const DropdownMenuItem<String>(
+                            value: "",
+                            child: Text(""),
+                          )
+                        ])
+              : (dataGridCell.columnName == 'Brand')
+                  ? DropdownButton<String>(
+                      value: _cartModel.isNotEmpty ? dataGridCell.value : "",
+                      hint: const Text('Select Value'),
+                      autofocus: true,
+                      focusColor: Colors.transparent,
+                      underline: const Text(''),
+                      itemHeight: 50,
+                      icon: const Icon(Icons.arrow_drop_down_sharp),
+                      isExpanded: true,
+
+                      //8   style: textStyle,
+                      onChanged: (String? value) {
+                        // selectedValue = value;
+                        final dynamic oldValue = row
+                                .getCells()
+                                .firstWhereOrNull((DataGridCell dataCell) =>
+                                    dataCell.columnName ==
+                                    dataGridCell.columnName)
+                                ?.value ??
+                            '';
+                        if (oldValue == value || value == null) {
+                          return;
+                        }
+
+                        final int dataRowIndex = dataGridRows.indexOf(row);
+                        dataGridRows[dataRowIndex].getCells()[1] =
+                            DataGridCell<String>(
+                                columnName: 'Brand', value: value);
+                        _cartModel[dataRowIndex].item = value.toString();
+
+                        notifyListeners();
+                        // updateDatagridSource();
+                      },
+                      items: brand.isNotEmpty
+                          ? brand.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList()
+                          : [
+                              const DropdownMenuItem<String>(
+                                value: "",
+                                child: Text(""),
+                              )
+                            ])
+                  : Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Text(dataGridCell.value.toString(),
+                          textAlign: TextAlign.center, style: tablefontsize));
     }).toList());
   }
 

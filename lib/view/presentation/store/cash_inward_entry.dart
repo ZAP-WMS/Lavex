@@ -694,7 +694,7 @@ class CashInward extends GetView<CashInwardController> {
                                             supplierInvoiceNoController.text,
                                         item: controller.cartItems);
                                     await ApiServices()
-                                        .Addinward(data)
+                                        .addInward(data)
                                         .whenComplete(() {
                                       storeController.getinwardData("");
                                       Loader(true);

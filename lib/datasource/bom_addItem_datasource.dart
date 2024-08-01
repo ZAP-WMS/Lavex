@@ -3,11 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lavex/common/custom_text.dart';
 import 'package:lavex/data/model/bom_add_item.dart';
-import 'package:lavex/data/model/getallinwardentrymodel.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../data/model/getitemmodel.dart';
 import '../utils/style.dart';
-import '../widgets/drop_downTextField.dart';
 
 class BomAddItemDataSource extends DataGridSource {
   String userId;
@@ -74,7 +72,7 @@ class BomAddItemDataSource extends DataGridSource {
           child: (dataGridCell.columnName == 'Name')
               ? DropdownButton<String>(
                   value: name.isNotEmpty ? dataGridCell.value : "",
-                  hint: Text('Select Value'),
+                  hint: const Text('Select Value'),
                   autofocus: true,
                   focusColor: Colors.transparent,
                   underline: const Text(''),
@@ -121,12 +119,12 @@ class BomAddItemDataSource extends DataGridSource {
                             value: value,
                             child: Text(
                               value,
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                             ),
                           );
                         }).toList()
                       : [
-                          DropdownMenuItem<String>(
+                          const DropdownMenuItem<String>(
                             value: "",
                             child: Text(""),
                           )

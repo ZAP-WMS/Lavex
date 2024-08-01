@@ -3,11 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/model/InwardEntrymodel.dart';
-import 'package:lavex/data/model/bom_add_item.dart';
 import 'package:lavex/data/model/get_client_model.dart';
 import 'package:lavex/data/model/proforma_invoice.dart';
 import 'package:lavex/data/model/item_master.dart';
-
 import 'package:lavex/data/model/my_payments.dart';
 import 'package:http/http.dart' as http;
 import 'package:lavex/data/model/store_model.dart';
@@ -24,8 +22,8 @@ import '../../model/debit_note.dart';
 import '../../model/getallBom.dart';
 import '../../model/getallinwardentrymodel.dart';
 import '../../model/getitemmodel.dart';
-import '../../model/getitemmodel.dart';
 import '../../model/invoice.dart';
+import '../../model/production_store.dart';
 import '../../model/purchaseStoreModel.dart' as pa;
 import '../../model/register_model.dart';
 import '../../model/singleBom.dart';
@@ -64,10 +62,10 @@ class ApiServices {
     }
   }
 
-  Future<void> Addinward(InwardEntrymodel data) async {
+  Future<void> addInward(InwardEntrymodel data) async {
     try {
       print(data);
-      var response = await dio.post('$baseUrl$addinward', data: data.toJson());
+      var response = await dio.post('$baseUrl$addInward', data: data.toJson());
       print(response.data["message"]);
 
       if (response.statusCode == 200) {
@@ -346,6 +344,28 @@ class ApiServices {
         } else {
           print('message${response.data["message"]}');
           throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.statusMessage}');
+      }
+    } on Exception catch (e) {
+      throw Exception('Failed to create payment: ${e}');
+    }
+  }
+
+  Future<ProductioStore> getProductionData() async {
+    try {
+      var response = await dio.get('$baseUrl$getProductionStore');
+
+      print(response.data["message"]);
+
+      if (response.statusCode == 200) {
+        if (response.data["success"] ?? false) {
+          ProductioStore data = ProductioStore.fromJson(response.data);
+
+          return data;
+        } else {
+          throw Exception('Failed to create store');
         }
       } else {
         throw Exception('Failed to create payment: ${response.statusMessage}');

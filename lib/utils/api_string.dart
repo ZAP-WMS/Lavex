@@ -28,6 +28,7 @@ String deleteinward = "/api/inward/delInward/";
 String getallbom = "/api/bom/allbom";
 String getPurchaseStore = "/api/production/purchaseStore";
 String updateItem = "/api/itemMaster/updatingItemMater/";
+String getProductionStore = '/api/production/productionStore';
 
 // --------------------------------------------------------
 String baseUrlTxt = 'https://zapwms.in/';

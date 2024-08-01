@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:lavex/data/data_source/remote/api_service.dart';
-
 import '../../data/model/bom_add_item.dart';
-import '../../data/model/bomitemmodel.dart';
 import '../../data/model/getallBom.dart';
 
 class BomAddItemController extends GetxController {

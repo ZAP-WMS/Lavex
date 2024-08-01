@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lavex/data/data_source/remote/api_service.dart';
-import 'package:lavex/data/model/add_item.dart';
-import 'package:lavex/utils/string.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import '../../../common/custom_text.dart';
 import '../../../data/model/getitemmodel.dart';
 import '../../../data/model/update_itemModel.dart';
-import '../../../routes/route_pages.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_spacebar.dart';
 import '../../../widgets/custom_textform.dart';

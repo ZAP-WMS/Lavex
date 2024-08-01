@@ -68,8 +68,45 @@ class ItemMaster extends GetView<ItemMasterController> {
       'assets/item_master/Manufacturer.png',
       'assets/item_master/Brands.png',
       'assets/item_master/Brands.png',
-      'assets/item_master/Delete.png',
+      'assets/item_master/Delete.png'
     ];
+
+    void showDialogBox(BuildContext context) {
+      TextEditingController _textFieldController = TextEditingController();
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Enter your text'),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(
+                  hintText: "Type something here",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10))),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('CANCEL'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  print(_textFieldController
+                      .text); // You can do something with the text here
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return CommonScaffold(
       body: Obx(
         () => SingleChildScrollView(
@@ -89,11 +126,15 @@ class ItemMaster extends GetView<ItemMasterController> {
                           child: GestureDetector(
                             onTap: () {
                               controller.currentIndex.value = index;
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => tabClass[index],
-                                  ));
+                              if (index == 1) {
+                                showDialogBox(context);
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => tabClass[index],
+                                    ));
+                              }
                             },
                             child: Container(
                               height: 50,
@@ -143,22 +184,6 @@ class ItemMaster extends GetView<ItemMasterController> {
                             )),
                       ],
                     ),
-                    // horizontalSpace(20),
-                    // CustomField(
-                    //     width: 200,
-                    //     height: 30,
-                    //     controller: nameController,
-                    //     name: 'Amount From',
-                    //     validator: (p0) {},
-                    //     style: normalTextStyle),
-                    // horizontalSpace(20),
-                    // CustomField(
-                    //     width: 200,
-                    //     height: 30,
-                    //     controller: nameController,
-                    //     name: toTxt,
-                    //     validator: (p0) {},
-                    //     style: normalTextStyle),
                   ],
                 ),
                 verticalSpace(20),
