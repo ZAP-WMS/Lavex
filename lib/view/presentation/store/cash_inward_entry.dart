@@ -693,12 +693,16 @@ class CashInward extends GetView<CashInwardController> {
                                         suplierInvoiceNo:
                                             supplierInvoiceNoController.text,
                                         item: controller.cartItems);
-                                    await ApiServices()
+                                    var status = await ApiServices()
                                         .Addinward(data)
                                         .whenComplete(() {
-                                      storeController.getinwardData("");
                                       Loader(true);
                                     });
+                                    if (status) {
+                                      _formkey.currentState!.reset();
+                                      storeController.getalldata();
+                                      controller.cartItems.clear();
+                                    }
                                     print(data);
                                   }
                                 }),

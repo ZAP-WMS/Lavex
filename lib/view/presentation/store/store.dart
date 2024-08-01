@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lavex/data/data_source/remote/api_service.dart';
 import 'package:lavex/datasource/store_datasource.dart';
 import 'package:lavex/routes/route_pages.dart';
 import 'package:lavex/view/controller/store_controller.dart';
+import 'package:lavex/view/presentation/store/viewBill.dart';
 import 'package:lavex/widgets/custom_scaffold.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../common/custom_text.dart';
 import '../../../datasource/Inwardentrysource.dart';
+import '../../../datasource/all_productionentrysource.dart';
+import '../../../datasource/allstocksource.dart';
+import '../../../datasource/production_store_source.dart';
 import '../../../datasource/purchaseStoresource.dart';
 import '../../../utils/asset_image.dart';
 import '../../../utils/colors.dart';
@@ -17,16 +22,46 @@ import '../../../widgets/custom_spacebar.dart';
 
 class StorePage extends GetView<StoreController> {
   StorePage({super.key});
-
+  List<DataGridRow> SelectedproductionentryRows = [];
   final ScrollController scrollController = ScrollController();
   late Inwardentrysource storeDataSource;
   late purchaseStoresource purchaseStoreSource;
-
+  late ProductionStoresource productionStoresource;
+  late Allproductionentrysource producentrySource;
+  late AllStocksource allStocksource;
+  List<String> cid = [];
   List<GridColumn> buildColumns(BuildContext context) {
     List<GridColumn> columns = [];
-    List<String> TabName =
-        controller.currentIndex == 14 ? purchaseStoreTabName : InwardTabName;
+    String labelText = '';
+    List<String> TabName = [];
+
+    if (controller.currentIndex.value == 14) {
+      TabName = purchaseStoreTabName;
+    } else if (controller.currentIndex.value == 9) {
+      TabName = productionentryTabName;
+    } else if (controller.currentIndex.value == 15) {
+      TabName = productionstoreTabName;
+    } else if (controller.currentIndex.value == 3) {
+      TabName = allStockTabName;
+    } else {
+      TabName = InwardTabName;
+    }
+
     for (String columnName in TabName) {
+      if (controller.currentIndex.value == 14) {
+        labelText =
+            purchaseStoreTabName[purchaseStoreTabName.indexOf(columnName)];
+      } else if (controller.currentIndex.value == 9) {
+        labelText =
+            productionentryTabName[productionentryTabName.indexOf(columnName)];
+      } else if (controller.currentIndex.value == 15) {
+        labelText =
+            productionstoreTabName[productionstoreTabName.indexOf(columnName)];
+      } else if (controller.currentIndex.value == 3) {
+        labelText = allStockTabName[allStockTabName.indexOf(columnName)];
+      } else {
+        labelText = InwardTabName[InwardTabName.indexOf(columnName)];
+      }
       columns.add(
         GridColumn(
           columnName: columnName,
@@ -40,11 +75,7 @@ class StorePage extends GetView<StoreController> {
               ? MediaQuery.of(context).size.width * 0.2
               : MediaQuery.of(context).size.width *
                   0.09, // You can adjust this width as needed
-          label: createColumnLabel(
-            controller.currentIndex == 14
-                ? purchaseStoreTabName[purchaseStoreTabName.indexOf(columnName)]
-                : InwardTabName[InwardTabName.indexOf(columnName)],
-          ),
+          label: createColumnLabel(labelText),
         ),
       );
     }
@@ -106,22 +137,7 @@ class StorePage extends GetView<StoreController> {
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
                         onTap: () {
-                          if (index < 3) {
-                            controller.currentIndex.value = index;
-                            Get.toNamed(pages[index]);
-                          } else {
-                            if (index == 11) {
-                              controller.currentIndex.value = index;
-                              controller.getinwardData("Cash");
-                              print(storeTabName[index]);
-                            } else if (index == 8) {
-                              controller.currentIndex.value = index;
-                              controller.getinwardData("");
-                              print(storeTabName[index]);
-                            } else {
-                              controller.currentIndex.value = index;
-                            }
-                          }
+                          ontabselect(index, pages);
                         },
                         child: Container(
                           height: 50,
@@ -159,14 +175,60 @@ class StorePage extends GetView<StoreController> {
     );
   }
 
+  void ontabselect(int index, List<String> pages) {
+    if (index < 3) {
+      controller.currentIndex.value = index;
+      Get.toNamed(pages[index]);
+    } else {
+      if (index == 11) {
+        controller.currentIndex.value = index;
+        controller.getinwardData("Cash");
+        print(storeTabName[index]);
+      } else if (index == 4) {
+        controller.currentIndex.value = index;
+        // Get.toNamed(AppRoutes.viewBilldetail);
+      } else if (index == 8) {
+        controller.currentIndex.value = index;
+        controller.getinwardData("");
+        print(storeTabName[index]);
+      } else if (index == 5) {
+        controller.isLoading(true);
+        controller.updateStatus(
+            SelectedproductionentryRows.map((e) => e.getCells()[5].value)
+                .toList(),
+            "confirmed");
+        // controller.isLoading(false);
+        print(SelectedproductionentryRows.map((e) => e.getCells()[5].value)
+            .toList());
+      } else if (index == 6) {
+        controller.isLoading(true);
+        controller.updateStatus(
+            SelectedproductionentryRows.map((e) => e.getCells()[5].value)
+                .toList(),
+            "pending");
+        // controller.isLoading(false);
+        print(SelectedproductionentryRows.map((e) => e.getCells()[5].value)
+            .toList());
+      } else if (index == 7) {
+        controller.isLoading(true);
+        controller.updateStatus(
+            SelectedproductionentryRows.map((e) => e.getCells()[5].value)
+                .toList(),
+            "canceled");
+        // controller.isLoading(false);
+        print(SelectedproductionentryRows.map((e) => e.getCells()[5].value)
+            .toList());
+      } else {
+        controller.currentIndex.value = index;
+      }
+    }
+  }
+
   Widget _buildDataGrid(BuildContext context) {
     if (controller.isLoading.value) {
       return const Center(child: CircularProgressIndicator());
     } else {
-      storeDataSource =
-          Inwardentrysource(controller.inwardEntry, context, 'userId');
-      purchaseStoreSource =
-          purchaseStoresource(controller.purchaseStore, context, 'userId');
+      getAllSource(context);
       // print(storeController.purchaseStore);
       return SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -180,13 +242,47 @@ class StorePage extends GetView<StoreController> {
                 allowSorting: true,
                 selectionMode: SelectionMode.multiple,
                 gridLinesVisibility: GridLinesVisibility.both,
+                onSelectionChanged: (addedRows, removedRows) {
+                  if (controller.currentIndex.value == 9) {
+                    SelectedproductionentryRows.addAll(addedRows);
+                    if (removedRows.isNotEmpty) {
+                      removedRows.forEach(
+                          (e) => SelectedproductionentryRows.remove(e));
+                    }
+                    print(SelectedproductionentryRows.length);
+                  }
+                },
                 controller: DataGridController(),
                 headerGridLinesVisibility: GridLinesVisibility.both,
-                source: controller.currentIndex == 14
-                    ? purchaseStoreSource
-                    : storeDataSource,
+                source: GetSource(),
                 columns: buildColumns(context))),
       );
+    }
+  }
+
+  void getAllSource(BuildContext context) {
+    storeDataSource =
+        Inwardentrysource(controller.inwardEntry, context, 'userId');
+    purchaseStoreSource =
+        purchaseStoresource(controller.purchaseStore, context, 'userId');
+    producentrySource =
+        Allproductionentrysource(controller.listproentry, context, "userId");
+    productionStoresource = ProductionStoresource(
+        controller.listproductionstore, context, "userId");
+    allStocksource = AllStocksource(controller.liststock, context, "userId");
+  }
+
+  DataGridSource GetSource() {
+    if (controller.currentIndex.value == 14) {
+      return purchaseStoreSource;
+    } else if (controller.currentIndex.value == 9) {
+      return producentrySource;
+    } else if (controller.currentIndex.value == 15) {
+      return productionStoresource;
+    } else if (controller.currentIndex.value == 3) {
+      return allStocksource;
+    } else {
+      return storeDataSource;
     }
   }
 }

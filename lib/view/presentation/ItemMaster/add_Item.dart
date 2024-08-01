@@ -80,6 +80,7 @@ class AddItemMaster extends StatelessWidget {
     '24',
   ];
   String gst = "";
+  String Manufacturer = "";
   List<String> brand = [
     "Softx",
     "Lavex",
@@ -93,6 +94,7 @@ class AddItemMaster extends StatelessWidget {
     "Other",
   ];
   String Brand = "";
+  String OtherBrand = "";
   List<String> store = [
     "Unite 1",
     "Unite 2",
@@ -161,6 +163,30 @@ class AddItemMaster extends StatelessWidget {
                             ],
                           ),
                         );
+                      } else if (field == 'Manufacturer') {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CTextBlack(field, mBold: true, mSize: 14),
+                              Container(
+                                width: 300,
+                                height: 35,
+                                child: DropdownTextField<String>(
+                                  items: ["Manufacturer 1", "Manufacturer 2"],
+                                  hintText: field,
+                                  itemAsString: (item) => item,
+                                  onChanged: (value) {
+                                    gst = value ?? "";
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       } else if (field == 'GST %') {
                         return Padding(
                           padding: const EdgeInsets.only(
@@ -210,29 +236,55 @@ class AddItemMaster extends StatelessWidget {
                           ),
                         );
                       } else if (field == 'Brand') {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 10, right: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CTextBlack(field, mBold: true, mSize: 14),
-                              Container(
-                                width: 300,
-                                height: 35,
-                                child: DropdownTextField<String>(
-                                  items: brand,
-                                  hintText: field,
-                                  itemAsString: (item) => item,
-                                  onChanged: (value) {
-                                    Brand = value ?? "";
-                                  },
+                        return SStatus.value == "ReadyStock"
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, left: 10, right: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    CTextBlack(field, mBold: true, mSize: 14),
+                                    Container(
+                                      width: 300,
+                                      height: 35,
+                                      child: DropdownTextField<String>(
+                                        items: brand,
+                                        hintText: field,
+                                        itemAsString: (item) => item,
+                                        onChanged: (value) {
+                                          Brand = value ?? "";
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, left: 10, right: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    CTextBlack(field, mBold: true, mSize: 14),
+                                    Container(
+                                      width: 300,
+                                      height: 35,
+                                      child: DropdownTextField<String>(
+                                        items: Itemraw.map((f) => f.brand)
+                                            .toSet()
+                                            .toList(),
+                                        hintText: field,
+                                        itemAsString: (item) => item,
+                                        onChanged: (value) {
+                                          OtherBrand = value ?? "";
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
                       } else if (field == 'Store') {
                         return Padding(
                           padding: const EdgeInsets.only(
@@ -272,6 +324,7 @@ class AddItemMaster extends StatelessWidget {
                                       child: DropdownTextField<String>(
                                         items:
                                             Itemraw.map((f) => f.name as String)
+                                                .toSet()
                                                 .toList(),
                                         hintText: field,
                                         itemAsString: (item) => item,
@@ -316,7 +369,7 @@ class AddItemMaster extends StatelessWidget {
                                   name: SStatus.value == "ReadyStock"
                                       ? nameController.text
                                       : name,
-                                  manufacturerName: manufacturerController.text,
+                                  manufacturerName: Manufacturer,
                                   itemCode: itemCodeController.text,
                                   quantity: int.parse(quantityController.text),
                                   quantityType: qtyType,
@@ -327,7 +380,9 @@ class AddItemMaster extends StatelessWidget {
                                   hsnCode: hsnCodeController.text,
                                   stockStatus: SStatus.value,
                                   storeId: 10,
-                                  brandName: Brand,
+                                  brandName: SStatus.value == "ReadyStock"
+                                      ? Brand
+                                      : OtherBrand,
                                   category: categoryController.text,
                                   storeName: Store,
                                   total: 1,

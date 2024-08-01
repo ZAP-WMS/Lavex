@@ -32,6 +32,7 @@ import '../view/presentation/ItemMaster/item_master.dart';
 import '../view/presentation/clients/my_clients.dart';
 import '../view/presentation/store/add_item.dart';
 import '../view/presentation/store/updateInward.dart';
+import '../view/presentation/store/viewBill.dart';
 
 class AppPages {
   static var list = [
@@ -71,6 +72,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.update_companey,
       page: () => UpdateCompaney(),
+      //   binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.viewBilldetail,
+      page: () => ProductBillScreen(),
       //   binding: SplashBinding(),
     ),
     GetPage(

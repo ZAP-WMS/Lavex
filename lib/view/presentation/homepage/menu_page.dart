@@ -15,6 +15,7 @@ import '../Companey/add_company.dart';
 import '../Report/reports.dart';
 import '../BOM/bom.dart';
 import '../store/store.dart';
+import '../store/viewBill.dart';
 
 class MenuPage extends StatelessWidget {
   MenuPage({super.key});
@@ -37,7 +38,9 @@ class MenuPage extends StatelessWidget {
       StorePage(),
 //      StorePage(),
       ItemMaster(),
+
       ReportPage(),
+      ProductBillScreen(),
     ];
     return CommonScaffold(
       body: Padding(

@@ -27,7 +27,7 @@ class Addproductiondatasource extends DataGridSource {
     dataGridRows = _bomModel
         .map<DataGridRow>((dataGridRow) => dataGridRow.dataGridRow())
         .toList();
-    name.assignAll(Itemraw.map((f) => f.readyStock!.name as String).toList());
+    name.assignAll(Itemraw.map((f) => f.readyStock!.name as String).toSet());
     print(name);
   }
 
@@ -107,8 +107,8 @@ class Addproductiondatasource extends DataGridSource {
                         (element) => element.readyStock!.name == value);
                     dataGridRows[dataRowIndex].getCells()[1] =
                         DataGridCell<String>(
-                            columnName: 'Quantity Type',
-                            value: element.readyStock!.qtyType);
+                            columnName: 'Brand',
+                            value: element.readyStock!.brand);
                     dataGridRows[dataRowIndex].getCells()[2] =
                         DataGridCell<String>(
                             columnName: 'Quantity',
@@ -204,10 +204,9 @@ class Addproductiondatasource extends DataGridSource {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
           DataGridCell<String>(columnName: 'Name', value: newCellValue);
       _bomModel[dataRowIndex].title = newCellValue;
-    } else if (column.columnName == 'Quantity Type') {
+    } else if (column.columnName == 'Brand') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(
-              columnName: 'Quantity Type', value: newCellValue);
+          DataGridCell<String>(columnName: 'Brand', value: newCellValue);
       _bomModel[dataRowIndex].quantityType = newCellValue;
     } else if (column.columnName == 'Quantity') {
       dataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =

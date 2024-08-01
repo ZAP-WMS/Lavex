@@ -28,4 +28,5 @@ class AppRoutes {
   static const String updateinward = '/updateinward';
   static const String editBom = '/editBom';
   static const String detailBom = '/detailBom';
+  static const String viewBilldetail = '/viewbilldetail';
 }

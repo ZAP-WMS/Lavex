@@ -28,6 +28,11 @@ String deleteinward = "/api/inward/delInward/";
 String getallbom = "/api/bom/allbom";
 String getPurchaseStore = "/api/production/purchaseStore";
 String updateItem = "/api/itemMaster/updatingItemMater/";
+String productionentry = '/api/production/allProduction';
+String updatestatus = '/api/production/changestatus/';
+String productionstore = '/api/production/productionStore';
+String allStock = '/api/production/allStock';
+String preAndnow_production = '/api/production/prod/statuswithprev/';
 
 // --------------------------------------------------------
 String baseUrlTxt = 'https://zapwms.in/';

@@ -22,12 +22,13 @@ import '../../../widgets/drop_downTextField.dart';
 import '../../../widgets/icon_with_text.dart';
 import '../../controller/bom_additem_controller.dart';
 import '../../controller/production_controller.dart';
+import '../../controller/store_controller.dart';
 import '../Invoice/myinvoice/myInvoice..dart';
 
 class AddProduction extends GetView<ProductionController> {
   AddProduction({super.key});
 
-  final TextEditingController clientController = TextEditingController(
+  final TextEditingController dateController = TextEditingController(
       text:
           "${DateTime.now().day.toString()}-${DateTime.now().month.toString()}-${DateTime.now().year.toString()}");
   final TextEditingController addressController = TextEditingController();
@@ -64,6 +65,7 @@ class AddProduction extends GetView<ProductionController> {
   DataGridController _dataGridController = DataGridController();
   BomAddItemController list = Get.put(BomAddItemController());
   List<GridColumn> columns = [];
+  StoreController storcontroller = Get.put(StoreController());
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +126,7 @@ class AddProduction extends GetView<ProductionController> {
                           width: 300,
                           height: 40,
                           name: "Create Date",
-                          controller: clientController,
+                          controller: dateController,
                           style: normalTextStyle,
                           isreadOnly: false,
                           isSuffixIcon: false,
@@ -460,12 +462,13 @@ class AddProduction extends GetView<ProductionController> {
                         //   "gst": 18
                         // }));
                         addProductionModel model = addProductionModel(
-                            accepted: "yes",
-                            remark: "Abc",
-                            dateCreated: "12-02-2005",
+                            accepted: controller.accp.value ? "yes" : "no",
+                            remark: remarkController.text,
+                            dateCreated: dateController.text,
                             readyStock: listredy,
                             raw: listraw);
-                        ApiServices().Addproduction(model);
+                        ApiServices().Addproduction(model).whenComplete(
+                            () => storcontroller.getallproductionentry());
                       }),
                   horizontalSpace(10),
                   CTextBlack('Or'),

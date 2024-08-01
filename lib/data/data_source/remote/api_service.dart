@@ -18,14 +18,17 @@ import '../../model/add_client_model.dart';
 import '../../model/add_item.dart';
 import '../../model/add_productionModel.dart';
 import '../../model/add_suppllier.dart';
+import '../../model/all_productionentrymodel.dart';
 import '../../model/bomitemmodel.dart';
 import '../../model/credit_note.dart';
 import '../../model/debit_note.dart';
 import '../../model/getallBom.dart';
+import '../../model/getallStockmodel.dart';
 import '../../model/getallinwardentrymodel.dart';
 import '../../model/getitemmodel.dart';
 import '../../model/getitemmodel.dart';
 import '../../model/invoice.dart';
+import '../../model/productionstore.dart';
 import '../../model/purchaseStoreModel.dart' as pa;
 import '../../model/register_model.dart';
 import '../../model/singleBom.dart';
@@ -64,7 +67,7 @@ class ApiServices {
     }
   }
 
-  Future<void> Addinward(InwardEntrymodel data) async {
+  Future<bool> Addinward(InwardEntrymodel data) async {
     try {
       print(data);
       var response = await dio.post('$baseUrl$addinward', data: data.toJson());
@@ -76,16 +79,19 @@ class ApiServices {
           Get.snackbar("Status", response.data["message"].toString(),
               snackPosition: SnackPosition.BOTTOM);
           // Get.back();
+          return response.data["success"];
         } else {
           print('message${response.data["message"]}');
           Get.snackbar("Status", response.data["message"].toString(),
               snackPosition: SnackPosition.BOTTOM);
+          return response.data["success"];
           // throw Exception('Failed to create payment');
         }
       } else {
         Get.snackbar("Status", response.data["message"].toString(),
             snackPosition: SnackPosition.BOTTOM);
-        // throw Exception('Failed to create payment: ${response.statusMessage}');
+
+        throw Exception('Failed to create payment: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error: $e');
@@ -150,6 +156,40 @@ class ApiServices {
     return [];
   }
 
+  Future<bool> updateStatus(String id, String status) async {
+    try {
+      var response =
+          await dio.put('$baseUrl$updatestatus$id', data: {"status": status});
+      print(response.data["message"]);
+      if (response.statusCode == 200) {
+        print(response.data);
+        return true;
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+    return true;
+  }
+
+  getallStocklist() async {
+    try {
+      var response = await dio.get('$baseUrl$allStock');
+      print(response.data["message"]);
+      if (response.statusCode == 200) {
+        if (response.data["success"]) {
+          GetAllStockModel data = GetAllStockModel.fromJson(response.data);
+          print(data.data!.length);
+          return data.data;
+        } else {
+          Get.snackbar("Message", response.data["success"],
+              snackPosition: SnackPosition.BOTTOM);
+        }
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
   getredymaterial(String type) async {
     try {
       var response = await dio.get('$baseUrl$getInward$type');
@@ -187,6 +227,33 @@ class ApiServices {
         }
       } else {
         throw Exception('Failed to create payment: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Failed to create payment: $e');
+    }
+  }
+
+  Future<ProductionstoreModel> productionStore() async {
+    try {
+      var response = await dio.get('$baseUrl$productionstore');
+      print(response.data["message"]);
+      Get.snackbar("Status", response.data["message"].toString(),
+          snackPosition: SnackPosition.BOTTOM);
+      if (response.statusCode == 200) {
+        if (response.data["success"] ?? false) {
+          print(response.data["success"]);
+          ProductionstoreModel data =
+              ProductionstoreModel.fromJson(response.data);
+          return data;
+          // Get.offAndToNamed(AppRoutes.client_List);
+          // Get.back();
+        } else {
+          print('message${response.data["message"]}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error: $e');
@@ -345,6 +412,34 @@ class ApiServices {
           return data.data ?? [];
         } else {
           print('message${response.data["message"]}');
+          throw Exception('Failed to create payment');
+        }
+      } else {
+        throw Exception('Failed to create payment: ${response.statusMessage}');
+      }
+    } on Exception catch (e) {
+      throw Exception('Failed to create payment: ${e}');
+    }
+  }
+
+  Future<AllProductionentryModel> getallproductionentry() async {
+    try {
+      var response = await dio.get('$baseUrl$productionentry');
+
+      print(response.data["message"]);
+
+      if (response.statusCode == 200) {
+        if (response.data["success"] ?? false) {
+          AllProductionentryModel data =
+              AllProductionentryModel.fromJson(response.data);
+          print(data.data!.length.toString());
+          Get.snackbar("message", response.data["message"],
+              snackPosition: SnackPosition.BOTTOM);
+          return data;
+        } else {
+          print('message${response.data["message"]}');
+          Get.snackbar("message", response.data["message"],
+              snackPosition: SnackPosition.BOTTOM);
           throw Exception('Failed to create payment');
         }
       } else {

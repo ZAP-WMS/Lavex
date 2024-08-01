@@ -282,8 +282,8 @@ final List<String> myPayment = [
 // Bom list
 final List<String> bomTableTitle = [
   'Name',
-  'Store',
-  'Status',
+  'Brand',
+  'Quantity',
   'Manage',
 ];
 
@@ -391,4 +391,32 @@ final List<String> purchaseStoreTabName = [
   "price",
   // "id",
   "Manage"
+];
+final List<String> productionentryTabName = [
+  "ProdNum",
+  "DateCreated",
+  "Remark",
+  "Status",
+  "Accepted",
+  "id",
+  "Manage",
+];
+final List<String> productionstoreTabName = [
+  'Name',
+  'Brand',
+  'Qty',
+  'Gst',
+  'Price',
+  'id',
+  'Manage'
+];
+final List<String> allStockTabName = [
+  'Name',
+  'Brand',
+  'Quantity',
+  'Gst',
+  'Price',
+  'Qty',
+  'Id',
+  'Manage',
 ];
